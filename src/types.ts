@@ -1,63 +1,32 @@
-export type Option = {
-    readonly id: string;
-    readonly name: string;
-    readonly description: string;
-};
-
-export type Decision = {
-    readonly id: string;
-    readonly revision: number;
-    readonly name: string;
-    readonly type: 'choice' | 'noul';
-    readonly question: string;
-    readonly background: string;
-    readonly options: readonly Option[];
-    readonly minConfidence: number;
-    readonly yesThreshold: number;
-    readonly noThreshold: number;
-    readonly cooldownSeconds: number;
-    readonly maxAgeSeconds: number;
-};
-
 export type Settings = {
     readonly model: string;
     readonly timeoutSeconds: number;
     readonly maxCallsPerMinute: number;
 };
 
+export type Json = string | number | boolean | null | Json[] | {[key: string]: Json};
+export type Content = string | Json[] | {[key: string]: Json};
+
+export type Question =
+    | {readonly type: 'noul'; readonly instructions: Content; readonly criteria?: {readonly true: Content; readonly false: Content}}
+    | {readonly type: 'choice'; readonly instructions: Content; readonly criteria: Record<string, Content | null>}
+    | {readonly type: 'score'; readonly instructions: Content; readonly criteria: Content[]};
+
+export type EvaluationRequest = {
+    readonly state: Content;
+    readonly questions: Record<string, Question>;
+};
+
 export type Answer =
-    | { readonly type: 'choice'; readonly choice: string; readonly confidence: number; readonly probabilities: Record<string, number> }
-    | { readonly type: 'noul'; readonly noul: number };
+    | {readonly type: 'choice'; readonly choice: string; readonly confidence: number; readonly probabilities: Record<string, number>}
+    | {readonly type: 'noul'; readonly noul: number}
+    | {readonly type: 'score'; readonly score: number; readonly confidence: number; readonly probabilities: Record<string, number>; readonly legend: Record<string, Json>};
 
-export type Response = {
-    readonly answer: Answer;
+export type EvaluationResponse = {
+    readonly answers: Record<string, Answer>;
     readonly model: string;
     readonly inputTokens: number;
-};
-
-export type Evaluation = {
-    readonly id: string;
-    readonly decisionId: string;
-    readonly decisionName: string;
-    readonly revision: number;
-    readonly type: Decision['type'];
-    readonly startedAt: number;
-    readonly completedAt: number;
-    readonly status: 'accepted' | 'uncertain' | 'error' | 'superseded' | 'cooldown' | 'expired';
-    readonly value: string;
-    readonly label: string;
-    readonly confidence: number | null;
-    readonly probability: number | null;
-    readonly model: string;
-    readonly inputTokens: number;
+    readonly outputTokens: number;
+    readonly requestId: string;
     readonly durationMs: number;
-    readonly error: string;
-    readonly test: boolean;
-};
-
-export type StoredState = {
-    readonly decisions: Decision[];
-    readonly latest: Record<string, Evaluation>;
-    readonly accepted: Record<string, Evaluation>;
-    readonly history: Evaluation[];
 };

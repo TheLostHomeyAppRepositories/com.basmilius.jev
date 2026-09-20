@@ -1,67 +1,112 @@
 import { expect, test } from 'bun:test';
-import Decisions from '../src/brain/decisions';
-import { DEFAULT_SETTINGS } from '../src/const';
 import { registerFlows } from '../src/flow';
 import type JevApp from '../src/index';
-import type { Evaluation } from '../src/types';
+import type { EvaluationRequest, EvaluationResponse } from '../src/types';
 
 class Card {
-    run!: (args: any, state?: any) => Promise<any>;
-    autocomplete: Record<string, (query: string, args?: any) => Promise<any>> = {};
-
+    run!: (args: any) => Promise<any>;
     registerRunListener(listener: Card['run']): this { this.run = listener; return this; }
-    registerArgumentAutocompleteListener(name: string, listener: (query: string, args?: any) => Promise<any>): this {
-        this.autocomplete[name] = listener;
-        return this;
-    }
 }
 
 function fixture() {
-    let probability = 0.95;
-    const published: Evaluation[] = [];
-    const decisions = new Decisions({
-        settings: () => DEFAULT_SETTINGS,
-        evaluate: async () => ({answer: {type: 'noul', noul: probability}, model: 'jev-latest', inputTokens: 2}),
-        persist: () => {}, publish: async result => { published.push(result); }
-    });
-    decisions.save({id: 'notify', revision: 0, name: 'Notify', type: 'noul', question: 'Notify now?', background: '', options: [], minConfidence: 0.8, noThreshold: 0.2, yesThreshold: 0.8, cooldownSeconds: 0, maxAgeSeconds: 60});
     const cards = new Map<string, Card>();
+    const requests: EvaluationRequest[] = [];
+    let confidence = 0.95;
+    let probability = 0.95;
     function card(id: string): Card {
         if (!cards.has(id)) cards.set(id, new Card());
         return cards.get(id)!;
     }
-    const app = {decisions, homey: {__: (key: string) => key, flow: {getActionCard: card, getConditionCard: card, getTriggerCard: card}}};
-    registerFlows(app as unknown as JevApp);
-    return {card, published, setProbability: (value: number) => { probability = value; }};
+    async function evaluate(request: EvaluationRequest): Promise<EvaluationResponse> {
+        requests.push(request);
+        const answers = Object.fromEntries(Object.entries(request.questions).map(([id, question]) => [id,
+            question.type === 'choice' ? {type: 'choice', choice: 'answer_2', confidence, probabilities: {answer_1: 0.05, answer_2: 0.95}}
+                : question.type === 'noul' ? {type: 'noul', noul: probability}
+                : {type: 'score', score: 1.5, confidence, probabilities: {'0': 0, '1': 0.5, '2': 0.5}, legend: {'0': 'low', '1': 'mid', '2': 'high'}}
+        ]));
+        return {answers, model: 'jev-latest', inputTokens: 20, outputTokens: 5, requestId: `request-${requests.length}`, durationMs: 10} as EvaluationResponse;
+    }
+    registerFlows({evaluate, homey: {flow: {getActionCard: (id: string) => card(`action:${id}`), getConditionCard: (id: string) => card(`condition:${id}`)}}} as unknown as JevApp);
+    return {cards, card, requests, setConfidence: (value: number) => { confidence = value; }, setProbability: (value: number) => { probability = value; }};
 }
 
-test('Flow action returns invocation tokens and rejects uncertain answers', async () => {
+const base = {state: 'We are watching a film.', question: 'Which light scene fits?'};
+
+test('registers only direct cards, without stored-decision cards or triggers', () => {
     const f = fixture();
-    const args = {decision: {id: 'notify'}, context: 'A message'};
-    const tokens = await f.card('evaluate').run(args);
-    expect(tokens.result).toBe('yes');
-    expect(tokens.confidence).toBe(-1);
-    expect(tokens.probability).toBe(0.95);
-    expect(tokens.request_id).toBe(f.published[0].id);
+    expect([...f.cards.keys()].sort()).toEqual(['action:advanced', 'action:choice_2', 'action:choice_3', 'action:choice_4', 'action:score', 'action:yes_no', 'condition:yes_no']);
+});
+
+for (const count of [2, 3, 4]) {
+    test(`choice with ${count} answers sends exactly one question and returns text and position`, async () => {
+        const f = fixture();
+        const args = {...base, answer_1: 'Bright', answer_2: 'Film', answer_3: 'Cozy', answer_4: 'No change'};
+        const result = await f.card(`action:choice_${count}`).run(args);
+        expect(result.answer).toBe('Film');
+        expect(result.answer_number).toBe(2);
+        expect(result.confidence).toBe(0.95);
+        expect(Object.keys(f.requests[0].questions)).toEqual(['answer']);
+        expect(Object.keys(f.requests[0].questions.answer.criteria!)).toHaveLength(count);
+        expect(f.requests[0].state).toBe(base.state);
+    });
+}
+
+test('rejects missing or duplicate answers before the API call', async () => {
+    const f = fixture();
+    await expect(f.card('action:choice_2').run({...base, answer_1: 'Same', answer_2: ' same '})).rejects.toThrow('different');
+    await expect(f.card('action:choice_3').run({...base, answer_1: 'First', answer_2: 'Second'})).rejects.toThrow();
+    expect(f.requests).toHaveLength(0);
+});
+
+test('low choice confidence stops the branch; custom thresholds work', async () => {
+    const f = fixture();
+    f.setConfidence(0.6);
+    const args = {...base, answer_1: 'Bright', answer_2: 'Film'};
+    await expect(f.card('action:choice_2').run(args)).rejects.toThrow('uncertain');
+    expect((await f.card('action:choice_2').run({...args, minimum: 0.5})).answer).toBe('Film');
+});
+
+test('yes/no action and condition distinguish yes, no and uncertainty', async () => {
+    const f = fixture();
+    expect((await f.card('action:yes_no').run(base)).answer).toBe(true);
+    expect(await f.card('condition:yes_no').run(base)).toBe(true);
+    f.setProbability(0.2);
+    expect((await f.card('action:yes_no').run(base)).answer).toBe(false);
+    expect(await f.card('condition:yes_no').run(base)).toBe(false);
     f.setProbability(0.5);
-    await expect(f.card('evaluate').run(args)).rejects.toThrow('uncertain');
-    expect(f.published.at(-1)?.status).toBe('uncertain');
+    await expect(f.card('action:yes_no').run(base)).rejects.toThrow('uncertain');
+    await expect(f.card('condition:yes_no').run(base)).rejects.toThrow('uncertain');
+    f.setProbability(0.8);
+    expect(await f.card('condition:yes_no').run(base)).toBe(true);
 });
 
-test('missing data and deleted options cannot pass an inverted outcome condition', async () => {
+test('score sends one described rubric and returns a fractional score', async () => {
     const f = fixture();
-    const args = {decision: {id: 'notify'}, outcome: {id: 'yes'}};
-    await expect(f.card('outcome_is').run(args)).rejects.toThrow('no_result');
-    await f.card('evaluate').run({decision: {id: 'notify'}, context: 'Text'});
-    expect(await f.card('outcome_is').run(args)).toBe(true);
-    await expect(f.card('outcome_is').run({...args, outcome: {id: 'removed'}})).rejects.toThrow('missing_option');
+    const args = {...base, low: 'No interruption', middle: 'Some interruption', high: 'Major interruption'};
+    const result = await f.card('action:score').run(args);
+    expect(result.score).toBe(1.5);
+    expect(f.requests[0].questions.answer.criteria).toEqual([args.low, args.middle, args.high]);
+    f.setConfidence(0.3);
+    await expect(f.card('action:score').run(args)).rejects.toThrow('uncertain');
 });
 
-test('triggers filter by stable decision ID and autocomplete offers outcomes', async () => {
+test('advanced returns multiple raw answers, including uncertainty, without global state', async () => {
     const f = fixture();
-    expect(await f.card('evaluated').run({decision: {id: 'notify'}}, {decisionId: 'another'})).toBe(false);
-    expect(await f.card('evaluated').run({decision: {id: 'notify'}}, {decisionId: 'notify'})).toBe(true);
-    expect(await f.card('evaluate').autocomplete.decision('not')).toHaveLength(1);
-    expect(await f.card('outcome_is').autocomplete.outcome('', {decision: {id: 'notify'}})).toHaveLength(2);
-    expect(await f.card('result_fresh').run({decision: {id: 'notify'}, seconds: 60})).toBe(false);
+    f.setProbability(0.5);
+    const request = {state: {room: 'Living room'}, questions: {a: {type: 'noul', instructions: 'Notify?'}, b: {type: 'noul', instructions: 'Dim?'}}};
+    const result = await f.card('action:advanced').run({json: JSON.stringify(request)});
+    expect(f.requests).toEqual([request]);
+    expect(JSON.parse(result.answers)).toEqual({a: {type: 'noul', noul: 0.5}, b: {type: 'noul', noul: 0.5}});
+    expect(result.request_id).toBe('request-1');
+    const next = await f.card('action:yes_no').run({...base, minimum: 0.9}).catch(() => null);
+    expect(next).toBeNull();
+    expect(JSON.parse(result.answers).a.noul).toBe(0.5);
+});
+
+test('rejects invalid thresholds and advanced JSON before the API call', async () => {
+    const f = fixture();
+    await expect(f.card('action:yes_no').run({...base, minimum: 0.5})).rejects.toThrow();
+    await expect(f.card('action:choice_2').run({...base, minimum: 2})).rejects.toThrow();
+    await expect(f.card('action:advanced').run({json: '{bad'})).rejects.toThrow('Invalid JSON');
+    expect(f.requests).toHaveLength(0);
 });

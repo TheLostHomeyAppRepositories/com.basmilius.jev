@@ -12,12 +12,3 @@ body {
 
 .feedbackSuccess { color: #28a745; }
 .feedbackError { color: #dc3545; }
-.optionGroup + .optionGroup { margin-top: var(--homey-su-4, 24px); }
-.decisionList { display: grid; }
-.decisionButton { display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: start; }
-.decisionButton[aria-pressed="true"] { font-weight: var(--homey-font-weight-bold, 700); text-decoration: underline; }
-.decisionButton small, .historyItem small { color: var(--homey-text-color-light); font-size: var(--homey-font-size-small); }
-.historyItem summary { cursor: pointer; padding: 12px 0; }
-.historyItem summary small { margin-inline-start: 12px; }
-.historyItem[open] summary { margin-bottom: 12px; }
-.sectionTop { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }

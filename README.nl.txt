@@ -1,1 +1,1 @@
-Neem beslissingen in je Homey Flows met Jev van TypeSafe. Maak een keuze- of ja/nee-vraag en lever zelf context aan met tekst en Flow-tags. Test beslissingen in de app-instellingen en gebruik geaccepteerde uitkomsten in je automatiseringen. Een TypeSafe API-key en tegoed zijn vereist.
+Stel Jev vragen direct in Homey Flows. Lever zelf state en één vraag aan, kies uit 2, 3 of 4 antwoorden, stel een ja/nee-vraag of beoordeel een situatie. De geavanceerde JSON-kaart ondersteunt meerdere vragen in één aanroep. Een TypeSafe API-key en tegoed zijn vereist.

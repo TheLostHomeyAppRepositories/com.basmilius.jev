@@ -40,509 +40,87 @@
     "testConnection": {
       "method": "POST",
       "path": "/test-connection"
-    },
-    "getDecisions": {
-      "method": "GET",
-      "path": "/decisions"
-    },
-    "saveDecision": {
-      "method": "PUT",
-      "path": "/decisions"
-    },
-    "deleteDecision": {
-      "method": "DELETE",
-      "path": "/decisions/:id"
-    },
-    "testDecision": {
-      "method": "POST",
-      "path": "/test-decision"
     }
   },
   "flow": {
-    "triggers": [
-      {
-        "title": {
-          "en": "An accepted outcome changes",
-          "nl": "Een geaccepteerde uitkomst verandert"
-        },
-        "titleFormatted": {
-          "en": "An accepted outcome changes · [[decision]]",
-          "nl": "Een geaccepteerde uitkomst verandert · [[decision]]"
-        },
-        "hint": {
-          "en": "Also runs for the first accepted outcome.",
-          "nl": "Start ook bij de eerste geaccepteerde uitkomst."
-        },
-        "args": [
-          {
-            "name": "decision",
-            "type": "autocomplete",
-            "title": {
-              "en": "Decision",
-              "nl": "Beslissing"
-            }
-          }
-        ],
-        "tokens": [
-          {
-            "name": "result",
-            "type": "string",
-            "title": {
-              "en": "Outcome ID",
-              "nl": "Uitkomst-ID"
-            }
-          },
-          {
-            "name": "label",
-            "type": "string",
-            "title": {
-              "en": "Outcome",
-              "nl": "Uitkomst"
-            }
-          },
-          {
-            "name": "status",
-            "type": "string",
-            "title": {
-              "en": "Status",
-              "nl": "Status"
-            }
-          },
-          {
-            "name": "confidence",
-            "type": "number",
-            "title": {
-              "en": "Confidence (−1 when unavailable)",
-              "nl": "Confidence (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "probability",
-            "type": "number",
-            "title": {
-              "en": "Probability (−1 when unavailable)",
-              "nl": "Kans (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "request_id",
-            "type": "string",
-            "title": {
-              "en": "Evaluation ID",
-              "nl": "Evaluatie-ID"
-            }
-          },
-          {
-            "name": "evaluated_at",
-            "type": "string",
-            "title": {
-              "en": "Context evaluated at",
-              "nl": "Context geëvalueerd op"
-            }
-          },
-          {
-            "name": "duration_ms",
-            "type": "number",
-            "title": {
-              "en": "Duration in milliseconds",
-              "nl": "Duur in milliseconden"
-            }
-          },
-          {
-            "name": "model",
-            "type": "string",
-            "title": {
-              "en": "Model",
-              "nl": "Model"
-            }
-          },
-          {
-            "name": "error",
-            "type": "string",
-            "title": {
-              "en": "Error",
-              "nl": "Fout"
-            }
-          }
-        ],
-        "id": "changed"
-      },
-      {
-        "title": {
-          "en": "A decision is accepted",
-          "nl": "Een beslissing is geaccepteerd"
-        },
-        "titleFormatted": {
-          "en": "A decision is accepted · [[decision]]",
-          "nl": "Een beslissing is geaccepteerd · [[decision]]"
-        },
-        "hint": {
-          "en": "Runs only for a current, accepted result.",
-          "nl": "Start alleen bij een actueel, geaccepteerd resultaat."
-        },
-        "args": [
-          {
-            "name": "decision",
-            "type": "autocomplete",
-            "title": {
-              "en": "Decision",
-              "nl": "Beslissing"
-            }
-          }
-        ],
-        "tokens": [
-          {
-            "name": "result",
-            "type": "string",
-            "title": {
-              "en": "Outcome ID",
-              "nl": "Uitkomst-ID"
-            }
-          },
-          {
-            "name": "label",
-            "type": "string",
-            "title": {
-              "en": "Outcome",
-              "nl": "Uitkomst"
-            }
-          },
-          {
-            "name": "status",
-            "type": "string",
-            "title": {
-              "en": "Status",
-              "nl": "Status"
-            }
-          },
-          {
-            "name": "confidence",
-            "type": "number",
-            "title": {
-              "en": "Confidence (−1 when unavailable)",
-              "nl": "Confidence (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "probability",
-            "type": "number",
-            "title": {
-              "en": "Probability (−1 when unavailable)",
-              "nl": "Kans (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "request_id",
-            "type": "string",
-            "title": {
-              "en": "Evaluation ID",
-              "nl": "Evaluatie-ID"
-            }
-          },
-          {
-            "name": "evaluated_at",
-            "type": "string",
-            "title": {
-              "en": "Context evaluated at",
-              "nl": "Context geëvalueerd op"
-            }
-          },
-          {
-            "name": "duration_ms",
-            "type": "number",
-            "title": {
-              "en": "Duration in milliseconds",
-              "nl": "Duur in milliseconden"
-            }
-          },
-          {
-            "name": "model",
-            "type": "string",
-            "title": {
-              "en": "Model",
-              "nl": "Model"
-            }
-          },
-          {
-            "name": "error",
-            "type": "string",
-            "title": {
-              "en": "Error",
-              "nl": "Fout"
-            }
-          }
-        ],
-        "id": "evaluated"
-      },
-      {
-        "title": {
-          "en": "A decision cannot be used",
-          "nl": "Een beslissing kan niet worden gebruikt"
-        },
-        "titleFormatted": {
-          "en": "A decision cannot be used · [[decision]]",
-          "nl": "Een beslissing kan niet worden gebruikt · [[decision]]"
-        },
-        "hint": {
-          "en": "Check the status and error tags. Test evaluations and superseded requests never trigger Flows.",
-          "nl": "Controleer de status- en fouttags. Tests en ingehaalde aanvragen starten nooit Flows."
-        },
-        "args": [
-          {
-            "name": "decision",
-            "type": "autocomplete",
-            "title": {
-              "en": "Decision",
-              "nl": "Beslissing"
-            }
-          }
-        ],
-        "tokens": [
-          {
-            "name": "result",
-            "type": "string",
-            "title": {
-              "en": "Outcome ID",
-              "nl": "Uitkomst-ID"
-            }
-          },
-          {
-            "name": "label",
-            "type": "string",
-            "title": {
-              "en": "Outcome",
-              "nl": "Uitkomst"
-            }
-          },
-          {
-            "name": "status",
-            "type": "string",
-            "title": {
-              "en": "Status",
-              "nl": "Status"
-            }
-          },
-          {
-            "name": "confidence",
-            "type": "number",
-            "title": {
-              "en": "Confidence (−1 when unavailable)",
-              "nl": "Confidence (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "probability",
-            "type": "number",
-            "title": {
-              "en": "Probability (−1 when unavailable)",
-              "nl": "Kans (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "request_id",
-            "type": "string",
-            "title": {
-              "en": "Evaluation ID",
-              "nl": "Evaluatie-ID"
-            }
-          },
-          {
-            "name": "evaluated_at",
-            "type": "string",
-            "title": {
-              "en": "Context evaluated at",
-              "nl": "Context geëvalueerd op"
-            }
-          },
-          {
-            "name": "duration_ms",
-            "type": "number",
-            "title": {
-              "en": "Duration in milliseconds",
-              "nl": "Duur in milliseconden"
-            }
-          },
-          {
-            "name": "model",
-            "type": "string",
-            "title": {
-              "en": "Model",
-              "nl": "Model"
-            }
-          },
-          {
-            "name": "error",
-            "type": "string",
-            "title": {
-              "en": "Error",
-              "nl": "Fout"
-            }
-          }
-        ],
-        "id": "unavailable"
-      }
-    ],
     "conditions": [
       {
         "title": {
-          "en": "The accepted outcome is",
-          "nl": "De geaccepteerde uitkomst is"
+          "en": "The answer to a question is yes",
+          "nl": "Het antwoord op een vraag is ja"
         },
         "titleFormatted": {
-          "en": "The outcome of [[decision]] !{{is|is not}} [[outcome]]",
-          "nl": "De uitkomst van [[decision]] !{{is|is niet}} [[outcome]]"
+          "en": "[[question]] with state [[state]] !{{is|is not}} true with minimum probability [[minimum]]",
+          "nl": "[[question]] met state [[state]] !{{is|is niet}} waar met minimale kans [[minimum]]"
         },
         "hint": {
-          "en": "Stops with an error if no current accepted result exists.",
-          "nl": "Stopt met een fout als er geen actueel geaccepteerd resultaat is."
+          "en": "One question. Accept yes when its probability meets the minimum, no when it is at most 1 minus the minimum. Uncertainty and API errors stop the card, including inverted conditions.",
+          "nl": "Eén vraag. Ja bij een kans vanaf het minimum, nee bij maximaal 1 min het minimum. Twijfel en API-fouten stoppen de kaart, ook bij omgekeerde condities."
         },
         "args": [
           {
-            "name": "decision",
-            "type": "autocomplete",
+            "name": "state",
+            "type": "text",
             "title": {
-              "en": "Decision",
-              "nl": "Beslissing"
+              "en": "State",
+              "nl": "State"
             }
           },
           {
-            "name": "outcome",
-            "type": "autocomplete",
+            "name": "question",
+            "type": "text",
             "title": {
-              "en": "Outcome",
-              "nl": "Uitkomst"
-            }
-          }
-        ],
-        "id": "outcome_is"
-      },
-      {
-        "title": {
-          "en": "An accepted result is recent",
-          "nl": "Een geaccepteerd resultaat is recent"
-        },
-        "titleFormatted": {
-          "en": "[[decision]] has an accepted result from the last [[seconds]] seconds",
-          "nl": "[[decision]] heeft een geaccepteerd resultaat uit de laatste [[seconds]] seconden"
-        },
-        "args": [
-          {
-            "name": "decision",
-            "type": "autocomplete",
-            "title": {
-              "en": "Decision",
-              "nl": "Beslissing"
+              "en": "Question",
+              "nl": "Vraag"
             }
           },
           {
-            "name": "seconds",
+            "name": "minimum",
             "type": "number",
-            "min": 1,
-            "max": 86400,
             "title": {
-              "en": "Seconds",
-              "nl": "Seconden"
-            }
+              "en": "Minimum probability (0.51–1)",
+              "nl": "Minimale kans (0,51–1)"
+            },
+            "min": 0.51,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.8
           }
         ],
-        "id": "result_fresh"
+        "id": "yes_no"
       }
     ],
     "actions": [
       {
         "title": {
-          "en": "Evaluate a decision",
-          "nl": "Evalueer een beslissing"
+          "en": "Evaluate state and questions from JSON",
+          "nl": "Evalueer state en vragen uit JSON"
         },
         "titleFormatted": {
-          "en": "Evaluate [[decision]] with [[context]]",
-          "nl": "Evalueer [[decision]] met [[context]]"
+          "en": "Evaluate [[json]]",
+          "nl": "Evalueer [[json]]"
         },
         "hint": {
-          "en": "Supply your own context using text and Flow tags. An uncertain or unavailable result stops this branch.",
-          "nl": "Lever zelf context aan met tekst en Flow-tags. Een onzekere of onbeschikbare uitkomst stopt deze tak."
+          "en": "Paste {\"state\":…, \"questions\":{…}}. Supports choice, noul and score, up to 64 questions. Returns all raw answers as JSON; apply your own probability and confidence checks. Uses the model in settings.",
+          "nl": "Plak {\"state\":…, \"questions\":{…}}. Ondersteunt choice, noul en score, maximaal 64 vragen. Geeft alle ruwe antwoorden als JSON; controleer zelf kans en confidence. Gebruikt het model uit instellingen."
         },
         "args": [
           {
-            "name": "decision",
-            "type": "autocomplete",
-            "title": {
-              "en": "Decision",
-              "nl": "Beslissing"
-            }
-          },
-          {
-            "name": "context",
+            "name": "json",
             "type": "text",
             "title": {
-              "en": "Context",
-              "nl": "Context"
+              "en": "Request JSON",
+              "nl": "Aanvraag-JSON"
             }
           }
         ],
         "tokens": [
           {
-            "name": "result",
+            "name": "answers",
             "type": "string",
             "title": {
-              "en": "Outcome ID",
-              "nl": "Uitkomst-ID"
-            }
-          },
-          {
-            "name": "label",
-            "type": "string",
-            "title": {
-              "en": "Outcome",
-              "nl": "Uitkomst"
-            }
-          },
-          {
-            "name": "status",
-            "type": "string",
-            "title": {
-              "en": "Status",
-              "nl": "Status"
-            }
-          },
-          {
-            "name": "confidence",
-            "type": "number",
-            "title": {
-              "en": "Confidence (−1 when unavailable)",
-              "nl": "Confidence (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "probability",
-            "type": "number",
-            "title": {
-              "en": "Probability (−1 when unavailable)",
-              "nl": "Kans (−1 indien niet beschikbaar)"
-            }
-          },
-          {
-            "name": "request_id",
-            "type": "string",
-            "title": {
-              "en": "Evaluation ID",
-              "nl": "Evaluatie-ID"
-            }
-          },
-          {
-            "name": "evaluated_at",
-            "type": "string",
-            "title": {
-              "en": "Context evaluated at",
-              "nl": "Context geëvalueerd op"
-            }
-          },
-          {
-            "name": "duration_ms",
-            "type": "number",
-            "title": {
-              "en": "Duration in milliseconds",
-              "nl": "Duur in milliseconden"
+              "en": "Answers (JSON)",
+              "nl": "Antwoorden (JSON)"
             }
           },
           {
@@ -554,15 +132,698 @@
             }
           },
           {
-            "name": "error",
+            "name": "input_tokens",
+            "type": "number",
+            "title": {
+              "en": "Input tokens",
+              "nl": "Inputtokens"
+            }
+          },
+          {
+            "name": "output_tokens",
+            "type": "number",
+            "title": {
+              "en": "Output tokens",
+              "nl": "Outputtokens"
+            }
+          },
+          {
+            "name": "request_id",
             "type": "string",
             "title": {
-              "en": "Error",
-              "nl": "Fout"
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration (ms)",
+              "nl": "Duur (ms)"
             }
           }
         ],
-        "id": "evaluate"
+        "id": "advanced"
+      },
+      {
+        "title": {
+          "en": "Ask a question with 2 answers",
+          "nl": "Stel een vraag met 2 antwoorden"
+        },
+        "titleFormatted": {
+          "en": "Ask [[question]] with state [[state]], answers [[answer_1]] / [[answer_2]] and minimum confidence [[minimum]]",
+          "nl": "Stel [[question]] met state [[state]], antwoorden [[answer_1]] / [[answer_2]] en minimale confidence [[minimum]]"
+        },
+        "hint": {
+          "en": "Supply state and one question using text or Flow tags. A result below the minimum confidence stops this branch.",
+          "nl": "Vul state en één vraag in met tekst of Flow-tags. Een resultaat onder de minimale confidence stopt deze tak."
+        },
+        "args": [
+          {
+            "name": "state",
+            "type": "text",
+            "title": {
+              "en": "State",
+              "nl": "State"
+            }
+          },
+          {
+            "name": "question",
+            "type": "text",
+            "title": {
+              "en": "Question",
+              "nl": "Vraag"
+            }
+          },
+          {
+            "name": "answer_1",
+            "type": "text",
+            "title": {
+              "en": "Answer 1",
+              "nl": "Antwoord 1"
+            }
+          },
+          {
+            "name": "answer_2",
+            "type": "text",
+            "title": {
+              "en": "Answer 2",
+              "nl": "Antwoord 2"
+            }
+          },
+          {
+            "name": "minimum",
+            "type": "number",
+            "title": {
+              "en": "Minimum confidence (0–1)",
+              "nl": "Minimale confidence (0–1)"
+            },
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.8
+          }
+        ],
+        "tokens": [
+          {
+            "name": "answer",
+            "type": "string",
+            "title": {
+              "en": "Answer",
+              "nl": "Antwoord"
+            }
+          },
+          {
+            "name": "answer_number",
+            "type": "number",
+            "title": {
+              "en": "Answer number",
+              "nl": "Antwoordnummer"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence",
+              "nl": "Confidence"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability of selected answer",
+              "nl": "Kans van gekozen antwoord"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "input_tokens",
+            "type": "number",
+            "title": {
+              "en": "Input tokens",
+              "nl": "Inputtokens"
+            }
+          },
+          {
+            "name": "output_tokens",
+            "type": "number",
+            "title": {
+              "en": "Output tokens",
+              "nl": "Outputtokens"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration (ms)",
+              "nl": "Duur (ms)"
+            }
+          }
+        ],
+        "id": "choice_2"
+      },
+      {
+        "title": {
+          "en": "Ask a question with 3 answers",
+          "nl": "Stel een vraag met 3 antwoorden"
+        },
+        "titleFormatted": {
+          "en": "Ask [[question]] with state [[state]], answers [[answer_1]] / [[answer_2]] / [[answer_3]] and minimum confidence [[minimum]]",
+          "nl": "Stel [[question]] met state [[state]], antwoorden [[answer_1]] / [[answer_2]] / [[answer_3]] en minimale confidence [[minimum]]"
+        },
+        "hint": {
+          "en": "Supply state and one question using text or Flow tags. A result below the minimum confidence stops this branch.",
+          "nl": "Vul state en één vraag in met tekst of Flow-tags. Een resultaat onder de minimale confidence stopt deze tak."
+        },
+        "args": [
+          {
+            "name": "state",
+            "type": "text",
+            "title": {
+              "en": "State",
+              "nl": "State"
+            }
+          },
+          {
+            "name": "question",
+            "type": "text",
+            "title": {
+              "en": "Question",
+              "nl": "Vraag"
+            }
+          },
+          {
+            "name": "answer_1",
+            "type": "text",
+            "title": {
+              "en": "Answer 1",
+              "nl": "Antwoord 1"
+            }
+          },
+          {
+            "name": "answer_2",
+            "type": "text",
+            "title": {
+              "en": "Answer 2",
+              "nl": "Antwoord 2"
+            }
+          },
+          {
+            "name": "answer_3",
+            "type": "text",
+            "title": {
+              "en": "Answer 3",
+              "nl": "Antwoord 3"
+            }
+          },
+          {
+            "name": "minimum",
+            "type": "number",
+            "title": {
+              "en": "Minimum confidence (0–1)",
+              "nl": "Minimale confidence (0–1)"
+            },
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.8
+          }
+        ],
+        "tokens": [
+          {
+            "name": "answer",
+            "type": "string",
+            "title": {
+              "en": "Answer",
+              "nl": "Antwoord"
+            }
+          },
+          {
+            "name": "answer_number",
+            "type": "number",
+            "title": {
+              "en": "Answer number",
+              "nl": "Antwoordnummer"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence",
+              "nl": "Confidence"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability of selected answer",
+              "nl": "Kans van gekozen antwoord"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "input_tokens",
+            "type": "number",
+            "title": {
+              "en": "Input tokens",
+              "nl": "Inputtokens"
+            }
+          },
+          {
+            "name": "output_tokens",
+            "type": "number",
+            "title": {
+              "en": "Output tokens",
+              "nl": "Outputtokens"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration (ms)",
+              "nl": "Duur (ms)"
+            }
+          }
+        ],
+        "id": "choice_3"
+      },
+      {
+        "title": {
+          "en": "Ask a question with 4 answers",
+          "nl": "Stel een vraag met 4 antwoorden"
+        },
+        "titleFormatted": {
+          "en": "Ask [[question]] with state [[state]], answers [[answer_1]] / [[answer_2]] / [[answer_3]] / [[answer_4]] and minimum confidence [[minimum]]",
+          "nl": "Stel [[question]] met state [[state]], antwoorden [[answer_1]] / [[answer_2]] / [[answer_3]] / [[answer_4]] en minimale confidence [[minimum]]"
+        },
+        "hint": {
+          "en": "Supply state and one question using text or Flow tags. A result below the minimum confidence stops this branch.",
+          "nl": "Vul state en één vraag in met tekst of Flow-tags. Een resultaat onder de minimale confidence stopt deze tak."
+        },
+        "args": [
+          {
+            "name": "state",
+            "type": "text",
+            "title": {
+              "en": "State",
+              "nl": "State"
+            }
+          },
+          {
+            "name": "question",
+            "type": "text",
+            "title": {
+              "en": "Question",
+              "nl": "Vraag"
+            }
+          },
+          {
+            "name": "answer_1",
+            "type": "text",
+            "title": {
+              "en": "Answer 1",
+              "nl": "Antwoord 1"
+            }
+          },
+          {
+            "name": "answer_2",
+            "type": "text",
+            "title": {
+              "en": "Answer 2",
+              "nl": "Antwoord 2"
+            }
+          },
+          {
+            "name": "answer_3",
+            "type": "text",
+            "title": {
+              "en": "Answer 3",
+              "nl": "Antwoord 3"
+            }
+          },
+          {
+            "name": "answer_4",
+            "type": "text",
+            "title": {
+              "en": "Answer 4",
+              "nl": "Antwoord 4"
+            }
+          },
+          {
+            "name": "minimum",
+            "type": "number",
+            "title": {
+              "en": "Minimum confidence (0–1)",
+              "nl": "Minimale confidence (0–1)"
+            },
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.8
+          }
+        ],
+        "tokens": [
+          {
+            "name": "answer",
+            "type": "string",
+            "title": {
+              "en": "Answer",
+              "nl": "Antwoord"
+            }
+          },
+          {
+            "name": "answer_number",
+            "type": "number",
+            "title": {
+              "en": "Answer number",
+              "nl": "Antwoordnummer"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence",
+              "nl": "Confidence"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability of selected answer",
+              "nl": "Kans van gekozen antwoord"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "input_tokens",
+            "type": "number",
+            "title": {
+              "en": "Input tokens",
+              "nl": "Inputtokens"
+            }
+          },
+          {
+            "name": "output_tokens",
+            "type": "number",
+            "title": {
+              "en": "Output tokens",
+              "nl": "Outputtokens"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration (ms)",
+              "nl": "Duur (ms)"
+            }
+          }
+        ],
+        "id": "choice_4"
+      },
+      {
+        "title": {
+          "en": "Score a question with 3 levels",
+          "nl": "Beoordeel een vraag met 3 niveaus"
+        },
+        "titleFormatted": {
+          "en": "Score [[question]] with state [[state]] on levels [[low]] / [[middle]] / [[high]] with minimum confidence [[minimum]]",
+          "nl": "Beoordeel [[question]] met state [[state]] op niveaus [[low]] / [[middle]] / [[high]] met minimale confidence [[minimum]]"
+        },
+        "hint": {
+          "en": "Describe low, middle and high levels. Returns a score from 0 to 2, including fractions. Low confidence stops this branch.",
+          "nl": "Beschrijf het lage, middelste en hoge niveau. Geeft een score van 0 tot 2, ook met decimalen. Lage confidence stopt deze tak."
+        },
+        "args": [
+          {
+            "name": "state",
+            "type": "text",
+            "title": {
+              "en": "State",
+              "nl": "State"
+            }
+          },
+          {
+            "name": "question",
+            "type": "text",
+            "title": {
+              "en": "Question",
+              "nl": "Vraag"
+            }
+          },
+          {
+            "name": "low",
+            "type": "text",
+            "title": {
+              "en": "Low level (0)",
+              "nl": "Laag niveau (0)"
+            }
+          },
+          {
+            "name": "middle",
+            "type": "text",
+            "title": {
+              "en": "Middle level (1)",
+              "nl": "Middelste niveau (1)"
+            }
+          },
+          {
+            "name": "high",
+            "type": "text",
+            "title": {
+              "en": "High level (2)",
+              "nl": "Hoog niveau (2)"
+            }
+          },
+          {
+            "name": "minimum",
+            "type": "number",
+            "title": {
+              "en": "Minimum confidence (0–1)",
+              "nl": "Minimale confidence (0–1)"
+            },
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.8
+          }
+        ],
+        "tokens": [
+          {
+            "name": "score",
+            "type": "number",
+            "title": {
+              "en": "Score (0–2)",
+              "nl": "Score (0–2)"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence",
+              "nl": "Confidence"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "input_tokens",
+            "type": "number",
+            "title": {
+              "en": "Input tokens",
+              "nl": "Inputtokens"
+            }
+          },
+          {
+            "name": "output_tokens",
+            "type": "number",
+            "title": {
+              "en": "Output tokens",
+              "nl": "Outputtokens"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration (ms)",
+              "nl": "Duur (ms)"
+            }
+          }
+        ],
+        "id": "score"
+      },
+      {
+        "title": {
+          "en": "Ask a yes/no question",
+          "nl": "Stel een ja/nee-vraag"
+        },
+        "titleFormatted": {
+          "en": "Ask [[question]] with state [[state]] with minimum probability [[minimum]]",
+          "nl": "Stel [[question]] met state [[state]] met minimale kans [[minimum]]"
+        },
+        "hint": {
+          "en": "One question. Accept yes when its probability meets the minimum, no when it is at most 1 minus the minimum. Uncertainty and API errors stop the card, including inverted conditions.",
+          "nl": "Eén vraag. Ja bij een kans vanaf het minimum, nee bij maximaal 1 min het minimum. Twijfel en API-fouten stoppen de kaart, ook bij omgekeerde condities."
+        },
+        "args": [
+          {
+            "name": "state",
+            "type": "text",
+            "title": {
+              "en": "State",
+              "nl": "State"
+            }
+          },
+          {
+            "name": "question",
+            "type": "text",
+            "title": {
+              "en": "Question",
+              "nl": "Vraag"
+            }
+          },
+          {
+            "name": "minimum",
+            "type": "number",
+            "title": {
+              "en": "Minimum probability (0.51–1)",
+              "nl": "Minimale kans (0,51–1)"
+            },
+            "min": 0.51,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.8
+          }
+        ],
+        "tokens": [
+          {
+            "name": "answer",
+            "type": "boolean",
+            "title": {
+              "en": "Answer",
+              "nl": "Antwoord"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability of yes",
+              "nl": "Kans op ja"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "input_tokens",
+            "type": "number",
+            "title": {
+              "en": "Input tokens",
+              "nl": "Inputtokens"
+            }
+          },
+          {
+            "name": "output_tokens",
+            "type": "number",
+            "title": {
+              "en": "Output tokens",
+              "nl": "Outputtokens"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration (ms)",
+              "nl": "Duur (ms)"
+            }
+          }
+        ],
+        "id": "yes_no"
       }
     ]
   }

@@ -1,39 +1,87 @@
 # Jev for Homey
 
-Use TypeSafe Jev to make decisions in Homey Flows from context you provide. Create a choice or yes/no question in the app settings, then evaluate it with text and Flow tags.
+Ask TypeSafe Jev questions directly in your Homey Flows. Supply the state, question and possible answers on a card. The app does not discover devices or collect household state.
 
-The app does not read devices or gather household state. Only the question, allowed outcomes, optional background and context you supply go to TypeSafe.
+Settings contain your TypeSafe API key, model, timeout, request limit and a connection test. There is no decision editor or saved decision registry.
 
-## Getting started
+## Flow cards
 
-1. Install dependencies and build using the commands in [AGENTS.md](AGENTS.md).
-2. Install the app on a development Homey with `homey app run`.
-3. Open app settings, enter a TypeSafe API key and save the connection. A connection test makes a small paid API call.
-4. Create a decision. Give each choice a name and a description of when it applies. Save it, then test with your own example context.
-5. Add **Evaluate a decision** to a Flow. Fill Context with text and Homey tags.
+| Card | Input | Output |
+| --- | --- | --- |
+| Ask a question with 2 answers | State, one question, two answers, minimum confidence | Answer text, answer number, confidence, probability |
+| Ask a question with 3 answers | State, one question, three answers, minimum confidence | Answer text, answer number, confidence, probability |
+| Ask a question with 4 answers | State, one question, four answers, minimum confidence | Answer text, answer number, confidence, probability |
+| Ask a yes/no question | State, one question, minimum probability | Boolean answer and probability of yes |
+| The answer to a question is yes | Same as the yes/no action | Flow condition |
+| Score a question with 3 levels | State, one question, descriptions of low/middle/high, minimum confidence | Score from 0 to 2, including fractions, and confidence |
+| Evaluate state and questions from JSON | JSON containing state and questions | All answers as JSON |
 
-For example, create a lighting decision with Film, Reading and No change as outcomes. Supply context such as “The television is on, two people are home and it is dark outside.” Connect the accepted result to the appropriate existing Homey actions.
+All action cards also return the resolved model, input/output token counts, evaluation ID and duration. Action result tags can be connected in Advanced Flow. The yes/no condition works directly in regular Flows and makes a fresh API call each time.
 
-## Flow behavior
+Each simple card evaluates exactly one question. Text fields accept Flow tags. Choice answer numbers start at 1 and match the order of the answer fields, so you can branch on the answer number without matching text.
 
-Regular Flows can use **A decision is accepted**, **An accepted outcome changes** and **A decision cannot be used**. Select a decision on the trigger. Compare the accepted outcome with the condition card before running an action.
+For example, use the three-answer card with:
 
-Advanced Flow receives the outcome ID and label directly from the evaluation action, together with probability, confidence, evaluation ID, timestamp, duration and model. Stable IDs survive renames; use the outcome condition card's autocomplete when you do not want to compare IDs manually.
+- State: `We are watching a film, guests are here and it is dark outside.`
+- Question: `Which light scene fits?`
+- Answer 1: `Film: dim light for watching television.`
+- Answer 2: `Cozy: enough warm light to talk with guests.`
+- Answer 3: `Bright: enough light to read or work.`
 
-An uncertain, expired, superseded or cooldown-blocked evaluation rejects the action, as does an API error. Route the Advanced Flow error output explicitly if you need fallback behavior. It never returns a default no answer. A superseded evaluation does not trigger regular Flows.
+Connect the returned answer number to existing Homey lighting actions.
 
-The outcome condition throws when there is no current accepted result, so inverting that card does not turn missing data into permission to act. The freshness condition can check whether a usable result exists without an API call.
+## Confidence and uncertainty
 
-Choice confidence and Noul yes/no thresholds are configurable. A Noul answer between its no and yes thresholds is uncertain. The confidence tag is −1 for Noul because the API does not return a separate confidence value; probability is the chance of yes. For Choice, probability is the selected option's probability. A missing probability is −1.
+Simple cards default to 0.8 as their minimum. Choice and Score compare the API's confidence with this threshold. For Noul, the minimum is a probability: at 0.8 the card accepts yes for probabilities of at least 0.8, and no for probabilities of at most 0.2. Values between those boundaries throw an uncertainty error. Noul minimums must be between 0.51 and 1.
 
-The minimum time between outcome changes prevents repeated switching. Identical outcomes refresh validity without restarting this interval. Editing a decision or connection invalidates existing results. Decisions and results survive restarts; their validity still expires based on the original evaluation time.
+API errors, malformed answers and uncertainty stop the card. In Advanced Flow, connect the error path for fallback behavior. An inverted yes/no condition also throws on uncertainty; it never treats a missing answer as no.
 
-## Testing and privacy
+The advanced card deliberately returns raw probabilities and confidence, including uncertain answers. Apply your own checks when consuming its JSON. Confidence is not a guarantee of correctness.
 
-The settings test calls TypeSafe and records the result, but never updates production state or starts Flows. Save edits before testing. The latest 50 evaluations are stored without their per-call context. User-written questions, option descriptions and fixed background are stored as decision settings.
+## Advanced JSON
 
-Requests time out after 10 seconds by default. The app allows 30 evaluations per minute and four in flight at once. Timeout and per-minute limit are configurable. Requests are not retried automatically.
+Paste an object with `state` and `questions` into the advanced card. State can be text, an object or an array. The model comes from app settings; do not include `model`, an API key or other top-level fields.
 
-This first version supports Choice and Noul. Score, batching, automatic caching, cost accounting and App Store promotional assets are not included. No automatic device context is planned.
+```json
+{
+  "state": {
+    "activity": "watching a film",
+    "guests": true,
+    "message": "The washing machine has finished."
+  },
+  "questions": {
+    "scene": {
+      "type": "choice",
+      "instructions": "Which light scene fits?",
+      "criteria": {
+        "film": "Dim light for watching a film",
+        "cozy": "Warm light for talking with guests",
+        "bright": "Enough light to read or work"
+      }
+    },
+    "notify": {
+      "type": "noul",
+      "instructions": "Should this message interrupt the current activity?"
+    },
+    "urgency": {
+      "type": "score",
+      "instructions": "How urgent is this message?",
+      "criteria": ["Can wait", "Needs attention soon", "Requires immediate action"]
+    }
+  }
+}
+```
 
-TypeSafe API access and credit are required. See the [official API documentation](https://docs.typesafe.ai/api).
+The **Answers (JSON)** tag contains an object keyed by `scene`, `notify` and `urgency`. Read `.scene.choice`, `.scene.confidence`, `.notify.noul` or `.urgency.score` with your preferred JSON tool. Apply thresholds before running actions. The advanced card does not create dynamic Homey tags for each question.
+
+The app accepts 1–64 questions per request and a maximum of 64,000 characters for state plus questions. Question IDs use letters, digits, hyphens and underscores, starting with a letter or digit. Choice accepts 2–255 options; Score accepts 2–10 described levels. Instructions and descriptions can also be structured objects or arrays, following the [TypeSafe API](https://docs.typesafe.ai/api).
+
+Use Flow tags in simple text fields without JSON escaping. In advanced JSON, inserted string values must be valid JSON strings with quotes and newlines escaped. Generate the entire JSON upstream when inputs can contain arbitrary text.
+
+## Development and limits
+
+Build and validation commands are in [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.md) contains the Claude entry instructions. TypeSafe API access and credit are required for real evaluations and connection tests.
+
+Requests time out after 10 seconds by default, with a limit of 30 calls per minute and four concurrent calls. Settings change the timeout and per-minute limit. Limits are shared across all cards and the connection test; requests are not retried automatically. Results stay local to each invocation, including simultaneous evaluations.
+
+The app does not persist new state, questions, answers or evaluation history. Homey stores the configured cards in your Flows. The initial development version's saved-decision cards have been removed; any Flows built with those cards must be rebuilt with direct cards. The old `jev_state` setting, if present on a development Homey, is ignored rather than automatically deleted.

@@ -1,76 +1,79 @@
 import type JevApp from '../index';
-import type { Evaluation } from '../types';
-import { identifier, number } from '../validation';
+import { parseRequest } from '../brain/request';
+import type { EvaluationRequest, EvaluationResponse, Question } from '../types';
+import { number, text } from '../validation';
 
-type DecisionArgs = { readonly decision: { readonly id: string } };
-type OutcomeArgs = DecisionArgs & { readonly outcome: { readonly id: string } };
-type TriggerState = { readonly decisionId: string };
+type SimpleArgs = {
+    readonly state: string;
+    readonly question: string;
+    readonly minimum?: number;
+};
 
-export function tokens(result: Evaluation) {
-    return {
-        result: result.status === 'accepted' ? result.value : '',
-        label: result.status === 'accepted' ? result.label : '',
-        status: result.status,
-        confidence: result.confidence ?? -1,
-        probability: result.probability ?? -1,
-        request_id: result.id,
-        evaluated_at: new Date(result.startedAt).toISOString(),
-        duration_ms: result.durationMs,
-        model: result.model,
-        error: result.error
-    };
+type ChoiceArgs = SimpleArgs & {readonly answer_1: string; readonly answer_2: string; readonly answer_3?: string; readonly answer_4?: string};
+type ScoreArgs = SimpleArgs & {readonly low: string; readonly middle: string; readonly high: string};
+
+export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
+    const flow = app.homey.flow;
+
+    for (const count of [2, 3, 4] as const) {
+        flow.getActionCard(`choice_${count}`).registerRunListener(async (args: ChoiceArgs) => {
+            const minimum = number(args.minimum ?? 0.8, 'Minimum confidence', 0, 1);
+            const answers = [args.answer_1, args.answer_2, ...(count >= 3 ? [args.answer_3] : []), ...(count === 4 ? [args.answer_4] : [])]
+                .map(answer => text(answer, 'Answer', 2000));
+            if (new Set(answers.map(answer => answer.toLowerCase())).size !== answers.length) throw new Error('Answers must be different.');
+            const criteria = Object.fromEntries(answers.map((answer, index) => [`answer_${index + 1}`, answer]));
+            const response = await app.evaluate(request(args, {type: 'choice', instructions: args.question, criteria}));
+            const answer = response.answers.answer;
+            if (answer.type !== 'choice') throw new Error('Unexpected answer type.');
+            if (answer.confidence < minimum) throw new Error('Jev is uncertain. No choice was accepted.');
+            const index = Number(answer.choice.slice('answer_'.length)) - 1;
+            return {...tokens(response), answer: answers[index], answer_number: index + 1, confidence: answer.confidence, probability: answer.probabilities[answer.choice]};
+        });
+    }
+
+    async function yesNo(args: SimpleArgs) {
+        const minimum = number(args.minimum ?? 0.8, 'Minimum probability', 0.51, 1);
+        const response = await app.evaluate(request(args, {type: 'noul', instructions: args.question}));
+        const answer = response.answers.answer;
+        if (answer.type !== 'noul') throw new Error('Unexpected answer type.');
+        const isYes = answer.noul >= minimum;
+        if (!isYes && answer.noul > Number((1 - minimum).toFixed(12))) throw new Error('Jev is uncertain. No yes/no answer was accepted.');
+        return {...tokens(response), answer: isYes, probability: answer.noul};
+    }
+
+    flow.getActionCard('yes_no').registerRunListener(yesNo);
+    // Uncertainty throws so an inverted condition cannot turn an unavailable answer into permission to act.
+    flow.getConditionCard('yes_no').registerRunListener(async (args: SimpleArgs) => (await yesNo(args)).answer);
+
+    flow.getActionCard('score').registerRunListener(async (args: ScoreArgs) => {
+        const minimum = number(args.minimum ?? 0.8, 'Minimum confidence', 0, 1);
+        const criteria = [args.low, args.middle, args.high].map(level => text(level, 'Level description', 2000));
+        if (new Set(criteria.map(level => level.toLowerCase())).size !== criteria.length) throw new Error('Describe three different score levels.');
+        const response = await app.evaluate(request(args, {type: 'score', instructions: args.question, criteria}));
+        const answer = response.answers.answer;
+        if (answer.type !== 'score') throw new Error('Unexpected answer type.');
+        if (answer.confidence < minimum) throw new Error('Jev is uncertain. No score was accepted.');
+        return {...tokens(response), score: answer.score, confidence: answer.confidence};
+    });
+
+    flow.getActionCard('advanced').registerRunListener(async (args: {readonly json: string}) => {
+        const response = await app.evaluate(parseRequest(args.json));
+        return {...tokens(response), answers: JSON.stringify(response.answers)};
+    });
 }
 
-export function registerFlows(app: JevApp): void {
-    const flow = app.homey.flow;
-    const evaluate = flow.getActionCard('evaluate');
-    const outcome = flow.getConditionCard('outcome_is');
-    const fresh = flow.getConditionCard('result_fresh');
-    const cards = [evaluate, outcome, fresh];
+function request(args: SimpleArgs, question: Question): EvaluationRequest {
+    const state = text(args.state, 'State', 64000);
+    const instructions = text(args.question, 'Question', 8000);
+    return {state, questions: {answer: {...question, instructions}}};
+}
 
-    for (const id of ['evaluated', 'changed', 'unavailable']) {
-        const card = flow.getTriggerCard(id);
-        card.registerRunListener(async (args: DecisionArgs, state: TriggerState) => args.decision.id === state.decisionId);
-        cards.push(card);
-    }
-
-    for (const card of cards) {
-        card.registerArgumentAutocompleteListener('decision', async (query: string) => app.decisions.snapshot().decisions
-            .filter(decision => decision.name.toLowerCase().includes(query.toLowerCase()))
-            .map(decision => ({id: decision.id, name: decision.name, description: decision.question})));
-    }
-
-    evaluate.registerRunListener(async (args: DecisionArgs & { readonly context: string }) => {
-        const result = await app.decisions.evaluate(identifier(args.decision?.id), args.context);
-        // Stop this Advanced Flow branch on uncertainty as well as errors. Ordinary Flows can use the unavailable trigger.
-        if (result.status !== 'accepted') throw new Error(result.error || `Decision not accepted: ${result.status}.`);
-        return tokens(result);
-    });
-
-    outcome.registerArgumentAutocompleteListener('outcome', async (query: string, args: DecisionArgs) => {
-        if (!args.decision?.id) return [];
-        const decision = app.decisions.find(identifier(args.decision.id));
-        const options = decision.type === 'choice' ? decision.options : [
-            {id: 'yes', name: app.homey.__('flow.yes')},
-            {id: 'no', name: app.homey.__('flow.no')}
-        ];
-        return options.filter(option => option.name.toLowerCase().includes(query.toLowerCase()))
-            .map(option => ({id: option.id, name: option.name}));
-    });
-
-    outcome.registerRunListener(async (args: OutcomeArgs) => {
-        const id = identifier(args.decision?.id);
-        const expected = identifier(args.outcome?.id);
-        const decision = app.decisions.find(id);
-        const exists = decision.type === 'noul' ? ['yes', 'no'].includes(expected) : decision.options.some(option => option.id === expected);
-        if (!exists) throw new Error(app.homey.__('flow.missing_option'));
-        const result = app.decisions.latest(id);
-        // Throw rather than return false: an inverted condition must not treat missing data as an accepted answer.
-        if (!result) throw new Error(app.homey.__('flow.no_result'));
-        return result.value === expected;
-    });
-    fresh.registerRunListener(async (args: DecisionArgs & { readonly seconds: number }) => {
-        const result = app.decisions.latest(identifier(args.decision?.id));
-        return !!result && Date.now() - result.startedAt <= number(args.seconds, 'Seconds', 1, 86400) * 1000;
-    });
+function tokens(response: EvaluationResponse) {
+    return {
+        model: response.model,
+        input_tokens: response.inputTokens,
+        output_tokens: response.outputTokens,
+        request_id: response.requestId,
+        duration_ms: response.durationMs
+    };
 }

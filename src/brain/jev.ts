@@ -1,28 +1,41 @@
+import { randomUUID } from 'node:crypto';
 import { API_URL } from '../const';
-import type { Decision, Response, Settings } from '../types';
+import type { Answer, EvaluationRequest, EvaluationResponse, Json, Question, Settings } from '../types';
 import { number, record, text } from '../validation';
+import { validateRequest } from './request';
 
 export type Transport = (url: string, init: RequestInit) => Promise<globalThis.Response>;
 
 export default class Jev {
-    constructor(private readonly transport: Transport = fetch) {}
+    #calls: number[] = [];
+    #pending = 0;
 
-    async evaluate(decision: Decision, context: string, settings: Settings, apiKey: string): Promise<Response> {
+    constructor(private readonly transport: Transport = fetch, private readonly now: () => number = Date.now) {}
+
+    async evaluate(input: EvaluationRequest, settings: Settings, apiKey: string): Promise<EvaluationResponse> {
+        const request = validateRequest(input);
         if (!apiKey) throw new Error('Set your TypeSafe API key in the app settings.');
-        const question = decision.type === 'choice'
-            ? {type: 'choice', instructions: decision.question, criteria: Object.fromEntries(decision.options.map(option => [option.id, {name: option.name, description: option.description}]))}
-            : {type: 'noul', instructions: decision.question};
+        const startedAt = this.now();
+        this.#calls = this.#calls.filter(at => startedAt - at < 60000);
+        if (this.#calls.length >= settings.maxCallsPerMinute) throw new Error('App request limit reached. Try again in a minute.');
+        if (this.#pending >= 4) throw new Error('Four evaluations are already running. Try again shortly.');
+        this.#calls.push(startedAt);
+        this.#pending++;
+        try {
+            const result = await this.#request(request, settings, apiKey);
+            return {...result, requestId: randomUUID(), durationMs: this.now() - startedAt};
+        } finally {
+            this.#pending--;
+        }
+    }
 
+    async #request(request: EvaluationRequest, settings: Settings, apiKey: string): Promise<Omit<EvaluationResponse, 'requestId' | 'durationMs'>> {
         let response: globalThis.Response;
         try {
             response = await this.transport(API_URL, {
                 method: 'POST',
                 headers: {'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    model: settings.model,
-                    state: decision.background ? {context, background: decision.background} : context,
-                    questions: {decision: question}
-                }),
+                body: JSON.stringify({model: settings.model, ...request}),
                 signal: AbortSignal.timeout(settings.timeoutSeconds * 1000),
                 redirect: 'error'
             });
@@ -30,7 +43,7 @@ export default class Jev {
             throw new Error('TypeSafe could not be reached or the request timed out.');
         }
 
-        // Provider error bodies can echo context or credentials; never forward them to logs or Flows.
+        // Provider error bodies can echo state or credentials; never forward them to logs or Flows.
         if (!response.ok) {
             if (response.status === 401 || response.status === 403) throw new Error('TypeSafe rejected the API key or account access.');
             if (response.status === 429) throw new Error('TypeSafe rate limit reached. Try again later.');
@@ -38,35 +51,43 @@ export default class Jev {
             throw new Error(`TypeSafe request failed (HTTP ${response.status}).`);
         }
 
-        try {
-            return parseResponse(await response.json(), decision);
-        } catch {
-            throw new Error('TypeSafe returned an invalid decision response.');
-        }
+        try { return parseResponse(await response.json(), request); }
+        catch { throw new Error('TypeSafe returned an invalid decision response.'); }
     }
 }
 
-export function parseResponse(value: unknown, decision: Decision): Response {
-    const body = record(value);
-    const answer = record(record(body.answers).decision);
+export function parseResponse(input: unknown, request: EvaluationRequest): Omit<EvaluationResponse, 'requestId' | 'durationMs'> {
+    const body = record(input);
+    const rawAnswers = record(body.answers);
+    if (Object.keys(rawAnswers).length !== Object.keys(request.questions).length) throw new Error('Incorrect number of answers.');
+    const answers = Object.fromEntries(Object.entries(request.questions).map(([id, question]) => [id, parseAnswer(rawAnswers[id], question)]));
     const usage = record(body.usage);
-    const model = text(body.model, 'Response model', 100);
     const inputTokens = number(usage.input_tokens, 'Input tokens', 0, Number.MAX_SAFE_INTEGER);
-    if (!Number.isInteger(inputTokens) || answer.type !== decision.type) throw new Error('Invalid response.');
+    const outputTokens = number(usage.output_tokens, 'Output tokens', 0, Number.MAX_SAFE_INTEGER);
+    if (!Number.isInteger(inputTokens) || !Number.isInteger(outputTokens)) throw new Error('Invalid token usage.');
+    return {answers, model: text(body.model, 'Model', 100), inputTokens, outputTokens};
+}
 
-    if (answer.type === 'noul') {
-        return {answer: {type: 'noul', noul: number(answer.noul, 'Probability', 0, 1)}, model, inputTokens};
+function parseAnswer(input: unknown, question: Question): Answer {
+    const answer = record(input);
+    if (answer.type !== question.type) throw new Error('Unexpected answer type.');
+    if (question.type === 'noul') return {type: 'noul', noul: number(answer.noul, 'Probability', 0, 1)};
+    const keys = question.type === 'choice' ? Object.keys(question.criteria) : question.criteria.map((_, index) => String(index));
+    const rawProbabilities = record(answer.probabilities);
+    if (Object.keys(rawProbabilities).length !== keys.length) throw new Error('Incomplete probabilities.');
+    const probabilities = Object.fromEntries(keys.map(key => [key, number(rawProbabilities[key], 'Probability', 0, 1)]));
+    if (Math.abs(Object.values(probabilities).reduce((sum, value) => sum + value, 0) - 1) > 0.01) throw new Error('Invalid probability distribution.');
+    const confidence = number(answer.confidence, 'Confidence', 0, 1);
+    if (question.type === 'choice') {
+        const choice = text(answer.choice, 'Choice', 200);
+        if (!keys.includes(choice)) throw new Error('Unknown answer.');
+        if (Object.values(probabilities).some(value => value > probabilities[choice] + 0.00001)) throw new Error('Choice does not match probabilities.');
+        return {type: 'choice', choice, confidence, probabilities};
     }
-
-    const choice = text(answer.choice, 'Choice', 80);
-    if (!decision.options.some(option => option.id === choice)) throw new Error('Unknown option.');
-    const probabilities = record(answer.probabilities);
-    if (Object.keys(probabilities).length !== decision.options.length) throw new Error('Incomplete probabilities.');
-    const entries = decision.options.map(option => [option.id, number(probabilities[option.id], 'Probability', 0, 1)] as const);
-    const total = entries.reduce((sum, [, probability]) => sum + probability, 0);
-    if (Math.abs(total - 1) > 0.01) throw new Error('Invalid probability distribution.');
-    const selected = probabilities[choice] as number;
-    if (entries.some(([, probability]) => probability > selected + 0.00001)) throw new Error('Choice does not match probabilities.');
-
-    return {answer: {type: 'choice', choice, confidence: number(answer.confidence, 'Confidence', 0, 1), probabilities: Object.fromEntries(entries)}, model, inputTokens};
+    const score = number(answer.score, 'Score', 0, keys.length - 1);
+    const expected = keys.reduce((sum, key) => sum + Number(key) * probabilities[key], 0);
+    if (Math.abs(score - expected) > 0.02) throw new Error('Score does not match probabilities.');
+    // Build the legend from the supplied rubric, rather than trusting additional provider content.
+    const legend: Record<string, Json> = Object.fromEntries(question.criteria.map((level, index) => [String(index), level]));
+    return {type: 'score', score, confidence, probabilities, legend};
 }

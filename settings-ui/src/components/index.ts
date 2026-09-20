@@ -1,6 +1,4 @@
 export {default as ConnectionPanel} from './ConnectionPanel.vue';
-export {default as DecisionEditor} from './DecisionEditor.vue';
-export {default as EvaluationResult} from './EvaluationResult.vue';
 export {default as Top} from './Top.vue';
 export {default as Form} from './Form.vue';
 export {default as FormGroup} from './FormGroup.vue';

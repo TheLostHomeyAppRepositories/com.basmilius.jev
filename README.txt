@@ -1,1 +1,1 @@
-Make decisions in your Homey Flows with Jev by TypeSafe. Define a choice or yes/no question and supply your own context using text and Flow tags. Test decisions in the app settings and use accepted results in your automations. Requires a TypeSafe API key and credit.
+Ask Jev questions directly in Homey Flows. Supply your own state and one question, choose between 2, 3 or 4 answers, ask a yes/no question or score a situation. The advanced JSON card supports multiple questions in one call. Requires a TypeSafe API key and credit.

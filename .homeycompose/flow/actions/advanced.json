@@ -1,0 +1,74 @@
+{
+  "title": {
+    "en": "Evaluate state and questions from JSON",
+    "nl": "Evalueer state en vragen uit JSON"
+  },
+  "titleFormatted": {
+    "en": "Evaluate [[json]]",
+    "nl": "Evalueer [[json]]"
+  },
+  "hint": {
+    "en": "Paste {\"state\":…, \"questions\":{…}}. Supports choice, noul and score, up to 64 questions. Returns all raw answers as JSON; apply your own probability and confidence checks. Uses the model in settings.",
+    "nl": "Plak {\"state\":…, \"questions\":{…}}. Ondersteunt choice, noul en score, maximaal 64 vragen. Geeft alle ruwe antwoorden als JSON; controleer zelf kans en confidence. Gebruikt het model uit instellingen."
+  },
+  "args": [
+    {
+      "name": "json",
+      "type": "text",
+      "title": {
+        "en": "Request JSON",
+        "nl": "Aanvraag-JSON"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "answers",
+      "type": "string",
+      "title": {
+        "en": "Answers (JSON)",
+        "nl": "Antwoorden (JSON)"
+      }
+    },
+    {
+      "name": "model",
+      "type": "string",
+      "title": {
+        "en": "Model",
+        "nl": "Model"
+      }
+    },
+    {
+      "name": "input_tokens",
+      "type": "number",
+      "title": {
+        "en": "Input tokens",
+        "nl": "Inputtokens"
+      }
+    },
+    {
+      "name": "output_tokens",
+      "type": "number",
+      "title": {
+        "en": "Output tokens",
+        "nl": "Outputtokens"
+      }
+    },
+    {
+      "name": "request_id",
+      "type": "string",
+      "title": {
+        "en": "Evaluation ID",
+        "nl": "Evaluatie-ID"
+      }
+    },
+    {
+      "name": "duration_ms",
+      "type": "number",
+      "title": {
+        "en": "Duration (ms)",
+        "nl": "Duur (ms)"
+      }
+    }
+  ]
+}

@@ -39,22 +39,6 @@
     "testConnection": {
       "method": "POST",
       "path": "/test-connection"
-    },
-    "getDecisions": {
-      "method": "GET",
-      "path": "/decisions"
-    },
-    "saveDecision": {
-      "method": "PUT",
-      "path": "/decisions"
-    },
-    "deleteDecision": {
-      "method": "DELETE",
-      "path": "/decisions/:id"
-    },
-    "testDecision": {
-      "method": "POST",
-      "path": "/test-decision"
     }
   }
 }
