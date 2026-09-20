@@ -1,0 +1,19 @@
+{
+  "name": "com.basmilius.jev.settings-ui",
+  "private": true,
+  "scripts": {
+    "build": "vue-tsc --noEmit && vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "dev": "vite --host 127.0.0.1"
+  },
+  "dependencies": {
+    "vue": "^3.5.28"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.5",
+    "vite": "^8.0.0",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.2.5"
+  },
+  "type": "module"
+}

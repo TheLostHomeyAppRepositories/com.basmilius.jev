@@ -1,0 +1,60 @@
+{
+  "id": "com.basmilius.jev",
+  "version": "0.1.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Jev",
+    "nl": "Jev"
+  },
+  "description": {
+    "en": "Make decisions in your Flows with your own context.",
+    "nl": "Neem beslissingen in je Flows met je eigen context."
+  },
+  "category": [
+    "tools"
+  ],
+  "brandColor": "#276B59",
+  "permissions": [],
+  "author": {
+    "name": "Bas Milius",
+    "email": "bas@mili.us"
+  },
+  "source": "https://github.com/basmilius/homey-jev",
+  "bugs": {
+    "url": "https://github.com/basmilius/homey-jev/issues"
+  },
+  "api": {
+    "getSettings": {
+      "method": "GET",
+      "path": "/settings"
+    },
+    "saveSettings": {
+      "method": "PUT",
+      "path": "/settings"
+    },
+    "testConnection": {
+      "method": "POST",
+      "path": "/test-connection"
+    },
+    "getDecisions": {
+      "method": "GET",
+      "path": "/decisions"
+    },
+    "saveDecision": {
+      "method": "PUT",
+      "path": "/decisions"
+    },
+    "deleteDecision": {
+      "method": "DELETE",
+      "path": "/decisions/:id"
+    },
+    "testDecision": {
+      "method": "POST",
+      "path": "/test-decision"
+    }
+  }
+}

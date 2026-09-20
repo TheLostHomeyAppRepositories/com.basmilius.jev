@@ -1,0 +1,5 @@
+export type MessageKey = 'intro' | 'introDetail' | 'connection' | 'decisions' | 'history' | 'apiKey' | 'keySaved' | 'keyMissing' | 'clearKey' | 'model' | 'timeout' | 'callLimit' | 'saveConnection' | 'testConnection' | 'connectionOk' | 'saved' | 'billable' | 'newChoice' | 'newNoul' | 'empty' | 'emptyDetail' | 'choice' | 'noul' | 'name' | 'question' | 'background' | 'backgroundHelp' | 'options' | 'optionName' | 'description' | 'addOption' | 'removeOption' | 'threshold' | 'thresholdHelp' | 'noThreshold' | 'yesThreshold' | 'noulHelp' | 'cooldown' | 'maxAge' | 'saveDecision' | 'deleteDecision' | 'deleteConfirm' | 'discardConfirm' | 'testTitle' | 'context' | 'contextPlaceholder' | 'test' | 'saveFirst' | 'testHelp' | 'privacy' | 'refresh' | 'loading' | 'retry' | 'noHistory' | 'testBadge' | 'accepted' | 'uncertain' | 'error' | 'superseded' | 'cooldownStatus' | 'expired' | 'confidence' | 'probability' | 'tokens' | 'yes' | 'no' | 'notAccepted' | 'flowHelp' | 'preview' | 'selectDecision';
+
+export function t(key: MessageKey): string {
+    return Homey.__(`settings.${key}`);
+}

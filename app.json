@@ -1,0 +1,569 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.basmilius.jev",
+  "version": "0.1.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Jev",
+    "nl": "Jev"
+  },
+  "description": {
+    "en": "Make decisions in your Flows with your own context.",
+    "nl": "Neem beslissingen in je Flows met je eigen context."
+  },
+  "category": [
+    "tools"
+  ],
+  "brandColor": "#276B59",
+  "permissions": [],
+  "author": {
+    "name": "Bas Milius",
+    "email": "bas@mili.us"
+  },
+  "source": "https://github.com/basmilius/homey-jev",
+  "bugs": {
+    "url": "https://github.com/basmilius/homey-jev/issues"
+  },
+  "api": {
+    "getSettings": {
+      "method": "GET",
+      "path": "/settings"
+    },
+    "saveSettings": {
+      "method": "PUT",
+      "path": "/settings"
+    },
+    "testConnection": {
+      "method": "POST",
+      "path": "/test-connection"
+    },
+    "getDecisions": {
+      "method": "GET",
+      "path": "/decisions"
+    },
+    "saveDecision": {
+      "method": "PUT",
+      "path": "/decisions"
+    },
+    "deleteDecision": {
+      "method": "DELETE",
+      "path": "/decisions/:id"
+    },
+    "testDecision": {
+      "method": "POST",
+      "path": "/test-decision"
+    }
+  },
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "An accepted outcome changes",
+          "nl": "Een geaccepteerde uitkomst verandert"
+        },
+        "titleFormatted": {
+          "en": "An accepted outcome changes · [[decision]]",
+          "nl": "Een geaccepteerde uitkomst verandert · [[decision]]"
+        },
+        "hint": {
+          "en": "Also runs for the first accepted outcome.",
+          "nl": "Start ook bij de eerste geaccepteerde uitkomst."
+        },
+        "args": [
+          {
+            "name": "decision",
+            "type": "autocomplete",
+            "title": {
+              "en": "Decision",
+              "nl": "Beslissing"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "result",
+            "type": "string",
+            "title": {
+              "en": "Outcome ID",
+              "nl": "Uitkomst-ID"
+            }
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "title": {
+              "en": "Outcome",
+              "nl": "Uitkomst"
+            }
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence (−1 when unavailable)",
+              "nl": "Confidence (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability (−1 when unavailable)",
+              "nl": "Kans (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "evaluated_at",
+            "type": "string",
+            "title": {
+              "en": "Context evaluated at",
+              "nl": "Context geëvalueerd op"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration in milliseconds",
+              "nl": "Duur in milliseconden"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            }
+          }
+        ],
+        "id": "changed"
+      },
+      {
+        "title": {
+          "en": "A decision is accepted",
+          "nl": "Een beslissing is geaccepteerd"
+        },
+        "titleFormatted": {
+          "en": "A decision is accepted · [[decision]]",
+          "nl": "Een beslissing is geaccepteerd · [[decision]]"
+        },
+        "hint": {
+          "en": "Runs only for a current, accepted result.",
+          "nl": "Start alleen bij een actueel, geaccepteerd resultaat."
+        },
+        "args": [
+          {
+            "name": "decision",
+            "type": "autocomplete",
+            "title": {
+              "en": "Decision",
+              "nl": "Beslissing"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "result",
+            "type": "string",
+            "title": {
+              "en": "Outcome ID",
+              "nl": "Uitkomst-ID"
+            }
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "title": {
+              "en": "Outcome",
+              "nl": "Uitkomst"
+            }
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence (−1 when unavailable)",
+              "nl": "Confidence (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability (−1 when unavailable)",
+              "nl": "Kans (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "evaluated_at",
+            "type": "string",
+            "title": {
+              "en": "Context evaluated at",
+              "nl": "Context geëvalueerd op"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration in milliseconds",
+              "nl": "Duur in milliseconden"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            }
+          }
+        ],
+        "id": "evaluated"
+      },
+      {
+        "title": {
+          "en": "A decision cannot be used",
+          "nl": "Een beslissing kan niet worden gebruikt"
+        },
+        "titleFormatted": {
+          "en": "A decision cannot be used · [[decision]]",
+          "nl": "Een beslissing kan niet worden gebruikt · [[decision]]"
+        },
+        "hint": {
+          "en": "Check the status and error tags. Test evaluations and superseded requests never trigger Flows.",
+          "nl": "Controleer de status- en fouttags. Tests en ingehaalde aanvragen starten nooit Flows."
+        },
+        "args": [
+          {
+            "name": "decision",
+            "type": "autocomplete",
+            "title": {
+              "en": "Decision",
+              "nl": "Beslissing"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "result",
+            "type": "string",
+            "title": {
+              "en": "Outcome ID",
+              "nl": "Uitkomst-ID"
+            }
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "title": {
+              "en": "Outcome",
+              "nl": "Uitkomst"
+            }
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence (−1 when unavailable)",
+              "nl": "Confidence (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability (−1 when unavailable)",
+              "nl": "Kans (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "evaluated_at",
+            "type": "string",
+            "title": {
+              "en": "Context evaluated at",
+              "nl": "Context geëvalueerd op"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration in milliseconds",
+              "nl": "Duur in milliseconden"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            }
+          }
+        ],
+        "id": "unavailable"
+      }
+    ],
+    "conditions": [
+      {
+        "title": {
+          "en": "The accepted outcome is",
+          "nl": "De geaccepteerde uitkomst is"
+        },
+        "titleFormatted": {
+          "en": "The outcome of [[decision]] !{{is|is not}} [[outcome]]",
+          "nl": "De uitkomst van [[decision]] !{{is|is niet}} [[outcome]]"
+        },
+        "hint": {
+          "en": "Stops with an error if no current accepted result exists.",
+          "nl": "Stopt met een fout als er geen actueel geaccepteerd resultaat is."
+        },
+        "args": [
+          {
+            "name": "decision",
+            "type": "autocomplete",
+            "title": {
+              "en": "Decision",
+              "nl": "Beslissing"
+            }
+          },
+          {
+            "name": "outcome",
+            "type": "autocomplete",
+            "title": {
+              "en": "Outcome",
+              "nl": "Uitkomst"
+            }
+          }
+        ],
+        "id": "outcome_is"
+      },
+      {
+        "title": {
+          "en": "An accepted result is recent",
+          "nl": "Een geaccepteerd resultaat is recent"
+        },
+        "titleFormatted": {
+          "en": "[[decision]] has an accepted result from the last [[seconds]] seconds",
+          "nl": "[[decision]] heeft een geaccepteerd resultaat uit de laatste [[seconds]] seconden"
+        },
+        "args": [
+          {
+            "name": "decision",
+            "type": "autocomplete",
+            "title": {
+              "en": "Decision",
+              "nl": "Beslissing"
+            }
+          },
+          {
+            "name": "seconds",
+            "type": "number",
+            "min": 1,
+            "max": 86400,
+            "title": {
+              "en": "Seconds",
+              "nl": "Seconden"
+            }
+          }
+        ],
+        "id": "result_fresh"
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Evaluate a decision",
+          "nl": "Evalueer een beslissing"
+        },
+        "titleFormatted": {
+          "en": "Evaluate [[decision]] with [[context]]",
+          "nl": "Evalueer [[decision]] met [[context]]"
+        },
+        "hint": {
+          "en": "Supply your own context using text and Flow tags. An uncertain or unavailable result stops this branch.",
+          "nl": "Lever zelf context aan met tekst en Flow-tags. Een onzekere of onbeschikbare uitkomst stopt deze tak."
+        },
+        "args": [
+          {
+            "name": "decision",
+            "type": "autocomplete",
+            "title": {
+              "en": "Decision",
+              "nl": "Beslissing"
+            }
+          },
+          {
+            "name": "context",
+            "type": "text",
+            "title": {
+              "en": "Context",
+              "nl": "Context"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "result",
+            "type": "string",
+            "title": {
+              "en": "Outcome ID",
+              "nl": "Uitkomst-ID"
+            }
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "title": {
+              "en": "Outcome",
+              "nl": "Uitkomst"
+            }
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "number",
+            "title": {
+              "en": "Confidence (−1 when unavailable)",
+              "nl": "Confidence (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "probability",
+            "type": "number",
+            "title": {
+              "en": "Probability (−1 when unavailable)",
+              "nl": "Kans (−1 indien niet beschikbaar)"
+            }
+          },
+          {
+            "name": "request_id",
+            "type": "string",
+            "title": {
+              "en": "Evaluation ID",
+              "nl": "Evaluatie-ID"
+            }
+          },
+          {
+            "name": "evaluated_at",
+            "type": "string",
+            "title": {
+              "en": "Context evaluated at",
+              "nl": "Context geëvalueerd op"
+            }
+          },
+          {
+            "name": "duration_ms",
+            "type": "number",
+            "title": {
+              "en": "Duration in milliseconds",
+              "nl": "Duur in milliseconden"
+            }
+          },
+          {
+            "name": "model",
+            "type": "string",
+            "title": {
+              "en": "Model",
+              "nl": "Model"
+            }
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            }
+          }
+        ],
+        "id": "evaluate"
+      }
+    ]
+  }
+}

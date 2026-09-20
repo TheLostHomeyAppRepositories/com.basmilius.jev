@@ -1,0 +1,1 @@
+Make decisions in your Homey Flows with Jev by TypeSafe. Define a choice or yes/no question and supply your own context using text and Flow tags. Test decisions in the app settings and use accepted results in your automations. Requires a TypeSafe API key and credit.

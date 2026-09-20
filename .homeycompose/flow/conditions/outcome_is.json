@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "The accepted outcome is",
+    "nl": "De geaccepteerde uitkomst is"
+  },
+  "titleFormatted": {
+    "en": "The outcome of [[decision]] !{{is|is not}} [[outcome]]",
+    "nl": "De uitkomst van [[decision]] !{{is|is niet}} [[outcome]]"
+  },
+  "hint": {
+    "en": "Stops with an error if no current accepted result exists.",
+    "nl": "Stopt met een fout als er geen actueel geaccepteerd resultaat is."
+  },
+  "args": [
+    {
+      "name": "decision",
+      "type": "autocomplete",
+      "title": {
+        "en": "Decision",
+        "nl": "Beslissing"
+      }
+    },
+    {
+      "name": "outcome",
+      "type": "autocomplete",
+      "title": {
+        "en": "Outcome",
+        "nl": "Uitkomst"
+      }
+    }
+  ]
+}

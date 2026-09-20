@@ -1,0 +1,114 @@
+{
+  "title": {
+    "en": "Evaluate a decision",
+    "nl": "Evalueer een beslissing"
+  },
+  "titleFormatted": {
+    "en": "Evaluate [[decision]] with [[context]]",
+    "nl": "Evalueer [[decision]] met [[context]]"
+  },
+  "hint": {
+    "en": "Supply your own context using text and Flow tags. An uncertain or unavailable result stops this branch.",
+    "nl": "Lever zelf context aan met tekst en Flow-tags. Een onzekere of onbeschikbare uitkomst stopt deze tak."
+  },
+  "args": [
+    {
+      "name": "decision",
+      "type": "autocomplete",
+      "title": {
+        "en": "Decision",
+        "nl": "Beslissing"
+      }
+    },
+    {
+      "name": "context",
+      "type": "text",
+      "title": {
+        "en": "Context",
+        "nl": "Context"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "result",
+      "type": "string",
+      "title": {
+        "en": "Outcome ID",
+        "nl": "Uitkomst-ID"
+      }
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "title": {
+        "en": "Outcome",
+        "nl": "Uitkomst"
+      }
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "nl": "Status"
+      }
+    },
+    {
+      "name": "confidence",
+      "type": "number",
+      "title": {
+        "en": "Confidence (\u22121 when unavailable)",
+        "nl": "Confidence (\u22121 indien niet beschikbaar)"
+      }
+    },
+    {
+      "name": "probability",
+      "type": "number",
+      "title": {
+        "en": "Probability (\u22121 when unavailable)",
+        "nl": "Kans (\u22121 indien niet beschikbaar)"
+      }
+    },
+    {
+      "name": "request_id",
+      "type": "string",
+      "title": {
+        "en": "Evaluation ID",
+        "nl": "Evaluatie-ID"
+      }
+    },
+    {
+      "name": "evaluated_at",
+      "type": "string",
+      "title": {
+        "en": "Context evaluated at",
+        "nl": "Context ge\u00ebvalueerd op"
+      }
+    },
+    {
+      "name": "duration_ms",
+      "type": "number",
+      "title": {
+        "en": "Duration in milliseconds",
+        "nl": "Duur in milliseconden"
+      }
+    },
+    {
+      "name": "model",
+      "type": "string",
+      "title": {
+        "en": "Model",
+        "nl": "Model"
+      }
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "title": {
+        "en": "Error",
+        "nl": "Fout"
+      }
+    }
+  ]
+}
