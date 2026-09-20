@@ -110,3 +110,14 @@ test('rejects invalid thresholds and advanced JSON before the API call', async (
     await expect(f.card('action:advanced').run({json: '{bad'})).rejects.toThrow('Invalid JSON');
     expect(f.requests).toHaveLength(0);
 });
+
+
+test('uncertainty reports the received probability and both acceptance boundaries', async () => {
+    const f = fixture();
+    f.setProbability(0.61);
+    const args = {state: 'Bas=true Fleur=no', question: 'Is Bas sleeping?', minimum: 0.8};
+    await expect(f.card('condition:yes_no').run(args)).rejects.toThrow('Probability of yes: 0.61; yes requires at least 0.8, no requires at most 0.2.');
+    expect(f.requests[0]).toEqual({state: args.state, questions: {answer: {type: 'noul', instructions: args.question}}});
+    f.setProbability(0.200000001);
+    await expect(f.card('action:yes_no').run(args)).rejects.toThrow('Probability of yes: 0.200000001');
+});

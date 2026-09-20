@@ -25,7 +25,7 @@ export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
             const response = await app.evaluate(request(args, {type: 'choice', instructions: args.question, criteria}));
             const answer = response.answers.answer;
             if (answer.type !== 'choice') throw new Error('Unexpected answer type.');
-            if (answer.confidence < minimum) throw new Error('Jev is uncertain. No choice was accepted.');
+            if (answer.confidence < minimum) throw new Error(`Jev is uncertain. Choice confidence: ${answer.confidence}; required: at least ${minimum}.`);
             const index = Number(answer.choice.slice('answer_'.length)) - 1;
             return {...tokens(response), answer: answers[index], answer_number: index + 1, confidence: answer.confidence, probability: answer.probabilities[answer.choice]};
         });
@@ -37,7 +37,10 @@ export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
         const answer = response.answers.answer;
         if (answer.type !== 'noul') throw new Error('Unexpected answer type.');
         const isYes = answer.noul >= minimum;
-        if (!isYes && answer.noul > Number((1 - minimum).toFixed(12))) throw new Error('Jev is uncertain. No yes/no answer was accepted.');
+        const maximumNo = Number((1 - minimum).toFixed(12));
+        if (!isYes && answer.noul > maximumNo) {
+            throw new Error(`Jev is uncertain. Probability of yes: ${answer.noul}; yes requires at least ${minimum}, no requires at most ${maximumNo}.`);
+        }
         return {...tokens(response), answer: isYes, probability: answer.noul};
     }
 
@@ -52,7 +55,7 @@ export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
         const response = await app.evaluate(request(args, {type: 'score', instructions: args.question, criteria}));
         const answer = response.answers.answer;
         if (answer.type !== 'score') throw new Error('Unexpected answer type.');
-        if (answer.confidence < minimum) throw new Error('Jev is uncertain. No score was accepted.');
+        if (answer.confidence < minimum) throw new Error(`Jev is uncertain. Score confidence: ${answer.confidence}; required: at least ${minimum}.`);
         return {...tokens(response), score: answer.score, confidence: answer.confidence};
     });
 
