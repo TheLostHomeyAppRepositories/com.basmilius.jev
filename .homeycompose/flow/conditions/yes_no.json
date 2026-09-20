@@ -8,8 +8,8 @@
     "nl": "[[question]] met state [[state]] !{{is|is niet}} waar met minimale kans [[minimum]]"
   },
   "hint": {
-    "en": "One question. Accept yes when its probability meets the minimum, no when it is at most 1 minus the minimum. Uncertainty and API errors stop the card, including inverted conditions.",
-    "nl": "Eén vraag. Ja bij een kans vanaf het minimum, nee bij maximaal 1 min het minimum. Twijfel en API-fouten stoppen de kaart, ook bij omgekeerde condities."
+    "en": "Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements. One question. Accept yes when its probability meets the minimum, no when it is at most 1 minus the minimum. Uncertainty and API errors stop the card, including inverted conditions.",
+    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Eén vraag. Ja bij een kans vanaf het minimum, nee bij maximaal 1 min het minimum. Twijfel en API-fouten stoppen de kaart, ook bij omgekeerde condities."
   },
   "args": [
     {

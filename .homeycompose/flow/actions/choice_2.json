@@ -8,8 +8,8 @@
     "nl": "Stel [[question]] met state [[state]], antwoorden [[answer_1]] / [[answer_2]] en minimale confidence [[minimum]]"
   },
   "hint": {
-    "en": "Supply state and one question using text or Flow tags. A result below the minimum confidence stops this branch.",
-    "nl": "Vul state en één vraag in met tekst of Flow-tags. Een resultaat onder de minimale confidence stopt deze tak."
+    "en": "Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements. Supply state and one question using text or Flow tags. A result below the minimum confidence stops this branch.",
+    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Vul state en één vraag in met tekst of Flow-tags. Een resultaat onder de minimale confidence stopt deze tak."
   },
   "args": [
     {

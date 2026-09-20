@@ -8,8 +8,8 @@
     "nl": "Beoordeel [[question]] met state [[state]] op niveaus [[low]] / [[middle]] / [[high]] met minimale confidence [[minimum]]"
   },
   "hint": {
-    "en": "Describe low, middle and high levels. Returns a score from 0 to 2, including fractions. Low confidence stops this branch.",
-    "nl": "Beschrijf het lage, middelste en hoge niveau. Geeft een score van 0 tot 2, ook met decimalen. Lage confidence stopt deze tak."
+    "en": "Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements. Describe low, middle and high levels. Returns a score from 0 to 2, including fractions. Low confidence stops this branch.",
+    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Beschrijf het lage, middelste en hoge niveau. Geeft een score van 0 tot 2, ook met decimalen. Lage confidence stopt deze tak."
   },
   "args": [
     {

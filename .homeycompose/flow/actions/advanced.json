@@ -8,8 +8,8 @@
     "nl": "Evalueer [[json]]"
   },
   "hint": {
-    "en": "Paste {\"state\":…, \"questions\":{…}}. Supports choice, noul and score, up to 64 questions. Returns all raw answers as JSON; apply your own probability and confidence checks. Uses the model in settings.",
-    "nl": "Plak {\"state\":…, \"questions\":{…}}. Ondersteunt choice, noul en score, maximaal 64 vragen. Geeft alle ruwe antwoorden als JSON; controleer zelf kans en confidence. Gebruikt het model uit instellingen."
+    "en": "Paste {\"state\":…, \"questions\":{…}}. Supports choice, noul and score, up to 64 questions. Returns all raw answers as JSON; apply your own probability and confidence checks. Uses the model in settings. Use descriptive state fields, e.g. {\"bas_is_sleeping\":true}, and include units for measurements.",
+    "nl": "Plak {\"state\":…, \"questions\":{…}}. Ondersteunt choice, noul en score, maximaal 64 vragen. Geeft alle ruwe antwoorden als JSON; controleer zelf kans en confidence. Gebruikt het model uit instellingen. Gebruik beschrijvende velden in state, bijvoorbeeld {\"bas_slaapt\":true}, en vermeld eenheden bij metingen."
   },
   "args": [
     {

@@ -18,7 +18,7 @@ Settings contain your TypeSafe API key, model, timeout, request limit and a conn
 
 All action cards also return the resolved model, input/output token counts, evaluation ID and duration. Action result tags can be connected in Advanced Flow. The yes/no condition works directly in regular Flows and makes a fresh API call each time.
 
-Each simple card evaluates exactly one question. Text fields accept Flow tags. Choice answer numbers start at 1 and match the order of the answer fields, so you can branch on the answer number without matching text.
+Each simple card evaluates exactly one question. Text fields accept Flow tags. Describe what every value means in state, and include units for measurements. For example, write `Bas is sleeping: [Asleep]. Living room temperature: [Temperature] °C.` and insert the corresponding Flow tags at the bracketed positions. This gives Jev the meaning of the values even when a tag resolves to `true`, `false` or a number. Choice answer numbers start at 1 and match the order of the answer fields, so you can branch on the answer number without matching text.
 
 For example, use the three-answer card with:
 
