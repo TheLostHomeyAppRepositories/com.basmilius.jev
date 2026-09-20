@@ -1,43 +1,46 @@
 <template>
-    <form class="panel stack" @submit.prevent="emit('save')">
-        <div class="sectionTop"><h2>{{ decision.name || t(decision.type) }}</h2><span class="badge">{{ t(decision.type) }}</span></div>
-        <fieldset :disabled="busy" class="stack">
-            <label>{{ t('name') }}<input v-model="decision.name" required maxlength="100"></label>
-            <label>{{ t('question') }}<textarea v-model="decision.question" rows="2" required maxlength="8000" /></label>
-            <label>{{ t('background') }}<textarea v-model="decision.background" rows="2" maxlength="16000" /><small>{{ t('backgroundHelp') }}</small></label>
+    <Form @submit.prevent="emit('save')">
+        <FormGroup :title="decision.name || t(decision.type)" :disabled="busy">
+            <FormInput v-model="decision.name" :label="t('name')" required maxlength="100" />
+            <FormTextarea v-model="decision.question" :label="t('question')" :rows="2" required maxlength="8000" />
+            <FormTextarea v-model="decision.background" :label="t('background')" :rows="2" maxlength="16000">
+                <p class="description">{{ t('backgroundHelp') }}</p>
+            </FormTextarea>
+        </FormGroup>
 
-            <section v-if="decision.type === 'choice'" class="stack">
-                <h3>{{ t('options') }}</h3>
-                <div v-for="option in decision.options" :key="option.id" :class="$style.option">
-                    <div class="columns">
-                        <label>{{ t('optionName') }}<input v-model="option.name" required maxlength="100"></label>
-                        <label>{{ t('description') }}<input v-model="option.description" maxlength="2000"></label>
-                    </div>
-                    <button type="button" :disabled="decision.options.length <= 2" @click="removeOption(option.id)">{{ t('removeOption') }}</button>
-                </div>
-                <button type="button" :disabled="decision.options.length >= 255" @click="addOption">{{ t('addOption') }}</button>
-                <label>{{ t('threshold') }}<input v-model.number="decision.minConfidence" type="number" step="0.01" min="0" max="1" required><small>{{ t('thresholdHelp') }}</small></label>
-            </section>
-            <section v-else class="stack">
-                <div class="columns">
-                    <label>{{ t('noThreshold') }}<input v-model.number="decision.noThreshold" type="number" step="0.01" min="0" max="1" required></label>
-                    <label>{{ t('yesThreshold') }}<input v-model.number="decision.yesThreshold" type="number" step="0.01" min="0" max="1" required></label>
-                </div>
-                <small>{{ t('noulHelp') }}</small>
-            </section>
-            <div class="columns">
-                <label>{{ t('cooldown') }}<input v-model.number="decision.cooldownSeconds" type="number" min="0" max="86400" required></label>
-                <label>{{ t('maxAge') }}<input v-model.number="decision.maxAgeSeconds" type="number" min="1" max="86400" required></label>
+        <FormGroup v-if="decision.type === 'choice'" :title="t('options')" :disabled="busy">
+            <div v-for="option in decision.options" :key="option.id" class="optionGroup">
+                <FormInput v-model="option.name" :label="t('optionName')" required maxlength="100" />
+                <FormInput v-model="option.description" :label="t('description')" maxlength="2000" />
+                <ButtonTransparent :label="t('removeOption')" :disabled="decision.options.length <= 2" @click="removeOption(option.id)" />
             </div>
-        </fieldset>
-        <div class="actions">
-            <button class="primary" :disabled="busy || !dirty">{{ t('saveDecision') }}</button>
-            <button v-if="decision.revision" type="button" class="danger" :disabled="busy" @click="emit('remove')">{{ t('deleteDecision') }}</button>
-        </div>
-    </form>
+            <ButtonTransparent :label="t('addOption')" :disabled="decision.options.length >= 255" @click="addOption" />
+            <FormInput v-model="decision.minConfidence" type="number" :label="t('threshold')" step="0.01" min="0" max="1" required>
+                <p class="description">{{ t('thresholdHelp') }}</p>
+            </FormInput>
+        </FormGroup>
+        <FormGroup v-else :title="t('noul')" :disabled="busy">
+            <FormInput v-model="decision.noThreshold" type="number" :label="t('noThreshold')" step="0.01" min="0" max="1" required />
+            <FormInput v-model="decision.yesThreshold" type="number" :label="t('yesThreshold')" step="0.01" min="0" max="1" required />
+            <p class="description">{{ t('noulHelp') }}</p>
+        </FormGroup>
+
+        <FormGroup :title="t('maxAge')" :disabled="busy">
+            <FormInput v-model="decision.cooldownSeconds" type="number" :label="t('cooldown')" min="0" max="86400" required />
+            <FormInput v-model="decision.maxAgeSeconds" type="number" :label="t('maxAge')" min="1" max="86400" required />
+            <ButtonPrimary type="submit" :label="t('saveDecision')" :disabled="busy || !dirty" />
+            <ButtonTransparent v-if="decision.revision" :label="t('deleteDecision')" :disabled="busy" @click="emit('remove')" />
+        </FormGroup>
+    </Form>
 </template>
 
 <script setup lang="ts">
+import Form from './Form.vue';
+import FormGroup from './FormGroup.vue';
+import FormInput from './FormInput.vue';
+import FormTextarea from './FormTextarea.vue';
+import ButtonPrimary from './ButtonPrimary.vue';
+import ButtonTransparent from './ButtonTransparent.vue';
 import type { EditableDecision } from '@/api';
 import { t } from '@/i18n';
 
@@ -53,7 +56,3 @@ function removeOption(id: string): void {
     decision.value.options = decision.value.options.filter(option => option.id !== id);
 }
 </script>
-
-<style module>
-.option { padding: 16px; border: 1px solid var(--border); border-radius: 10px; display: grid; gap: 12px; }
-</style>

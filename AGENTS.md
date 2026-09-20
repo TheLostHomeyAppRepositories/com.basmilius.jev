@@ -58,3 +58,5 @@ Noul: https://docs.typesafe.ai/primitives/noul
 Use `POST https://api.typesafe.ai/v1/systemone` with a bearer key. Model defaults to `jev-latest`; users can pin a supported version. There are no automatic retries because evaluations consume credit. Verify API changes against official docs before editing the contract.
 
 GitHub repository: https://github.com/basmilius/homey-jev. Keep it private. Claude and FlowBits are sibling repositories for reference, not dependencies to modify.
+
+Settings UI must match the sibling Claude app and Homey's native settings UI. Reuse the `Top`, `Form`, `FormGroup`, input and button components with `homey-*` classes. Let Homey supply theme, typography and control styles through `/homey.js`; keep custom CSS limited to layout. Do not add a separate branded theme or card-based dashboard.

@@ -2,7 +2,7 @@
     <div :class="$style.result">
         <div class="sectionTop">
             <strong>{{ result.label ? (result.type === 'noul' && (result.label === 'yes' || result.label === 'no') ? t(result.label) : result.label) : '—' }}</strong>
-            <span :class="['badge', { success: result.status === 'accepted' }]">{{ t(result.status === 'cooldown' ? 'cooldownStatus' : result.status) }}</span>
+            <span class="description">{{ t(result.status === 'cooldown' ? 'cooldownStatus' : result.status) }}</span>
         </div>
         <p v-if="result.status !== 'accepted'">{{ result.error || t('notAccepted') }}</p>
         <dl :class="$style.metrics">
@@ -29,6 +29,6 @@ function format(value: number): string {
 <style module>
 .result { display: grid; gap: 12px; font-variant-numeric: tabular-nums; }
 .metrics { display: flex; flex-wrap: wrap; gap: 16px 28px; margin: 0; }
-.metrics dt { color: var(--muted); font-size: 12px; }
-.metrics dd { margin: 4px 0 0; font-size: 14px; }
+.metrics dt { color: var(--homey-text-color-light); font-size: var(--homey-font-size-small); }
+.metrics dd { margin: 4px 0 0; font-size: var(--homey-font-size-default); }
 </style>

@@ -7,3 +7,5 @@ The defining constraint is user-supplied context. Do not add device discovery, a
 Start with `src/brain/decisions.ts` for behavior, `.homeycompose/flow/` for Flow contracts and `settings-ui/src/useJev.ts` for settings interactions. Preserve stable decision and option IDs, test-mode isolation and the distinction between no, uncertainty and errors.
 
 Run `bun run typecheck`, `bun test`, `bun run build` and `homey app build` after changes. Live API and Homey-device tests require a configured account/device and must be reported separately from mocked tests. Keep the GitHub repository private.
+
+Settings UI must match the sibling Claude app and Homey's native settings UI. Reuse the `Top`, `Form`, `FormGroup`, input and button components with `homey-*` classes. Let Homey supply theme, typography and control styles through `/homey.js`; keep custom CSS limited to layout. Do not add a separate branded theme or card-based dashboard.

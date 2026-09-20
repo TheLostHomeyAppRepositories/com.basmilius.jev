@@ -1,46 +1,55 @@
 <template>
-    <main class="app">
-        <header class="hero"><span class="wordmark">Jev</span><h1>{{ t('intro') }}</h1><p>{{ t('introDetail') }}</p></header>
-        <p v-if="error" class="message error" role="alert">{{ error }} <button v-if="!state" :disabled="busy" @click="reload">{{ t('retry') }}</button></p>
-        <p v-if="notice" class="message" role="status">{{ notice }}</p>
+    <main>
+        <Top title="Jev" :subtitle="t('introDetail')" />
+        <p v-if="error" class="feedbackError" role="alert">{{ error }} <ButtonTransparent v-if="!state" :disabled="busy" :label="t('retry')" @click="reload" /></p>
+        <p v-if="notice" class="feedbackSuccess" role="status">{{ notice }}</p>
         <p v-if="!state && busy" role="status">{{ t('loading') }}</p>
         <template v-if="settings && state">
             <ConnectionPanel :settings="settings" :busy="busy" @save="saveConnection" @test="testConnection" />
-            <section class="panel stack">
-                <div class="sectionTop"><h2>{{ t('decisions') }}</h2><button :disabled="busy" @click="reload">{{ t('refresh') }}</button></div>
-                <div class="actions"><button :disabled="busy" @click="newDecision('choice')">+ {{ t('newChoice') }}</button><button :disabled="busy" @click="newDecision('noul')">+ {{ t('newNoul') }}</button></div>
-                <div v-if="!state.decisions.length" class="empty"><h3>{{ t('empty') }}</h3><p>{{ t('emptyDetail') }}</p></div>
-                <div v-else class="decisionList">
-                    <button v-for="decision in state.decisions" :key="decision.id" :disabled="busy" :class="['decisionButton', { selected: draft?.id === decision.id }]" :aria-pressed="draft?.id === decision.id" @click="choose(decision)">
-                        <span>{{ decision.name }}</span><small>{{ t(decision.type) }}</small>
-                    </button>
-                </div>
-                <p v-if="state.decisions.length && !draft" class="muted">{{ t('selectDecision') }}</p>
-            </section>
+            <Form @submit.prevent>
+                <FormGroup :title="t('decisions')">
+                    <ButtonPrimary :disabled="busy" :label="t('newChoice')" @click="newDecision('choice')" />
+                    <ButtonTransparent :disabled="busy" :label="t('newNoul')" @click="newDecision('noul')" />
+                    <div v-if="!state.decisions.length" class="homey-form-group">
+                        <p class="description">{{ t('emptyDetail') }}</p>
+                    </div>
+                    <div v-else class="homey-form-group decisionList">
+                        <button v-for="decision in state.decisions" :key="decision.id" type="button" :disabled="busy" class="homey-button-transparent decisionButton" :aria-pressed="draft?.id === decision.id" @click="choose(decision)">
+                            <span>{{ decision.name }}</span><small>{{ t(decision.type) }}</small>
+                        </button>
+                    </div>
+                    <p v-if="state.decisions.length && !draft" class="description">{{ t('selectDecision') }}</p>
+                    <ButtonTransparent :disabled="busy" :label="t('refresh')" @click="reload" />
+                </FormGroup>
+            </Form>
 
             <template v-if="draft">
                 <DecisionEditor v-model="draft" :busy="busy" :dirty="dirty" @save="save" @remove="deleteDecision" />
-                <section class="panel stack">
-                    <h2>{{ t('testTitle') }}</h2>
-                    <form class="stack" @submit.prevent="test(context)">
-                        <label>{{ t('context') }}<textarea v-model="context" rows="4" maxlength="64000" required :placeholder="t('contextPlaceholder')" :disabled="busy" /></label>
-                        <small>{{ t('testHelp') }}</small>
-                        <button class="primary" :disabled="busy || dirty || !settings.hasApiKey || !context.trim()">{{ busy ? t('loading') : t('test') }}</button>
-                        <small v-if="dirty">{{ t('saveFirst') }}</small>
-                    </form>
-                    <div v-if="testResult && !dirty" class="testResult" aria-live="polite"><h3>{{ t('preview') }}</h3><EvaluationResult :result="testResult" /></div>
-                </section>
+                <Form @submit.prevent="test(context)">
+                    <FormGroup :title="t('testTitle')">
+                        <FormTextarea v-model="context" :label="t('context')" :rows="4" maxlength="64000" required :placeholder="t('contextPlaceholder')" :disabled="busy" />
+                        <p class="description">{{ t('testHelp') }}</p>
+                        <ButtonPrimary type="submit" :is-loading="busy" :label="t('test')" :disabled="busy || dirty || !settings.hasApiKey || !context.trim()" />
+                        <p v-if="dirty" class="description">{{ t('saveFirst') }}</p>
+                        <div v-if="testResult && !dirty" class="homey-form-group" aria-live="polite"><EvaluationResult :result="testResult" /></div>
+                    </FormGroup>
+                </Form>
             </template>
 
-            <section class="panel stack"><h2>Homey Flow</h2><p>{{ t('flowHelp') }}</p><small>{{ t('privacy') }}</small></section>
-            <section class="panel stack">
-                <div class="sectionTop"><h2>{{ t('history') }}</h2><button :disabled="busy" @click="reload">{{ t('refresh') }}</button></div>
-                <p v-if="!state.history.length" class="muted">{{ t('noHistory') }}</p>
-                <details v-for="entry in state.history" :key="entry.id" class="historyItem">
-                    <summary><span>{{ entry.decisionName }}</span><small>{{ entry.test ? t('testBadge') + ' · ' : '' }}{{ t(entry.status === 'cooldown' ? 'cooldownStatus' : entry.status) }}</small></summary>
-                    <EvaluationResult :result="entry" />
-                </details>
-            </section>
+            <Form @submit.prevent>
+                <FormGroup title="Homey Flow">
+                    <p class="description">{{ t('flowHelp') }}</p>
+                    <p class="description">{{ t('privacy') }}</p>
+                </FormGroup>
+                <FormGroup :title="t('history')">
+                    <ButtonTransparent :disabled="busy" :label="t('refresh')" @click="reload" />
+                    <p v-if="!state.history.length" class="description">{{ t('noHistory') }}</p>
+                    <details v-for="entry in state.history" :key="entry.id" class="homey-form-group historyItem">
+                        <summary><span>{{ entry.decisionName }}</span><small>{{ entry.test ? t('testBadge') + ' · ' : '' }}{{ t(entry.status === 'cooldown' ? 'cooldownStatus' : entry.status) }}</small></summary>
+                        <EvaluationResult :result="entry" />
+                    </details>
+                </FormGroup>
+            </Form>
         </template>
     </main>
 </template>
@@ -48,7 +57,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { api } from '@/api';
-import { ConnectionPanel, DecisionEditor, EvaluationResult } from '@/components';
+import { ConnectionPanel, DecisionEditor, EvaluationResult, Top, Form, FormGroup, FormTextarea, ButtonPrimary, ButtonTransparent } from '@/components';
 import { t } from '@/i18n';
 import { useJev } from '@/useJev';
 import type { Decision, Settings } from '../../src/types';
