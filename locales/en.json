@@ -18,7 +18,7 @@
     "privacy": "The app does not read devices or store state, questions or answers. Homey stores your card configuration as part of the Flow.",
     "loading": "Loading…",
     "retry": "Try again",
-    "flowHelp": "Add a yes/no, choice with 2, 3 or 4 answers, or score card. Fill in state and one question using text or Flow tags. Results are returned as tags in Advanced Flow. The yes/no condition also works directly in regular Flows. Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements.",
+    "flowHelp": "All Jev cards are under Then. Add a yes/no, choice with 2, 3 or 4 answers, or score card. Fill in state and one question using text or Flow tags. Results are returned as tags in Advanced Flow. Use the yes/no card’s boolean Answer tag in a Logic condition to branch on its result. Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements.",
     "advancedHelp": "The advanced card accepts JSON containing state and questions. It returns all raw answers as JSON. Apply your own probability and confidence checks. Copy this example and adapt it in the Flow card:"
   }
 }

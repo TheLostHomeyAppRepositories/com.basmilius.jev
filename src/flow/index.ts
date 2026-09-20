@@ -45,8 +45,6 @@ export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
     }
 
     flow.getActionCard('yes_no').registerRunListener(yesNo);
-    // Uncertainty throws so an inverted condition cannot turn an unavailable answer into permission to act.
-    flow.getConditionCard('yes_no').registerRunListener(async (args: SimpleArgs) => (await yesNo(args)).answer);
 
     flow.getActionCard('score').registerRunListener(async (args: ScoreArgs) => {
         const minimum = number(args.minimum ?? 0.8, 'Minimum confidence', 0, 1);

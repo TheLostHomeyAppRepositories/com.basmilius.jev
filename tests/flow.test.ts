@@ -32,9 +32,9 @@ function fixture() {
 
 const base = {state: 'We are watching a film.', question: 'Which light scene fits?'};
 
-test('registers only direct cards, without stored-decision cards or triggers', () => {
+test('registers only action cards, without conditions or triggers', () => {
     const f = fixture();
-    expect([...f.cards.keys()].sort()).toEqual(['action:advanced', 'action:choice_2', 'action:choice_3', 'action:choice_4', 'action:score', 'action:yes_no', 'condition:yes_no']);
+    expect([...f.cards.keys()].sort()).toEqual(['action:advanced', 'action:choice_2', 'action:choice_3', 'action:choice_4', 'action:score', 'action:yes_no']);
 });
 
 for (const count of [2, 3, 4]) {
@@ -66,18 +66,15 @@ test('low choice confidence stops the branch; custom thresholds work', async () 
     expect((await f.card('action:choice_2').run({...args, minimum: 0.5})).answer).toBe('Film');
 });
 
-test('yes/no action and condition distinguish yes, no and uncertainty', async () => {
+test('yes/no action distinguishes yes, no and uncertainty', async () => {
     const f = fixture();
     expect((await f.card('action:yes_no').run(base)).answer).toBe(true);
-    expect(await f.card('condition:yes_no').run(base)).toBe(true);
     f.setProbability(0.2);
     expect((await f.card('action:yes_no').run(base)).answer).toBe(false);
-    expect(await f.card('condition:yes_no').run(base)).toBe(false);
     f.setProbability(0.5);
     await expect(f.card('action:yes_no').run(base)).rejects.toThrow('uncertain');
-    await expect(f.card('condition:yes_no').run(base)).rejects.toThrow('uncertain');
     f.setProbability(0.8);
-    expect(await f.card('condition:yes_no').run(base)).toBe(true);
+    expect((await f.card('action:yes_no').run(base)).answer).toBe(true);
 });
 
 test('score sends one described rubric and returns a fractional score', async () => {
@@ -116,7 +113,7 @@ test('uncertainty reports the received probability and both acceptance boundarie
     const f = fixture();
     f.setProbability(0.61);
     const args = {state: 'Bas=true Fleur=no', question: 'Is Bas sleeping?', minimum: 0.8};
-    await expect(f.card('condition:yes_no').run(args)).rejects.toThrow('Probability of yes: 0.61; yes requires at least 0.8, no requires at most 0.2.');
+    await expect(f.card('action:yes_no').run(args)).rejects.toThrow('Probability of yes: 0.61; yes requires at least 0.8, no requires at most 0.2.');
     expect(f.requests[0]).toEqual({state: args.state, questions: {answer: {type: 'noul', instructions: args.question}}});
     f.setProbability(0.200000001);
     await expect(f.card('action:yes_no').run(args)).rejects.toThrow('Probability of yes: 0.200000001');

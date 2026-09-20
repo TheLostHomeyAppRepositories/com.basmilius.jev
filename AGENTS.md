@@ -7,9 +7,9 @@ Jev is a Homey SDK v3 app for TypeSafe decisions, configured entirely through Fl
 - All state, questions, answer options and confidence thresholds belong on Flow cards. Do not add a decision editor, stored decision registry, test playground or evaluation history to settings.
 - Settings contain only the TypeSafe API key, model, request timeout, request limit and connection test. Keep the Homey styling used by the sibling Claude app.
 - The user supplies all state through text/Flow tags or explicit JSON. Never discover devices, collect sensor values or construct a household snapshot.
-- Each simple card sends exactly one question. Choice has separate cards for 2, 3 and 4 answers. Noul has an action and a condition. Score has one card with three described levels.
+- Each simple card sends exactly one question. Choice has separate cards for 2, 3 and 4 answers. All cards are actions (Then), including Noul, which returns a boolean answer tag. Do not add condition or trigger cards. Score has one card with three described levels.
 - The advanced card accepts one JSON object with `state` and `questions`, supporting 1–64 Choice, Noul and Score questions in one API call. The configured model is added by the app; reject extra top-level fields rather than silently ignoring them.
-- Simple cards apply their on-card acceptance threshold. Choice and Score use confidence; Noul accepts yes at or above the minimum probability and no at or below 1 minus that minimum. The default is 0.8. Intermediate Noul values throw, including for inverted conditions.
+- Simple cards apply their on-card acceptance threshold. Choice and Score use confidence; Noul accepts yes at or above the minimum probability and no at or below 1 minus that minimum. The default is 0.8. Intermediate Noul values throw instead of returning an answer.
 - The advanced card returns validated raw answers as JSON without an implicit confidence threshold. Its caller owns the policy for accepting uncertain answers.
 - All outputs belong to their invocation. There is no shared last result, saved decision state or result trigger.
 - Do not log or persist state, questions, answers, API keys or provider error bodies. Homey itself stores Flow configuration.
