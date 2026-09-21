@@ -67,5 +67,176 @@
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
+  },
+  "homepage": "https://bas.dev",
+  "support": "https://github.com/basmilius/homey-jev/issues",
+  "homeyCommunityTopicId": 159835,
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "basmilius"
+      },
+      "githubSponsors": {
+        "username": "basmilius"
+      }
+    }
+  },
+  "tags": {
+    "en": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "artificial intelligence",
+      "decisions",
+      "context",
+      "choice",
+      "score"
+    ],
+    "nl": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "kunstmatige intelligentie",
+      "beslissingen",
+      "context",
+      "keuze",
+      "score"
+    ],
+    "de": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "künstliche Intelligenz",
+      "Entscheidungen",
+      "Kontext",
+      "Auswahl",
+      "Bewertung"
+    ],
+    "fr": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "intelligence artificielle",
+      "décisions",
+      "contexte",
+      "choix",
+      "score"
+    ],
+    "es": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "inteligencia artificial",
+      "decisiones",
+      "contexto",
+      "elección",
+      "puntuación"
+    ],
+    "da": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "kunstig intelligens",
+      "beslutninger",
+      "kontekst",
+      "valg",
+      "score"
+    ],
+    "no": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "kunstig intelligens",
+      "beslutninger",
+      "kontekst",
+      "valg",
+      "poengsum"
+    ],
+    "sv": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "artificiell intelligens",
+      "beslut",
+      "kontext",
+      "val",
+      "poäng"
+    ],
+    "it": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "intelligenza artificiale",
+      "decisioni",
+      "contesto",
+      "scelta",
+      "punteggio"
+    ],
+    "pl": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "sztuczna inteligencja",
+      "decyzje",
+      "kontekst",
+      "wybór",
+      "ocena"
+    ],
+    "ru": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "искусственный интеллект",
+      "решения",
+      "контекст",
+      "выбор",
+      "оценка"
+    ],
+    "ko": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "인공지능",
+      "결정",
+      "맥락",
+      "선택",
+      "점수"
+    ],
+    "ar": [
+      "jev",
+      "typesafe",
+      "ai",
+      "flow",
+      "advanced flow",
+      "ذكاء اصطناعي",
+      "قرارات",
+      "سياق",
+      "اختيار",
+      "تقييم"
+    ]
   }
 }
