@@ -42,6 +42,11 @@
       "path": "/test-connection"
     }
   },
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
   "flow": {
     "actions": [
       {
