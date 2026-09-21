@@ -11,6 +11,7 @@ Settings contain your TypeSafe API key, model, timeout, request limit and a conn
 | Ask a question with 2 answers | State, one question, two answers, minimum confidence | Answer text, answer number, confidence, probability |
 | Ask a question with 3 answers | State, one question, three answers, minimum confidence | Answer text, answer number, confidence, probability |
 | Ask a question with 4 answers | State, one question, four answers, minimum confidence | Answer text, answer number, confidence, probability |
+| Choose from a list | State, one question, 2–255 answers separated by newlines, minimum confidence | Answer text, answer number, confidence, probability |
 | Ask a yes/no question | State, one question, minimum probability | Boolean answer and probability of yes |
 | Score a question with 3 levels | State, one question, descriptions of low/middle/high, minimum confidence | Score from 0 to 2, including fractions, and confidence |
 | Evaluate state and questions from JSON | JSON containing state and questions | All answers as JSON |
@@ -28,6 +29,22 @@ For example, use the three-answer card with:
 - Answer 3: `Bright: enough light to read or work.`
 
 Connect the returned answer number to existing Homey lighting actions.
+
+## Answer lists and scores
+
+Use **Choose from a list** for longer or changing lists. Enter one answer per line, or supply a text Flow tag containing the list:
+
+```text
+Film watching
+Reading
+Socializing
+Cleaning
+No change
+```
+
+The card trims spaces around each answer and ignores blank lines. It requires 2–255 different answers, with at most 2,000 characters each and 64,000 characters for the list. Duplicates are rejected regardless of capitalization, before calling TypeSafe. Commas and slashes remain part of an answer. The returned answer number starts at 1 and follows the list after blank lines have been removed.
+
+The score card asks one question with three described levels. For “How much extra lighting is needed?”, use “Enough light for the current activity”, “Extra light would be comfortable” and “Too dark for the current activity”. The result runs from 0 to 2, including fractions. It is a position on those levels, not a dimming percentage or temperature. Use Logic cards to decide what to do with it.
 
 ## Confidence and uncertainty
 

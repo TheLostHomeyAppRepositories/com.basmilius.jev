@@ -8,8 +8,8 @@
     "nl": "Beoordeel [[question]] met state [[state]] op niveaus [[low]] / [[middle]] / [[high]] met minimale confidence [[minimum]]"
   },
   "hint": {
-    "en": "Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements. Describe low, middle and high levels. Returns a score from 0 to 2, including fractions. Low confidence stops this branch.",
-    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Beschrijf het lage, middelste en hoge niveau. Geeft een score van 0 tot 2, ook met decimalen. Lage confidence stopt deze tak."
+    "en": "Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements. Ask one question. Describe concrete situations for the low, middle and high levels, rather than just numbers. Returns a score from 0 to 2, including fractions. The score is a position on your scale, not a dimming percentage or temperature. A result below the minimum confidence follows the error path.",
+    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Stel één vraag. Beschrijf concrete situaties voor het lage, middelste en hoge niveau, in plaats van alleen getallen. Geeft een score van 0 tot 2, ook met decimalen. De score is een positie op je schaal, geen dimpercentage of temperatuur. Een resultaat onder de minimale confidence volgt het foutpad."
   },
   "args": [
     {

@@ -13,6 +13,7 @@ function fixture() {
     const requests: EvaluationRequest[] = [];
     let confidence = 0.95;
     let probability = 0.95;
+    let choice = 'answer_2';
     function card(id: string): Card {
         if (!cards.has(id)) cards.set(id, new Card());
         return cards.get(id)!;
@@ -20,21 +21,21 @@ function fixture() {
     async function evaluate(request: EvaluationRequest): Promise<EvaluationResponse> {
         requests.push(request);
         const answers = Object.fromEntries(Object.entries(request.questions).map(([id, question]) => [id,
-            question.type === 'choice' ? {type: 'choice', choice: 'answer_2', confidence, probabilities: {answer_1: 0.05, answer_2: 0.95}}
+            question.type === 'choice' ? {type: 'choice', choice, confidence, probabilities: {[choice]: 0.95}}
                 : question.type === 'noul' ? {type: 'noul', noul: probability}
                 : {type: 'score', score: 1.5, confidence, probabilities: {'0': 0, '1': 0.5, '2': 0.5}, legend: {'0': 'low', '1': 'mid', '2': 'high'}}
         ]));
         return {answers, model: 'jev-latest', inputTokens: 20, outputTokens: 5, requestId: `request-${requests.length}`, durationMs: 10} as EvaluationResponse;
     }
     registerFlows({evaluate, homey: {flow: {getActionCard: (id: string) => card(`action:${id}`), getConditionCard: (id: string) => card(`condition:${id}`)}}} as unknown as JevApp);
-    return {cards, card, requests, setConfidence: (value: number) => { confidence = value; }, setProbability: (value: number) => { probability = value; }};
+    return {cards, card, requests, setChoice: (value: string) => { choice = value; }, setConfidence: (value: number) => { confidence = value; }, setProbability: (value: number) => { probability = value; }};
 }
 
 const base = {state: 'We are watching a film.', question: 'Which light scene fits?'};
 
 test('registers only action cards, without conditions or triggers', () => {
     const f = fixture();
-    expect([...f.cards.keys()].sort()).toEqual(['action:advanced', 'action:choice_2', 'action:choice_3', 'action:choice_4', 'action:score', 'action:yes_no']);
+    expect([...f.cards.keys()].sort()).toEqual(['action:advanced', 'action:choice_2', 'action:choice_3', 'action:choice_4', 'action:choice_list', 'action:score', 'action:yes_no']);
 });
 
 for (const count of [2, 3, 4]) {
@@ -117,4 +118,54 @@ test('uncertainty reports the received probability and both acceptance boundarie
     expect(f.requests[0]).toEqual({state: args.state, questions: {answer: {type: 'noul', instructions: args.question}}});
     f.setProbability(0.200000001);
     await expect(f.card('action:yes_no').run(args)).rejects.toThrow('Probability of yes: 0.200000001');
+});
+
+test('list trims lines, ignores blanks and preserves order and punctuation', async () => {
+    const f = fixture();
+    f.setChoice('answer_5');
+    const result = await f.card('action:choice_list').run({...base, answers: '\r\n Bright \r\n Film, cozy \r\n\r\n Reading / work \rCleaning\n No change \n'});
+    expect(f.requests).toEqual([{state: base.state, questions: {answer: {
+        type: 'choice', instructions: base.question,
+        criteria: {answer_1: 'Bright', answer_2: 'Film, cozy', answer_3: 'Reading / work', answer_4: 'Cleaning', answer_5: 'No change'}
+    }}}]);
+    expect(result).toMatchObject({answer: 'No change', answer_number: 5, confidence: 0.95, probability: 0.95});
+});
+
+test('list rejects invalid input before evaluating', async () => {
+    const f = fixture();
+    for (const answers of [
+        undefined, 42, '', '   \n ', 'Only one', ' Film \nfilm',
+        Array.from({length: 256}, (_, i) => `Option ${i}`).join('\n'),
+        'a'.repeat(2001) + '\nOther',
+        'a'.repeat(64001)
+    ]) {
+        await expect(f.card('action:choice_list').run({...base, answers})).rejects.toThrow();
+    }
+    await expect(f.card('action:choice_list').run({...base, answers: 'One\nTwo', minimum: 2})).rejects.toThrow();
+    expect(f.requests).toHaveLength(0);
+});
+
+test('list supports 255 answers and returns the last answer by position', async () => {
+    const f = fixture();
+    f.setChoice('answer_255');
+    const answers = Array.from({length: 255}, (_, i) => `Option ${i + 1}`).join('\n');
+    const result = await f.card('action:choice_list').run({...base, answers});
+    expect(Object.keys(f.requests[0].questions.answer.criteria!)).toHaveLength(255);
+    expect(result.answer).toBe('Option 255');
+    expect(result.answer_number).toBe(255);
+});
+
+test('list applies default and custom confidence thresholds', async () => {
+    const f = fixture();
+    f.setConfidence(0.6);
+    const args = {...base, answers: 'Bright\nFilm'};
+    await expect(f.card('action:choice_list').run(args)).rejects.toThrow('uncertain');
+    expect((await f.card('action:choice_list').run({...args, minimum: 0.6})).answer).toBe('Film');
+});
+
+test('score rejects missing and duplicate levels before evaluating', async () => {
+    const f = fixture();
+    await expect(f.card('action:score').run({...base, low: 'Dark', middle: ' dark ', high: 'Bright'})).rejects.toThrow('different');
+    await expect(f.card('action:score').run({...base, low: 'Dark', middle: 'Comfortable'})).rejects.toThrow();
+    expect(f.requests).toHaveLength(0);
 });

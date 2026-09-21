@@ -15,21 +15,29 @@ type ScoreArgs = SimpleArgs & {readonly low: string; readonly middle: string; re
 export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
     const flow = app.homey.flow;
 
-    for (const count of [2, 3, 4] as const) {
-        flow.getActionCard(`choice_${count}`).registerRunListener(async (args: ChoiceArgs) => {
-            const minimum = number(args.minimum ?? 0.8, 'Minimum confidence', 0, 1);
-            const answers = [args.answer_1, args.answer_2, ...(count >= 3 ? [args.answer_3] : []), ...(count === 4 ? [args.answer_4] : [])]
-                .map(answer => text(answer, 'Answer', 2000));
-            if (new Set(answers.map(answer => answer.toLowerCase())).size !== answers.length) throw new Error('Answers must be different.');
-            const criteria = Object.fromEntries(answers.map((answer, index) => [`answer_${index + 1}`, answer]));
-            const response = await app.evaluate(request(args, {type: 'choice', instructions: args.question, criteria}));
-            const answer = response.answers.answer;
-            if (answer.type !== 'choice') throw new Error('Unexpected answer type.');
-            if (answer.confidence < minimum) throw new Error(`Jev is uncertain. Choice confidence: ${answer.confidence}; required: at least ${minimum}.`);
-            const index = Number(answer.choice.slice('answer_'.length)) - 1;
-            return {...tokens(response), answer: answers[index], answer_number: index + 1, confidence: answer.confidence, probability: answer.probabilities[answer.choice]};
-        });
+    async function choose(args: SimpleArgs, values: readonly unknown[]) {
+        const minimum = number(args.minimum ?? 0.8, 'Minimum confidence', 0, 1);
+        if (values.length < 2 || values.length > 255) throw new Error('Supply between 2 and 255 answers.');
+        const answers = values.map(answer => text(answer, 'Answer', 2000));
+        if (new Set(answers.map(answer => answer.toLowerCase())).size !== answers.length) throw new Error('Answers must be different.');
+        const criteria = Object.fromEntries(answers.map((answer, index) => [`answer_${index + 1}`, answer]));
+        const response = await app.evaluate(request(args, {type: 'choice', instructions: args.question, criteria}));
+        const answer = response.answers.answer;
+        if (answer.type !== 'choice') throw new Error('Unexpected answer type.');
+        if (answer.confidence < minimum) throw new Error(`Jev is uncertain. Choice confidence: ${answer.confidence}; required: at least ${minimum}.`);
+        const index = Number(answer.choice.slice('answer_'.length)) - 1;
+        return {...tokens(response), answer: answers[index], answer_number: index + 1, confidence: answer.confidence, probability: answer.probabilities[answer.choice]};
     }
+
+    for (const count of [2, 3, 4] as const) {
+        flow.getActionCard(`choice_${count}`).registerRunListener(async (args: ChoiceArgs) =>
+            choose(args, [args.answer_1, args.answer_2, ...(count >= 3 ? [args.answer_3] : []), ...(count === 4 ? [args.answer_4] : [])]));
+    }
+
+    flow.getActionCard('choice_list').registerRunListener(async (args: SimpleArgs & {readonly answers: string}) => {
+        const answers = text(args.answers, 'Answer list', 64000).split(/\r\n|\r|\n/).map(answer => answer.trim()).filter(Boolean);
+        return choose(args, answers);
+    });
 
     async function yesNo(args: SimpleArgs) {
         const minimum = number(args.minimum ?? 0.8, 'Minimum probability', 0.51, 1);
