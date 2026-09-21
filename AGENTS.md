@@ -43,7 +43,7 @@ Run the UI build and Homey validation before declaring a change ready. If the ge
 
 Use the `@basmilius/homey-common` base App and native Homey Flow API. Keep HTTP validation independent of Homey for testing with an injected transport and clock. Use type aliases, four-space indentation and comments explaining constraints.
 
-Vue components use template, script setup, style order. The view coordinates components through `useJev`; components emit events instead of fetching data. Reuse `Top`, `Form`, `FormGroup`, inputs and buttons with `homey-*` classes, matching Claude. Homey supplies theme, typography and controls through `/homey.js`. Custom CSS is for layout only. Ship English and Dutch UI/card text.
+Vue components use template, script setup, style order. The view coordinates components through `useJev`; components emit events instead of fetching data. Reuse `Top`, `Form`, `FormGroup`, inputs and buttons with `homey-*` classes, matching Claude. Homey supplies theme, typography and controls through `/homey.js`. Custom CSS is for layout only. Ship store READMEs, app metadata, settings and Flow card text in all FlowBits languages: en, nl, de, fr, it, sv, no, es, da, ru, pl, ko and ar. Preserve Flow placeholders and JSON field names. Set the settings page direction to RTL for Arabic; keep JSON examples LTR.
 
 Validate input sizes, types, allowed fields and criteria before making a paid request. Validate every response against the supplied questions, including answer membership, probability distributions and score bounds. Rate limits cover all cards and the connection test. Do not automatically retry paid requests.
 

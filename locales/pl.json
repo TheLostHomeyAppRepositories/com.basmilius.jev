@@ -1,0 +1,25 @@
+{
+  "language": "pl",
+  "settings": {
+    "introDetail": "Zadawaj Jev pytania bezpośrednio w swoich Homey Flow. Samodzielnie podajesz stan i możliwe odpowiedzi.",
+    "connection": "Połączenie",
+    "apiKey": "Klucz API TypeSafe",
+    "keySaved": "Klucz jest zapisany. Zostaw puste pole, aby go zachować.",
+    "keyMissing": "Dodaj klucz API TypeSafe, aby rozpocząć.",
+    "clearKey": "Usuń zapisany klucz",
+    "model": "Model",
+    "timeout": "Limit czasu żądania (sekundy)",
+    "callLimit": "Maksymalna liczba wywołań na minutę",
+    "saveConnection": "Zapisz połączenie",
+    "testConnection": "Przetestuj zapisane połączenie",
+    "connectionOk": "Połączenie działa z",
+    "saved": "Zapisano.",
+    "billable": "Testy połączenia i oceny Flow wywołują TypeSafe i zużywają środki API.",
+    "privacy": "Aplikacja nie odczytuje urządzeń ani nie zapisuje stanów, pytań czy odpowiedzi. Homey zapisuje konfigurację kart jako część Flow.",
+    "loading": "Ładowanie…",
+    "retry": "Spróbuj ponownie",
+    "flowHelp": "Wszystkie karty Jev są w sekcji Wtedy. Wybierz tak/nie, odpowiedź z listy lub ocenę. Wprowadź stan i jedno pytanie jako tekst lub znaczniki Flow. Wyniki są znacznikami w Advanced Flow. Sprawdź logiczny znacznik Odpowiedź kartą Logika. Opisz każdą wartość, np. „Bas śpi: [Śpi]”, i podaj jednostki.",
+    "advancedHelp": "Karta zaawansowana przyjmuje JSON z state i questions oraz zwraca surowe odpowiedzi w JSON. Samodzielnie sprawdzaj prawdopodobieństwo i pewność. Skopiuj ten przykład i dostosuj go w karcie Flow:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Oglądanie filmu\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"Która scena oświetlenia pasuje?\",\n      \"criteria\": {\n        \"film\": \"Oglądanie filmu\",\n        \"reading\": \"Czytanie\",\n        \"guests\": \"Spotkanie z gośćmi\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"Czy niepilne powiadomienie zakłóciłoby tę czynność?\"\n    }\n  }\n}"
+  }
+}

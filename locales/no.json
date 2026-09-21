@@ -1,0 +1,25 @@
+{
+  "language": "no",
+  "settings": {
+    "introDetail": "Still Jev spørsmål direkte i dine Homey Flows. Du oppgir tilstanden og de mulige svarene.",
+    "connection": "Tilkobling",
+    "apiKey": "TypeSafe API-nøkkel",
+    "keySaved": "En nøkkel er lagret. La feltet stå tomt for å beholde den.",
+    "keyMissing": "Legg til din TypeSafe API-nøkkel for å komme i gang.",
+    "clearKey": "Fjern den lagrede nøkkelen",
+    "model": "Modell",
+    "timeout": "Tidsavbrudd for forespørsler (sekunder)",
+    "callLimit": "Maksimalt antall kall per minutt",
+    "saveConnection": "Lagre tilkobling",
+    "testConnection": "Test lagret tilkobling",
+    "connectionOk": "Tilkoblingen fungerer med",
+    "saved": "Lagret.",
+    "billable": "Tilkoblingstester og Flow-vurderinger kaller TypeSafe og bruker API-kreditt.",
+    "privacy": "Appen leser ikke enheter og lagrer ikke tilstander, spørsmål eller svar. Homey lagrer kortoppsettet i Flowen.",
+    "loading": "Laster…",
+    "retry": "Prøv igjen",
+    "flowHelp": "Alle Jev-kort finnes under Så. Velg ja/nei, et svar fra en liste eller en poengsum. Oppgi tilstand og ett spørsmål med tekst eller Flow-tagger. Resultatene returneres som tagger i Advanced Flow. Kontroller den boolske Svar-taggen med et logikkort. Beskriv hver verdi, f.eks. \"Bas sover: [Sover]\", og oppgi måleenheter.",
+    "advancedHelp": "Det avanserte kortet godtar JSON med state og questions og returnerer rå svar som JSON. Kontroller sannsynlighet og sikkerhet selv. Kopier eksemplet og tilpass det i Flow-kortet:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Se film\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"Hvilken lysscene passer?\",\n      \"criteria\": {\n        \"film\": \"Se film\",\n        \"reading\": \"Lese\",\n        \"guests\": \"Være sammen med gjester\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"Ville et varsel som ikke haster, forstyrre aktiviteten?\"\n    }\n  }\n}"
+  }
+}

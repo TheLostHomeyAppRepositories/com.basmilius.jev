@@ -1,0 +1,25 @@
+{
+  "language": "it",
+  "settings": {
+    "introDetail": "Poni domande a Jev direttamente nei tuoi Homey Flow. Fornisci tu lo stato e le risposte possibili.",
+    "connection": "Connessione",
+    "apiKey": "Chiave API TypeSafe",
+    "keySaved": "È presente una chiave salvata. Lascia vuoto per mantenerla.",
+    "keyMissing": "Aggiungi la tua chiave API TypeSafe per iniziare.",
+    "clearKey": "Rimuovi la chiave salvata",
+    "model": "Modello",
+    "timeout": "Timeout delle richieste (secondi)",
+    "callLimit": "Numero massimo di chiamate al minuto",
+    "saveConnection": "Salva connessione",
+    "testConnection": "Prova la connessione salvata",
+    "connectionOk": "La connessione funziona con",
+    "saved": "Salvato.",
+    "billable": "I test di connessione e le valutazioni Flow chiamano TypeSafe e consumano credito API.",
+    "privacy": "L’app non legge i dispositivi e non conserva stati, domande o risposte. Homey salva la configurazione delle schede nel Flow.",
+    "loading": "Caricamento…",
+    "retry": "Riprova",
+    "flowHelp": "Tutte le schede Jev si trovano in Allora. Scegli sì/no, una risposta da un elenco o un punteggio. Inserisci stato e una domanda con testo o tag Flow. I risultati sono tag in Advanced Flow. Verifica il tag Risposta booleano con una scheda Logica. Descrivi ogni valore, ad esempio \"Bas sta dormendo: [Addormentato]\", e indica le unità di misura.",
+    "advancedHelp": "La scheda avanzata accetta JSON con state e questions e restituisce risposte grezze in JSON. Verifica probabilità e confidenza. Copia questo esempio e adattalo nella scheda Flow:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Guardare un film\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"Quale scena luminosa è adatta?\",\n      \"criteria\": {\n        \"film\": \"Guardare un film\",\n        \"reading\": \"Leggere\",\n        \"guests\": \"Stare con gli ospiti\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"Una notifica non urgente interromperebbe questa attività?\"\n    }\n  }\n}"
+  }
+}

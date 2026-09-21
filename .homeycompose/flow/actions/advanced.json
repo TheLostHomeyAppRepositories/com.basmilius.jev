@@ -1,15 +1,48 @@
 {
   "title": {
     "en": "Evaluate state and questions from JSON",
-    "nl": "Evalueer state en vragen uit JSON"
+    "nl": "Evalueer state en vragen uit JSON",
+    "de": "Zustand und Fragen aus JSON auswerten",
+    "fr": "Évaluer un état et des questions en JSON",
+    "es": "Evaluar estado y preguntas desde JSON",
+    "da": "Vurder tilstand og spørgsmål fra JSON",
+    "no": "Vurder tilstand og spørsmål fra JSON",
+    "sv": "Bedöm tillstånd och frågor från JSON",
+    "it": "Valuta stato e domande da JSON",
+    "pl": "Oceń stan i pytania z JSON",
+    "ru": "Оценить состояние и вопросы из JSON",
+    "ko": "JSON의 상태와 질문 평가",
+    "ar": "تقييم الحالة والأسئلة من JSON"
   },
   "titleFormatted": {
     "en": "Evaluate [[json]]",
-    "nl": "Evalueer [[json]]"
+    "nl": "Evalueer [[json]]",
+    "de": "[[json]] auswerten",
+    "fr": "Évaluer [[json]]",
+    "es": "Evaluar [[json]]",
+    "da": "Vurder [[json]]",
+    "no": "Vurder [[json]]",
+    "sv": "Bedöm [[json]]",
+    "it": "Valuta [[json]]",
+    "pl": "Oceń [[json]]",
+    "ru": "Оценить [[json]]",
+    "ko": "[[json]] 평가",
+    "ar": "تقييم [[json]]"
   },
   "hint": {
     "en": "Paste {\"state\":…, \"questions\":{…}}. Supports choice, noul and score, up to 64 questions. Returns all raw answers as JSON; apply your own probability and confidence checks. Uses the model in settings. Use descriptive state fields, e.g. {\"bas_is_sleeping\":true}, and include units for measurements.",
-    "nl": "Plak {\"state\":…, \"questions\":{…}}. Ondersteunt choice, noul en score, maximaal 64 vragen. Geeft alle ruwe antwoorden als JSON; controleer zelf kans en confidence. Gebruikt het model uit instellingen. Gebruik beschrijvende velden in state, bijvoorbeeld {\"bas_slaapt\":true}, en vermeld eenheden bij metingen."
+    "nl": "Plak {\"state\":…, \"questions\":{…}}. Ondersteunt choice, noul en score, maximaal 64 vragen. Geeft alle ruwe antwoorden als JSON; controleer zelf kans en confidence. Gebruikt het model uit instellingen. Gebruik beschrijvende velden in state, bijvoorbeeld {\"bas_slaapt\":true}, en vermeld eenheden bij metingen.",
+    "de": "Füge {\"state\":…, \"questions\":{…}} ein. Unterstützt choice, noul und score mit bis zu 64 Fragen. Liefert die Rohantworten als JSON. Prüfe Wahrscheinlichkeit und Konfidenz selbst. Verwendet das Modell aus den Einstellungen. Beschreibe die Zustandswerte und gib Maßeinheiten an.",
+    "fr": "Collez {\"state\":…, \"questions\":{…}}. Accepte choice, noul et score, jusqu’à 64 questions. Renvoie les réponses brutes en JSON. Vérifiez vous-même les probabilités et la confiance. Utilise le modèle des paramètres. Décrivez les valeurs de l’état et indiquez les unités.",
+    "es": "Pega {\"state\":…, \"questions\":{…}}. Admite choice, noul y score, hasta 64 preguntas. Devuelve las respuestas sin procesar en JSON. Comprueba la probabilidad y la confianza. Usa el modelo de los ajustes. Describe los valores del estado e incluye las unidades.",
+    "da": "Indsæt {\"state\":…, \"questions\":{…}}. Understøtter choice, noul og score med op til 64 spørgsmål. Returnerer rå svar som JSON. Kontroller selv sandsynlighed og sikkerhed. Bruger modellen fra indstillingerne. Beskriv tilstandens værdier og angiv måleenheder.",
+    "no": "Lim inn {\"state\":…, \"questions\":{…}}. Støtter choice, noul og score med opptil 64 spørsmål. Returnerer rå svar som JSON. Kontroller sannsynlighet og sikkerhet selv. Bruker modellen fra innstillingene. Beskriv tilstandsverdiene og oppgi måleenheter.",
+    "sv": "Klistra in {\"state\":…, \"questions\":{…}}. Stöder choice, noul och score med upp till 64 frågor. Returnerar råa svar som JSON. Kontrollera sannolikhet och säkerhet själv. Använder modellen från inställningarna. Beskriv tillståndets värden och ange måttenheter.",
+    "it": "Incolla {\"state\":…, \"questions\":{…}}. Supporta choice, noul e score, fino a 64 domande. Restituisce le risposte grezze in JSON. Verifica probabilità e confidenza. Usa il modello delle impostazioni. Descrivi i valori dello stato e indica le unità di misura.",
+    "pl": "Wklej {\"state\":…, \"questions\":{…}}. Obsługuje choice, noul i score, do 64 pytań. Zwraca surowe odpowiedzi w JSON. Samodzielnie sprawdzaj prawdopodobieństwo i pewność. Używa modelu z ustawień. Opisz wartości stanu i podaj jednostki.",
+    "ru": "Вставьте {\"state\":…, \"questions\":{…}}. Поддерживает choice, noul и score, до 64 вопросов. Возвращает исходные ответы в JSON. Проверяйте вероятность и уверенность самостоятельно. Использует модель из настроек. Опишите значения состояния и укажите единицы измерения.",
+    "ko": "{\"state\":…, \"questions\":{…}}를 붙여 넣으세요. choice, noul, score와 최대 64개 질문을 지원합니다. 원본 답변을 JSON으로 반환합니다. 확률과 신뢰도는 직접 확인하세요. 설정의 모델을 사용합니다. 상태 값의 의미와 측정 단위를 적어 주세요.",
+    "ar": "ألصق {\"state\":…, \"questions\":{…}}. يدعم choice وnoul وscore حتى 64 سؤالًا. يعيد الإجابات الخام بصيغة JSON. تحقق بنفسك من الاحتمالات والثقة. يستخدم النموذج المحدد في الإعدادات. اشرح قيم الحالة وأضف وحدات القياس."
   },
   "args": [
     {
@@ -17,7 +50,18 @@
       "type": "text",
       "title": {
         "en": "Request JSON",
-        "nl": "Aanvraag-JSON"
+        "nl": "Aanvraag-JSON",
+        "de": "Anfrage als JSON",
+        "fr": "Requête JSON",
+        "es": "Solicitud JSON",
+        "da": "JSON-anmodning",
+        "no": "JSON-forespørsel",
+        "sv": "JSON-förfrågan",
+        "it": "Richiesta JSON",
+        "pl": "Żądanie JSON",
+        "ru": "Запрос JSON",
+        "ko": "요청 JSON",
+        "ar": "طلب JSON"
       }
     }
   ],
@@ -27,7 +71,18 @@
       "type": "string",
       "title": {
         "en": "Answers (JSON)",
-        "nl": "Antwoorden (JSON)"
+        "nl": "Antwoorden (JSON)",
+        "de": "Antworten (JSON)",
+        "fr": "Réponses (JSON)",
+        "es": "Respuestas (JSON)",
+        "da": "Svar (JSON)",
+        "no": "Svar (JSON)",
+        "sv": "Svar (JSON)",
+        "it": "Risposte (JSON)",
+        "pl": "Odpowiedzi (JSON)",
+        "ru": "Ответы (JSON)",
+        "ko": "답변 (JSON)",
+        "ar": "الإجابات (JSON)"
       }
     },
     {
@@ -35,7 +90,18 @@
       "type": "string",
       "title": {
         "en": "Model",
-        "nl": "Model"
+        "nl": "Model",
+        "de": "Modell",
+        "fr": "Modèle",
+        "es": "Modelo",
+        "da": "Model",
+        "no": "Modell",
+        "sv": "Modell",
+        "it": "Modello",
+        "pl": "Model",
+        "ru": "Модель",
+        "ko": "모델",
+        "ar": "النموذج"
       }
     },
     {
@@ -43,7 +109,18 @@
       "type": "number",
       "title": {
         "en": "Input tokens",
-        "nl": "Inputtokens"
+        "nl": "Inputtokens",
+        "de": "Eingabetokens",
+        "fr": "Tokens en entrée",
+        "es": "Tokens de entrada",
+        "da": "Inputtokens",
+        "no": "Inndatatokener",
+        "sv": "Indatatoken",
+        "it": "Token di input",
+        "pl": "Tokeny wejściowe",
+        "ru": "Входные токены",
+        "ko": "입력 토큰",
+        "ar": "رموز الإدخال"
       }
     },
     {
@@ -51,7 +128,18 @@
       "type": "number",
       "title": {
         "en": "Output tokens",
-        "nl": "Outputtokens"
+        "nl": "Outputtokens",
+        "de": "Ausgabetokens",
+        "fr": "Tokens en sortie",
+        "es": "Tokens de salida",
+        "da": "Outputtokens",
+        "no": "Utdatatokener",
+        "sv": "Utdatatoken",
+        "it": "Token di output",
+        "pl": "Tokeny wyjściowe",
+        "ru": "Выходные токены",
+        "ko": "출력 토큰",
+        "ar": "رموز الإخراج"
       }
     },
     {
@@ -59,7 +147,18 @@
       "type": "string",
       "title": {
         "en": "Evaluation ID",
-        "nl": "Evaluatie-ID"
+        "nl": "Evaluatie-ID",
+        "de": "Auswertungs-ID",
+        "fr": "Identifiant d’évaluation",
+        "es": "ID de evaluación",
+        "da": "Vurderings-ID",
+        "no": "Vurderings-ID",
+        "sv": "Bedömnings-ID",
+        "it": "ID valutazione",
+        "pl": "ID oceny",
+        "ru": "ID оценки",
+        "ko": "평가 ID",
+        "ar": "معرّف التقييم"
       }
     },
     {
@@ -67,7 +166,18 @@
       "type": "number",
       "title": {
         "en": "Duration (ms)",
-        "nl": "Duur (ms)"
+        "nl": "Duur (ms)",
+        "de": "Dauer (ms)",
+        "fr": "Durée (ms)",
+        "es": "Duración (ms)",
+        "da": "Varighed (ms)",
+        "no": "Varighet (ms)",
+        "sv": "Varaktighet (ms)",
+        "it": "Durata (ms)",
+        "pl": "Czas trwania (ms)",
+        "ru": "Длительность (мс)",
+        "ko": "소요 시간 (ms)",
+        "ar": "المدة (مللي ثانية)"
       }
     }
   ]

@@ -1,0 +1,25 @@
+{
+  "language": "es",
+  "settings": {
+    "introDetail": "Haz preguntas a Jev directamente en tus Homey Flows. Tú aportas el estado y las posibles respuestas.",
+    "connection": "Conexión",
+    "apiKey": "Clave API de TypeSafe",
+    "keySaved": "Hay una clave guardada. Déjalo vacío para conservarla.",
+    "keyMissing": "Añade tu clave API de TypeSafe para empezar.",
+    "clearKey": "Eliminar la clave guardada",
+    "model": "Modelo",
+    "timeout": "Tiempo límite de solicitud (segundos)",
+    "callLimit": "Máximo de llamadas por minuto",
+    "saveConnection": "Guardar conexión",
+    "testConnection": "Probar la conexión guardada",
+    "connectionOk": "La conexión funciona con",
+    "saved": "Guardado.",
+    "billable": "Las pruebas de conexión y las evaluaciones Flow llaman a TypeSafe y consumen crédito API.",
+    "privacy": "La app no consulta dispositivos ni guarda estados, preguntas o respuestas. Homey guarda la configuración de las tarjetas en el Flow.",
+    "loading": "Cargando…",
+    "retry": "Reintentar",
+    "flowHelp": "Todas las tarjetas de Jev están en Entonces. Elige sí/no, una respuesta de una lista o una puntuación. Introduce el estado y una pregunta con texto o etiquetas Flow. Los resultados son etiquetas en Advanced Flow. Comprueba la etiqueta Respuesta booleana con una tarjeta Lógica. Describe cada valor, por ejemplo «Bas está durmiendo: [Dormido]», e incluye las unidades.",
+    "advancedHelp": "La tarjeta avanzada acepta JSON con state y questions y devuelve respuestas sin procesar en JSON. Comprueba la probabilidad y la confianza. Copia este ejemplo y adáptalo en la tarjeta Flow:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Ver una película\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"¿Qué escena de iluminación encaja?\",\n      \"criteria\": {\n        \"film\": \"Ver una película\",\n        \"reading\": \"Leer\",\n        \"guests\": \"Estar con invitados\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"¿Una notificación no urgente interrumpiría la actividad?\"\n    }\n  }\n}"
+  }
+}

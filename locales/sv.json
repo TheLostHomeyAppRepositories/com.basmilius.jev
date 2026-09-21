@@ -1,0 +1,25 @@
+{
+  "language": "sv",
+  "settings": {
+    "introDetail": "Ställ frågor till Jev direkt i dina Homey Flows. Du anger tillståndet och de möjliga svaren.",
+    "connection": "Anslutning",
+    "apiKey": "TypeSafe API-nyckel",
+    "keySaved": "En nyckel är sparad. Lämna tomt för att behålla den.",
+    "keyMissing": "Lägg till din TypeSafe API-nyckel för att komma igång.",
+    "clearKey": "Ta bort den sparade nyckeln",
+    "model": "Modell",
+    "timeout": "Tidsgräns för förfrågningar (sekunder)",
+    "callLimit": "Maximalt antal anrop per minut",
+    "saveConnection": "Spara anslutning",
+    "testConnection": "Testa sparad anslutning",
+    "connectionOk": "Anslutningen fungerar med",
+    "saved": "Sparat.",
+    "billable": "Anslutningstester och Flow-bedömningar anropar TypeSafe och använder API-kredit.",
+    "privacy": "Appen läser inte enheter och sparar inte tillstånd, frågor eller svar. Homey sparar kortens konfiguration i Flow.",
+    "loading": "Läser in…",
+    "retry": "Försök igen",
+    "flowHelp": "Alla Jev-kort finns under Då. Välj ja/nej, ett svar från en lista eller en poäng. Ange tillstånd och en fråga med text eller Flow-taggar. Resultaten returneras som taggar i Advanced Flow. Kontrollera den booleska Svar-taggen med ett logikkort. Beskriv varje värde, t.ex. \"Bas sover: [Sover]\", och ange måttenheter.",
+    "advancedHelp": "Det avancerade kortet tar emot JSON med state och questions och returnerar råa svar som JSON. Kontrollera sannolikhet och säkerhet själv. Kopiera exemplet och anpassa det i Flow-kortet:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Titta på film\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"Vilken ljusscen passar?\",\n      \"criteria\": {\n        \"film\": \"Titta på film\",\n        \"reading\": \"Läsa\",\n        \"guests\": \"Umgås med gäster\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"Skulle en notis som inte är brådskande störa aktiviteten?\"\n    }\n  }\n}"
+  }
+}

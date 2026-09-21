@@ -1,0 +1,25 @@
+{
+  "language": "de",
+  "settings": {
+    "introDetail": "Stelle Jev Fragen direkt in deinen Homey Flows. Du lieferst den Zustand und die möglichen Antworten.",
+    "connection": "Verbindung",
+    "apiKey": "TypeSafe-API-Schlüssel",
+    "keySaved": "Ein Schlüssel ist gespeichert. Zum Beibehalten leer lassen.",
+    "keyMissing": "Füge deinen TypeSafe-API-Schlüssel hinzu, um zu beginnen.",
+    "clearKey": "Gespeicherten Schlüssel entfernen",
+    "model": "Modell",
+    "timeout": "Zeitlimit pro Anfrage (Sekunden)",
+    "callLimit": "Maximale Aufrufe pro Minute",
+    "saveConnection": "Verbindung speichern",
+    "testConnection": "Gespeicherte Verbindung testen",
+    "connectionOk": "Verbindung funktioniert mit",
+    "saved": "Gespeichert.",
+    "billable": "Verbindungstests und Flow-Auswertungen rufen TypeSafe auf und verbrauchen API-Guthaben.",
+    "privacy": "Die App liest keine Geräte aus und speichert keine Zustände, Fragen oder Antworten. Homey speichert die Kartenkonfiguration im Flow.",
+    "loading": "Laden…",
+    "retry": "Erneut versuchen",
+    "flowHelp": "Alle Jev-Karten stehen unter Dann. Wähle Ja/Nein, eine Antwort aus einer Liste oder eine Bewertung. Gib Zustand und eine Frage als Text oder mit Flow-Tags ein. Advanced Flow erhält die Ergebnisse als Tags. Prüfe das boolesche Antwort-Tag mit einer Logikkarte. Beschreibe jeden Wert, z. B. „Bas schläft: [Schläft]“, und gib Maßeinheiten an.",
+    "advancedHelp": "Die erweiterte Karte nimmt JSON mit state und questions an und liefert Rohantworten als JSON. Prüfe Wahrscheinlichkeit und Konfidenz selbst. Kopiere dieses Beispiel und passe es in der Flow-Karte an:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Film schauen\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"Welche Lichtszene passt?\",\n      \"criteria\": {\n        \"film\": \"Film schauen\",\n        \"reading\": \"Lesen\",\n        \"guests\": \"Zeit mit Gästen verbringen\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"Würde eine nicht dringende Benachrichtigung die Aktivität stören?\"\n    }\n  }\n}"
+  }
+}

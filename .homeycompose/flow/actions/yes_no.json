@@ -1,15 +1,48 @@
 {
   "title": {
     "en": "Ask a yes/no question",
-    "nl": "Stel een ja/nee-vraag"
+    "nl": "Stel een ja/nee-vraag",
+    "de": "Eine Ja/Nein-Frage stellen",
+    "fr": "Poser une question oui/non",
+    "es": "Hacer una pregunta de sí/no",
+    "da": "Stil et ja/nej-spørgsmål",
+    "no": "Still et ja/nei-spørsmål",
+    "sv": "Ställ en ja/nej-fråga",
+    "it": "Poni una domanda sì/no",
+    "pl": "Zadaj pytanie tak/nie",
+    "ru": "Задать вопрос да/нет",
+    "ko": "예/아니요 질문하기",
+    "ar": "طرح سؤال بنعم أو لا"
   },
   "titleFormatted": {
     "en": "Ask [[question]] with state [[state]] with minimum probability [[minimum]]",
-    "nl": "Stel [[question]] met state [[state]] met minimale kans [[minimum]]"
+    "nl": "Stel [[question]] met state [[state]] met minimale kans [[minimum]]",
+    "de": "[[question]] mit Zustand [[state]] und Mindestwahrscheinlichkeit [[minimum]] fragen",
+    "fr": "Poser [[question]] avec l’état [[state]] et une probabilité minimale de [[minimum]]",
+    "es": "Preguntar [[question]] con estado [[state]] y probabilidad mínima [[minimum]]",
+    "da": "Stil [[question]] med tilstand [[state]] og mindste sandsynlighed [[minimum]]",
+    "no": "Still [[question]] med tilstand [[state]] og minste sannsynlighet [[minimum]]",
+    "sv": "Ställ [[question]] med tillstånd [[state]] och minsta sannolikhet [[minimum]]",
+    "it": "Chiedi [[question]] con stato [[state]] e probabilità minima [[minimum]]",
+    "pl": "Zapytaj [[question]] przy stanie [[state]] i minimalnym prawdopodobieństwie [[minimum]]",
+    "ru": "Задать [[question]] при состоянии [[state]] с минимальной вероятностью [[minimum]]",
+    "ko": "상태 [[state]]에서 최소 확률 [[minimum]]으로 [[question]] 질문",
+    "ar": "اطرح [[question]] مع الحالة [[state]] بحد أدنى للاحتمال [[minimum]]"
   },
   "hint": {
     "en": "Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements. One question. Returns a boolean Answer tag for use in Advanced Flow. Accept yes when its probability meets the minimum, no when it is at most 1 minus the minimum. Uncertainty and API errors stop the card.",
-    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Eén vraag. Geeft een boolean-tag Antwoord terug voor gebruik in Advanced Flow. Ja bij een kans vanaf het minimum, nee bij maximaal 1 min het minimum. Twijfel en API-fouten stoppen de kaart."
+    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Eén vraag. Geeft een boolean-tag Antwoord terug voor gebruik in Advanced Flow. Ja bij een kans vanaf het minimum, nee bij maximaal 1 min het minimum. Twijfel en API-fouten stoppen de kaart.",
+    "de": "Beschreibe die Zustandswerte samt Einheiten, z. B. „Bas schläft: [Schläft]“ mit einem Flow-Tag. Eine Frage, ein boolesches Antwort-Tag für Advanced Flow. Ja ab der Mindestwahrscheinlichkeit, Nein bei höchstens 1 minus diesem Wert. Unsicherheit und API-Fehler stoppen die Karte.",
+    "fr": "Décrivez les valeurs de l’état et leurs unités, par exemple « Bas dort : [Endormi] » avec un tag Flow. Une question, un tag Réponse booléen pour Advanced Flow. Oui si la probabilité atteint le minimum, non si elle est au plus égale à 1 moins ce minimum. L’incertitude et les erreurs API arrêtent la carte.",
+    "es": "Describe los valores del estado y sus unidades, por ejemplo «Bas está durmiendo: [Dormido]» con una etiqueta Flow. Una pregunta, una etiqueta Respuesta booleana para Advanced Flow. Sí cuando la probabilidad alcanza el mínimo, no cuando es como máximo 1 menos ese mínimo. La incertidumbre y los errores de API detienen la tarjeta.",
+    "da": "Beskriv tilstandens værdier og enheder, f.eks. \"Bas sover: [Sover]\" med et Flow-tag. Ét spørgsmål giver et boolesk Svar-tag til Advanced Flow. Ja når sandsynligheden når minimum, nej når den højst er 1 minus minimum. Usikkerhed og API-fejl stopper kortet.",
+    "no": "Beskriv tilstandsverdiene og enhetene, f.eks. \"Bas sover: [Sover]\" med en Flow-tagg. Ett spørsmål gir en boolsk Svar-tagg for Advanced Flow. Ja når sannsynligheten når minimum, nei når den er høyst 1 minus minimum. Usikkerhet og API-feil stopper kortet.",
+    "sv": "Beskriv tillståndets värden och enheter, t.ex. \"Bas sover: [Sover]\" med en Flow-tagg. En fråga ger en boolesk Svar-tagg för Advanced Flow. Ja när sannolikheten når minimum, nej när den är högst 1 minus minimum. Osäkerhet och API-fel stoppar kortet.",
+    "it": "Descrivi i valori dello stato e le unità, ad esempio \"Bas sta dormendo: [Addormentato]\" con un tag Flow. Una domanda restituisce un tag Risposta booleano per Advanced Flow. Sì se la probabilità raggiunge il minimo, no se è al massimo 1 meno il minimo. Incertezza ed errori API interrompono la scheda.",
+    "pl": "Opisz wartości stanu i jednostki, np. „Bas śpi: [Śpi]” ze znacznikiem Flow. Jedno pytanie zwraca logiczny znacznik Odpowiedź do Advanced Flow. Tak, gdy prawdopodobieństwo osiąga minimum; nie, gdy wynosi najwyżej 1 minus minimum. Niepewność i błędy API zatrzymują kartę.",
+    "ru": "Опишите значения состояния и единицы, например «Бас спит: [Спит]» с тегом Flow. Один вопрос возвращает логический тег «Ответ» для Advanced Flow. Да, если вероятность достигает минимума; нет, если она не больше 1 минус минимум. Неуверенность и ошибки API останавливают карточку.",
+    "ko": "상태 값과 단위를 설명하세요. 예: Flow 태그를 넣은 \"Bas가 자고 있음: [수면 중]\". 질문 하나에 대해 Advanced Flow용 불리언 답변 태그를 반환합니다. 확률이 최솟값 이상이면 예, 1에서 최솟값을 뺀 값 이하이면 아니요입니다. 불확실하거나 API 오류가 발생하면 카드가 중단됩니다.",
+    "ar": "اشرح قيم الحالة ووحداتها، مثل \"باس نائم: [نائم]\" باستخدام وسم Flow. يعيد سؤال واحد وسم إجابة منطقيًا لاستخدامه في Advanced Flow. نعم عندما يبلغ الاحتمال الحد الأدنى، ولا عندما لا يتجاوز 1 ناقص الحد الأدنى. عدم اليقين وأخطاء API يوقفان البطاقة."
   },
   "args": [
     {
@@ -17,7 +50,18 @@
       "type": "text",
       "title": {
         "en": "State",
-        "nl": "State"
+        "nl": "State",
+        "de": "Zustand",
+        "fr": "État",
+        "es": "Estado",
+        "da": "Tilstand",
+        "no": "Tilstand",
+        "sv": "Tillstånd",
+        "it": "Stato",
+        "pl": "Stan",
+        "ru": "Состояние",
+        "ko": "상태",
+        "ar": "الحالة"
       }
     },
     {
@@ -25,7 +69,18 @@
       "type": "text",
       "title": {
         "en": "Question",
-        "nl": "Vraag"
+        "nl": "Vraag",
+        "de": "Frage",
+        "fr": "Question",
+        "es": "Pregunta",
+        "da": "Spørgsmål",
+        "no": "Spørsmål",
+        "sv": "Fråga",
+        "it": "Domanda",
+        "pl": "Pytanie",
+        "ru": "Вопрос",
+        "ko": "질문",
+        "ar": "السؤال"
       }
     },
     {
@@ -33,7 +88,18 @@
       "type": "number",
       "title": {
         "en": "Minimum probability (0.51–1)",
-        "nl": "Minimale kans (0,51–1)"
+        "nl": "Minimale kans (0,51–1)",
+        "de": "Mindestwahrscheinlichkeit (0,51–1)",
+        "fr": "Probabilité minimale (0,51–1)",
+        "es": "Probabilidad mínima (0,51–1)",
+        "da": "Mindste sandsynlighed (0,51–1)",
+        "no": "Minste sannsynlighet (0,51–1)",
+        "sv": "Minsta sannolikhet (0,51–1)",
+        "it": "Probabilità minima (0,51–1)",
+        "pl": "Minimalne prawdopodobieństwo (0,51–1)",
+        "ru": "Минимальная вероятность (0,51–1)",
+        "ko": "최소 확률 (0.51–1)",
+        "ar": "الحد الأدنى للاحتمال (0.51–1)"
       },
       "min": 0.51,
       "max": 1,
@@ -47,7 +113,18 @@
       "type": "boolean",
       "title": {
         "en": "Answer",
-        "nl": "Antwoord"
+        "nl": "Antwoord",
+        "de": "Antwort",
+        "fr": "Réponse",
+        "es": "Respuesta",
+        "da": "Svar",
+        "no": "Svar",
+        "sv": "Svar",
+        "it": "Risposta",
+        "pl": "Odpowiedź",
+        "ru": "Ответ",
+        "ko": "답변",
+        "ar": "الإجابة"
       }
     },
     {
@@ -55,7 +132,18 @@
       "type": "number",
       "title": {
         "en": "Probability of yes",
-        "nl": "Kans op ja"
+        "nl": "Kans op ja",
+        "de": "Wahrscheinlichkeit für Ja",
+        "fr": "Probabilité de oui",
+        "es": "Probabilidad de sí",
+        "da": "Sandsynlighed for ja",
+        "no": "Sannsynlighet for ja",
+        "sv": "Sannolikhet för ja",
+        "it": "Probabilità di sì",
+        "pl": "Prawdopodobieństwo odpowiedzi tak",
+        "ru": "Вероятность ответа да",
+        "ko": "예일 확률",
+        "ar": "احتمال نعم"
       }
     },
     {
@@ -63,7 +151,18 @@
       "type": "string",
       "title": {
         "en": "Model",
-        "nl": "Model"
+        "nl": "Model",
+        "de": "Modell",
+        "fr": "Modèle",
+        "es": "Modelo",
+        "da": "Model",
+        "no": "Modell",
+        "sv": "Modell",
+        "it": "Modello",
+        "pl": "Model",
+        "ru": "Модель",
+        "ko": "모델",
+        "ar": "النموذج"
       }
     },
     {
@@ -71,7 +170,18 @@
       "type": "number",
       "title": {
         "en": "Input tokens",
-        "nl": "Inputtokens"
+        "nl": "Inputtokens",
+        "de": "Eingabetokens",
+        "fr": "Tokens en entrée",
+        "es": "Tokens de entrada",
+        "da": "Inputtokens",
+        "no": "Inndatatokener",
+        "sv": "Indatatoken",
+        "it": "Token di input",
+        "pl": "Tokeny wejściowe",
+        "ru": "Входные токены",
+        "ko": "입력 토큰",
+        "ar": "رموز الإدخال"
       }
     },
     {
@@ -79,7 +189,18 @@
       "type": "number",
       "title": {
         "en": "Output tokens",
-        "nl": "Outputtokens"
+        "nl": "Outputtokens",
+        "de": "Ausgabetokens",
+        "fr": "Tokens en sortie",
+        "es": "Tokens de salida",
+        "da": "Outputtokens",
+        "no": "Utdatatokener",
+        "sv": "Utdatatoken",
+        "it": "Token di output",
+        "pl": "Tokeny wyjściowe",
+        "ru": "Выходные токены",
+        "ko": "출력 토큰",
+        "ar": "رموز الإخراج"
       }
     },
     {
@@ -87,7 +208,18 @@
       "type": "string",
       "title": {
         "en": "Evaluation ID",
-        "nl": "Evaluatie-ID"
+        "nl": "Evaluatie-ID",
+        "de": "Auswertungs-ID",
+        "fr": "Identifiant d’évaluation",
+        "es": "ID de evaluación",
+        "da": "Vurderings-ID",
+        "no": "Vurderings-ID",
+        "sv": "Bedömnings-ID",
+        "it": "ID valutazione",
+        "pl": "ID oceny",
+        "ru": "ID оценки",
+        "ko": "평가 ID",
+        "ar": "معرّف التقييم"
       }
     },
     {
@@ -95,7 +227,18 @@
       "type": "number",
       "title": {
         "en": "Duration (ms)",
-        "nl": "Duur (ms)"
+        "nl": "Duur (ms)",
+        "de": "Dauer (ms)",
+        "fr": "Durée (ms)",
+        "es": "Duración (ms)",
+        "da": "Varighed (ms)",
+        "no": "Varighet (ms)",
+        "sv": "Varaktighet (ms)",
+        "it": "Durata (ms)",
+        "pl": "Czas trwania (ms)",
+        "ru": "Длительность (мс)",
+        "ko": "소요 시간 (ms)",
+        "ar": "المدة (مللي ثانية)"
       }
     }
   ]

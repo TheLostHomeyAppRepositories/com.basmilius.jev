@@ -10,7 +10,7 @@
                 <FormGroup title="Homey Flow">
                     <p class="description">{{ t('flowHelp') }}</p>
                     <p class="description">{{ t('advancedHelp') }}</p>
-                    <pre :class="$style.example">{{ example }}</pre>
+                    <pre dir="ltr" :class="$style.example">{{ example }}</pre>
                     <p class="description">{{ t('privacy') }}</p>
                 </FormGroup>
             </Form>
@@ -26,13 +26,7 @@ import { t } from '@/i18n';
 import { useJev } from '@/useJev';
 import type { Settings } from '../../src/types';
 
-const example = JSON.stringify({
-    state: {activity: 'film', guests: true},
-    questions: {
-        scene: {type: 'choice', instructions: 'Which light scene fits?', criteria: {film: 'Watching a film', bright: 'Reading or working', cozy: 'Talking with guests'}},
-        notify: {type: 'noul', instructions: 'Would a non-urgent notification interrupt the activity?'}
-    }
-}, null, 2);
+const example = t('example');
 
 const {settings, busy, error, notice, run, reload} = useJev();
 

@@ -1,0 +1,25 @@
+{
+  "language": "ko",
+  "settings": {
+    "introDetail": "Homey Flow에서 Jev에 직접 질문하세요. 상태와 가능한 답변은 직접 제공합니다.",
+    "connection": "연결",
+    "apiKey": "TypeSafe API 키",
+    "keySaved": "저장된 키가 있습니다. 유지하려면 비워 두세요.",
+    "keyMissing": "시작하려면 TypeSafe API 키를 추가하세요.",
+    "clearKey": "저장된 키 삭제",
+    "model": "모델",
+    "timeout": "요청 제한 시간 (초)",
+    "callLimit": "분당 최대 호출 수",
+    "saveConnection": "연결 저장",
+    "testConnection": "저장된 연결 테스트",
+    "connectionOk": "연결된 모델:",
+    "saved": "저장되었습니다.",
+    "billable": "연결 테스트와 Flow 평가는 TypeSafe를 호출하며 API 크레딧을 사용합니다.",
+    "privacy": "앱은 기기를 읽거나 상태, 질문, 답변을 저장하지 않습니다. Homey는 카드 설정을 Flow의 일부로 저장합니다.",
+    "loading": "불러오는 중…",
+    "retry": "다시 시도",
+    "flowHelp": "모든 Jev 카드는 실행 섹션에 있습니다. 예/아니요, 목록에서 선택 또는 점수 카드를 사용하세요. 텍스트나 Flow 태그로 상태와 질문 하나를 입력하세요. 결과는 Advanced Flow 태그로 반환됩니다. 로직 카드로 불리언 답변 태그를 확인하세요. \"Bas가 자고 있음: [수면 중]\"처럼 각 값의 의미와 측정 단위를 적어 주세요.",
+    "advancedHelp": "고급 카드는 state와 questions가 담긴 JSON을 받아 원본 답변을 JSON으로 반환합니다. 확률과 신뢰도는 직접 확인하세요. 이 예시를 복사해 Flow 카드에서 수정하세요:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"영화 보기\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"어떤 조명 장면이 어울리나요?\",\n      \"criteria\": {\n        \"film\": \"영화 보기\",\n        \"reading\": \"독서\",\n        \"guests\": \"손님과 대화\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"긴급하지 않은 알림이 현재 활동을 방해할까요?\"\n    }\n  }\n}"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "language": "fr",
+  "settings": {
+    "introDetail": "Posez des questions à Jev directement dans vos Homey Flows. Vous fournissez l’état et les réponses possibles.",
+    "connection": "Connexion",
+    "apiKey": "Clé API TypeSafe",
+    "keySaved": "Une clé est enregistrée. Laissez vide pour la conserver.",
+    "keyMissing": "Ajoutez votre clé API TypeSafe pour commencer.",
+    "clearKey": "Supprimer la clé enregistrée",
+    "model": "Modèle",
+    "timeout": "Délai maximal d’une requête (secondes)",
+    "callLimit": "Nombre maximal d’appels par minute",
+    "saveConnection": "Enregistrer la connexion",
+    "testConnection": "Tester la connexion enregistrée",
+    "connectionOk": "La connexion fonctionne avec",
+    "saved": "Enregistré.",
+    "billable": "Les tests de connexion et les évaluations Flow appellent TypeSafe et consomment du crédit API.",
+    "privacy": "L’app ne lit pas les appareils et ne conserve ni état, ni questions, ni réponses. Homey enregistre la configuration des cartes dans le Flow.",
+    "loading": "Chargement…",
+    "retry": "Réessayer",
+    "flowHelp": "Toutes les cartes Jev se trouvent sous Alors. Choisissez oui/non, une réponse dans une liste ou un score. Saisissez l’état et une question avec du texte ou des tags Flow. Les résultats sont des tags dans Advanced Flow. Testez le tag Réponse booléen avec une carte Logique. Décrivez chaque valeur, par exemple « Bas dort : [Endormi] », et indiquez les unités.",
+    "advancedHelp": "La carte avancée accepte du JSON contenant state et questions et renvoie les réponses brutes en JSON. Vérifiez vous-même les probabilités et la confiance. Copiez cet exemple et adaptez-le dans la carte Flow :",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Regarder un film\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"Quelle scène lumineuse convient ?\",\n      \"criteria\": {\n        \"film\": \"Regarder un film\",\n        \"reading\": \"Lire\",\n        \"guests\": \"Recevoir des invités\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"Une notification non urgente interromprait-elle cette activité ?\"\n    }\n  }\n}"
+  }
+}

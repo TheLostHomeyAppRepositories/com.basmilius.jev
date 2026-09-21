@@ -8,11 +8,33 @@
   ],
   "name": {
     "en": "Jev",
-    "nl": "Jev"
+    "nl": "Jev",
+    "de": "Jev",
+    "fr": "Jev",
+    "es": "Jev",
+    "da": "Jev",
+    "no": "Jev",
+    "sv": "Jev",
+    "it": "Jev",
+    "pl": "Jev",
+    "ru": "Jev",
+    "ko": "Jev",
+    "ar": "Jev"
   },
   "description": {
     "en": "Make decisions in your Flows with your own context.",
-    "nl": "Neem beslissingen in je Flows met je eigen context."
+    "nl": "Neem beslissingen in je Flows met je eigen context.",
+    "de": "Entscheidungen in deinen Flows mit deinem eigenen Kontext.",
+    "fr": "Prenez des décisions dans vos Flows avec votre propre contexte.",
+    "es": "Toma decisiones en tus Flows con tu propio contexto.",
+    "da": "Træf beslutninger i dine Flows med din egen kontekst.",
+    "no": "Ta beslutninger i dine Flows med din egen kontekst.",
+    "sv": "Fatta beslut i dina Flows med din egen kontext.",
+    "it": "Prendi decisioni nei tuoi Flow usando il tuo contesto.",
+    "pl": "Podejmuj decyzje w swoich Flow na podstawie własnego kontekstu.",
+    "ru": "Принимайте решения в Flow на основе вашего контекста.",
+    "ko": "직접 제공한 맥락으로 Flow에서 결정을 내리세요.",
+    "ar": "اتخذ قرارات في تدفقاتك باستخدام السياق الذي تقدمه."
   },
   "category": [
     "tools"

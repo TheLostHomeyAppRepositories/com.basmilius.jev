@@ -1,15 +1,48 @@
 {
   "title": {
     "en": "Score a question with 3 levels",
-    "nl": "Beoordeel een vraag met 3 niveaus"
+    "nl": "Beoordeel een vraag met 3 niveaus",
+    "de": "Eine Frage mit 3 Stufen bewerten",
+    "fr": "Évaluer une question sur 3 niveaux",
+    "es": "Puntuar una pregunta con 3 niveles",
+    "da": "Vurder et spørgsmål med 3 niveauer",
+    "no": "Vurder et spørsmål med 3 nivåer",
+    "sv": "Bedöm en fråga med 3 nivåer",
+    "it": "Valuta una domanda su 3 livelli",
+    "pl": "Oceń pytanie na 3 poziomach",
+    "ru": "Оценить вопрос по 3 уровням",
+    "ko": "질문을 3단계로 평가",
+    "ar": "تقييم سؤال على 3 مستويات"
   },
   "titleFormatted": {
     "en": "Score [[question]] with state [[state]] on levels [[low]] / [[middle]] / [[high]] with minimum confidence [[minimum]]",
-    "nl": "Beoordeel [[question]] met state [[state]] op niveaus [[low]] / [[middle]] / [[high]] met minimale confidence [[minimum]]"
+    "nl": "Beoordeel [[question]] met state [[state]] op niveaus [[low]] / [[middle]] / [[high]] met minimale confidence [[minimum]]",
+    "de": "[[question]] mit Zustand [[state]] auf den Stufen [[low]] / [[middle]] / [[high]] mit Mindestkonfidenz [[minimum]] bewerten",
+    "fr": "Évaluer [[question]] avec l’état [[state]], les niveaux [[low]] / [[middle]] / [[high]] et une confiance minimale de [[minimum]]",
+    "es": "Puntuar [[question]] con estado [[state]], niveles [[low]] / [[middle]] / [[high]] y confianza mínima [[minimum]]",
+    "da": "Vurder [[question]] med tilstand [[state]] på niveauerne [[low]] / [[middle]] / [[high]] med mindst sikkerhed [[minimum]]",
+    "no": "Vurder [[question]] med tilstand [[state]] på nivåene [[low]] / [[middle]] / [[high]] med minste sikkerhet [[minimum]]",
+    "sv": "Bedöm [[question]] med tillstånd [[state]] på nivåerna [[low]] / [[middle]] / [[high]] med minsta säkerhet [[minimum]]",
+    "it": "Valuta [[question]] con stato [[state]], livelli [[low]] / [[middle]] / [[high]] e confidenza minima [[minimum]]",
+    "pl": "Oceń [[question]] przy stanie [[state]], poziomach [[low]] / [[middle]] / [[high]] i minimalnej pewności [[minimum]]",
+    "ru": "Оценить [[question]] при состоянии [[state]] по уровням [[low]] / [[middle]] / [[high]] с минимальной уверенностью [[minimum]]",
+    "ko": "상태 [[state]]에서 [[question]]을 [[low]] / [[middle]] / [[high]] 단계로 최소 신뢰도 [[minimum]]으로 평가",
+    "ar": "قيّم [[question]] مع الحالة [[state]] على المستويات [[low]] / [[middle]] / [[high]] بحد أدنى للثقة [[minimum]]"
   },
   "hint": {
     "en": "Describe what each value in state means. Example: \"Bas is sleeping: [Asleep]\"; insert the Flow tag at [Asleep]. Include units for measurements. Ask one question. Describe concrete situations for the low, middle and high levels, rather than just numbers. Returns a score from 0 to 2, including fractions. The score is a position on your scale, not a dimming percentage or temperature. A result below the minimum confidence follows the error path.",
-    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Stel één vraag. Beschrijf concrete situaties voor het lage, middelste en hoge niveau, in plaats van alleen getallen. Geeft een score van 0 tot 2, ook met decimalen. De score is een positie op je schaal, geen dimpercentage of temperatuur. Een resultaat onder de minimale confidence volgt het foutpad."
+    "nl": "Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid. Stel één vraag. Beschrijf concrete situaties voor het lage, middelste en hoge niveau, in plaats van alleen getallen. Geeft een score van 0 tot 2, ook met decimalen. De score is een positie op je schaal, geen dimpercentage of temperatuur. Een resultaat onder de minimale confidence volgt het foutpad.",
+    "de": "Beschreibe die Zustandswerte samt Einheiten, z. B. „Bas schläft: [Schläft]“ mit einem Flow-Tag. Stelle eine Frage und beschreibe konkrete Situationen für die drei Stufen. Liefert einen Wert von 0 bis 2, auch mit Nachkommastellen. Dies ist eine Position auf deiner Skala, kein Dimmwert oder Temperaturwert. Bei zu geringer Konfidenz wird der Fehlerpfad verwendet.",
+    "fr": "Décrivez les valeurs de l’état et leurs unités, par exemple « Bas dort : [Endormi] » avec un tag Flow. Posez une question et décrivez des situations concrètes pour les trois niveaux. Renvoie un score de 0 à 2, décimales comprises. Il situe la réponse sur votre échelle, ce n’est pas un pourcentage d’éclairage ni une température. Une confiance insuffisante déclenche le chemin d’erreur.",
+    "es": "Describe los valores del estado y sus unidades, por ejemplo «Bas está durmiendo: [Dormido]» con una etiqueta Flow. Haz una pregunta y describe situaciones concretas para los tres niveles. Devuelve una puntuación de 0 a 2, con decimales. Es una posición en tu escala, no un porcentaje de iluminación ni una temperatura. Una confianza insuficiente activa la ruta de error.",
+    "da": "Beskriv tilstandens værdier og enheder, f.eks. \"Bas sover: [Sover]\" med et Flow-tag. Stil ét spørgsmål og beskriv konkrete situationer for de tre niveauer. Returnerer en score fra 0 til 2 med decimaler. Det er en position på din skala, ikke en dæmpningsprocent eller temperatur. For lav sikkerhed aktiverer fejlstien.",
+    "no": "Beskriv tilstandsverdiene og enhetene, f.eks. \"Bas sover: [Sover]\" med en Flow-tagg. Still ett spørsmål og beskriv konkrete situasjoner for de tre nivåene. Returnerer en poengsum fra 0 til 2 med desimaler. Dette er en plassering på skalaen din, ikke en dimmeprosent eller temperatur. For lav sikkerhet aktiverer feilbanen.",
+    "sv": "Beskriv tillståndets värden och enheter, t.ex. \"Bas sover: [Sover]\" med en Flow-tagg. Ställ en fråga och beskriv konkreta situationer för de tre nivåerna. Returnerar en poäng från 0 till 2 med decimaler. Det är en position på din skala, inte en dimningsprocent eller temperatur. För låg säkerhet aktiverar felvägen.",
+    "it": "Descrivi i valori dello stato e le unità, ad esempio \"Bas sta dormendo: [Addormentato]\" con un tag Flow. Poni una domanda e descrivi situazioni concrete per i tre livelli. Restituisce un punteggio da 0 a 2, anche decimale. È una posizione sulla tua scala, non una percentuale di luminosità o una temperatura. Una confidenza insufficiente attiva il percorso di errore.",
+    "pl": "Opisz wartości stanu i jednostki, np. „Bas śpi: [Śpi]” ze znacznikiem Flow. Zadaj jedno pytanie i opisz konkretne sytuacje dla trzech poziomów. Zwraca ocenę od 0 do 2, również ułamkową. To pozycja na Twojej skali, nie procent jasności ani temperatura. Zbyt niska pewność uruchamia ścieżkę błędu.",
+    "ru": "Опишите значения состояния и единицы, например «Бас спит: [Спит]» с тегом Flow. Задайте один вопрос и опишите конкретные ситуации для трёх уровней. Возвращает оценку от 0 до 2, включая дробные значения. Это позиция на вашей шкале, а не процент яркости или температура. При недостаточной уверенности выполняется ветка ошибки.",
+    "ko": "상태 값과 단위를 설명하세요. 예: Flow 태그를 넣은 \"Bas가 자고 있음: [수면 중]\". 질문 하나와 세 단계에 해당하는 구체적인 상황을 적으세요. 소수를 포함한 0–2 점수를 반환합니다. 점수는 정의한 척도상의 위치이며 밝기 비율이나 온도가 아닙니다. 신뢰도가 부족하면 오류 경로로 진행합니다.",
+    "ar": "اشرح قيم الحالة ووحداتها، مثل \"باس نائم: [نائم]\" باستخدام وسم Flow. اطرح سؤالًا واحدًا وصف حالات محددة للمستويات الثلاثة. يعيد درجة من 0 إلى 2، بما فيها الكسور. الدرجة موضع على مقياسك وليست نسبة سطوع أو درجة حرارة. إذا كانت الثقة غير كافية، يُتّبع مسار الخطأ."
   },
   "args": [
     {
@@ -17,7 +50,18 @@
       "type": "text",
       "title": {
         "en": "State",
-        "nl": "State"
+        "nl": "State",
+        "de": "Zustand",
+        "fr": "État",
+        "es": "Estado",
+        "da": "Tilstand",
+        "no": "Tilstand",
+        "sv": "Tillstånd",
+        "it": "Stato",
+        "pl": "Stan",
+        "ru": "Состояние",
+        "ko": "상태",
+        "ar": "الحالة"
       }
     },
     {
@@ -25,7 +69,18 @@
       "type": "text",
       "title": {
         "en": "Question",
-        "nl": "Vraag"
+        "nl": "Vraag",
+        "de": "Frage",
+        "fr": "Question",
+        "es": "Pregunta",
+        "da": "Spørgsmål",
+        "no": "Spørsmål",
+        "sv": "Fråga",
+        "it": "Domanda",
+        "pl": "Pytanie",
+        "ru": "Вопрос",
+        "ko": "질문",
+        "ar": "السؤال"
       }
     },
     {
@@ -33,7 +88,18 @@
       "type": "text",
       "title": {
         "en": "Low level (0)",
-        "nl": "Laag niveau (0)"
+        "nl": "Laag niveau (0)",
+        "de": "Niedrige Stufe (0)",
+        "fr": "Niveau bas (0)",
+        "es": "Nivel bajo (0)",
+        "da": "Lavt niveau (0)",
+        "no": "Lavt nivå (0)",
+        "sv": "Låg nivå (0)",
+        "it": "Livello basso (0)",
+        "pl": "Niski poziom (0)",
+        "ru": "Низкий уровень (0)",
+        "ko": "낮은 단계 (0)",
+        "ar": "المستوى المنخفض (0)"
       }
     },
     {
@@ -41,7 +107,18 @@
       "type": "text",
       "title": {
         "en": "Middle level (1)",
-        "nl": "Middelste niveau (1)"
+        "nl": "Middelste niveau (1)",
+        "de": "Mittlere Stufe (1)",
+        "fr": "Niveau moyen (1)",
+        "es": "Nivel medio (1)",
+        "da": "Mellemste niveau (1)",
+        "no": "Middels nivå (1)",
+        "sv": "Mellannivå (1)",
+        "it": "Livello medio (1)",
+        "pl": "Średni poziom (1)",
+        "ru": "Средний уровень (1)",
+        "ko": "중간 단계 (1)",
+        "ar": "المستوى المتوسط (1)"
       }
     },
     {
@@ -49,7 +126,18 @@
       "type": "text",
       "title": {
         "en": "High level (2)",
-        "nl": "Hoog niveau (2)"
+        "nl": "Hoog niveau (2)",
+        "de": "Hohe Stufe (2)",
+        "fr": "Niveau élevé (2)",
+        "es": "Nivel alto (2)",
+        "da": "Højt niveau (2)",
+        "no": "Høyt nivå (2)",
+        "sv": "Hög nivå (2)",
+        "it": "Livello alto (2)",
+        "pl": "Wysoki poziom (2)",
+        "ru": "Высокий уровень (2)",
+        "ko": "높은 단계 (2)",
+        "ar": "المستوى المرتفع (2)"
       }
     },
     {
@@ -57,7 +145,18 @@
       "type": "number",
       "title": {
         "en": "Minimum confidence (0–1)",
-        "nl": "Minimale confidence (0–1)"
+        "nl": "Minimale confidence (0–1)",
+        "de": "Mindestkonfidenz (0–1)",
+        "fr": "Confiance minimale (0–1)",
+        "es": "Confianza mínima (0–1)",
+        "da": "Mindste sikkerhed (0–1)",
+        "no": "Minste sikkerhet (0–1)",
+        "sv": "Minsta säkerhet (0–1)",
+        "it": "Confidenza minima (0–1)",
+        "pl": "Minimalna pewność (0–1)",
+        "ru": "Минимальная уверенность (0–1)",
+        "ko": "최소 신뢰도 (0–1)",
+        "ar": "الحد الأدنى للثقة (0–1)"
       },
       "min": 0,
       "max": 1,
@@ -71,7 +170,18 @@
       "type": "number",
       "title": {
         "en": "Score (0–2)",
-        "nl": "Score (0–2)"
+        "nl": "Score (0–2)",
+        "de": "Bewertung (0–2)",
+        "fr": "Score (0–2)",
+        "es": "Puntuación (0–2)",
+        "da": "Score (0–2)",
+        "no": "Poengsum (0–2)",
+        "sv": "Poäng (0–2)",
+        "it": "Punteggio (0–2)",
+        "pl": "Ocena (0–2)",
+        "ru": "Оценка (0–2)",
+        "ko": "점수 (0–2)",
+        "ar": "الدرجة (0–2)"
       }
     },
     {
@@ -79,7 +189,18 @@
       "type": "number",
       "title": {
         "en": "Confidence",
-        "nl": "Confidence"
+        "nl": "Confidence",
+        "de": "Konfidenz",
+        "fr": "Confiance",
+        "es": "Confianza",
+        "da": "Sikkerhed",
+        "no": "Sikkerhet",
+        "sv": "Säkerhet",
+        "it": "Confidenza",
+        "pl": "Pewność",
+        "ru": "Уверенность",
+        "ko": "신뢰도",
+        "ar": "الثقة"
       }
     },
     {
@@ -87,7 +208,18 @@
       "type": "string",
       "title": {
         "en": "Model",
-        "nl": "Model"
+        "nl": "Model",
+        "de": "Modell",
+        "fr": "Modèle",
+        "es": "Modelo",
+        "da": "Model",
+        "no": "Modell",
+        "sv": "Modell",
+        "it": "Modello",
+        "pl": "Model",
+        "ru": "Модель",
+        "ko": "모델",
+        "ar": "النموذج"
       }
     },
     {
@@ -95,7 +227,18 @@
       "type": "number",
       "title": {
         "en": "Input tokens",
-        "nl": "Inputtokens"
+        "nl": "Inputtokens",
+        "de": "Eingabetokens",
+        "fr": "Tokens en entrée",
+        "es": "Tokens de entrada",
+        "da": "Inputtokens",
+        "no": "Inndatatokener",
+        "sv": "Indatatoken",
+        "it": "Token di input",
+        "pl": "Tokeny wejściowe",
+        "ru": "Входные токены",
+        "ko": "입력 토큰",
+        "ar": "رموز الإدخال"
       }
     },
     {
@@ -103,7 +246,18 @@
       "type": "number",
       "title": {
         "en": "Output tokens",
-        "nl": "Outputtokens"
+        "nl": "Outputtokens",
+        "de": "Ausgabetokens",
+        "fr": "Tokens en sortie",
+        "es": "Tokens de salida",
+        "da": "Outputtokens",
+        "no": "Utdatatokener",
+        "sv": "Utdatatoken",
+        "it": "Token di output",
+        "pl": "Tokeny wyjściowe",
+        "ru": "Выходные токены",
+        "ko": "출력 토큰",
+        "ar": "رموز الإخراج"
       }
     },
     {
@@ -111,7 +265,18 @@
       "type": "string",
       "title": {
         "en": "Evaluation ID",
-        "nl": "Evaluatie-ID"
+        "nl": "Evaluatie-ID",
+        "de": "Auswertungs-ID",
+        "fr": "Identifiant d’évaluation",
+        "es": "ID de evaluación",
+        "da": "Vurderings-ID",
+        "no": "Vurderings-ID",
+        "sv": "Bedömnings-ID",
+        "it": "ID valutazione",
+        "pl": "ID oceny",
+        "ru": "ID оценки",
+        "ko": "평가 ID",
+        "ar": "معرّف التقييم"
       }
     },
     {
@@ -119,7 +284,18 @@
       "type": "number",
       "title": {
         "en": "Duration (ms)",
-        "nl": "Duur (ms)"
+        "nl": "Duur (ms)",
+        "de": "Dauer (ms)",
+        "fr": "Durée (ms)",
+        "es": "Duración (ms)",
+        "da": "Varighed (ms)",
+        "no": "Varighet (ms)",
+        "sv": "Varaktighet (ms)",
+        "it": "Durata (ms)",
+        "pl": "Czas trwania (ms)",
+        "ru": "Длительность (мс)",
+        "ko": "소요 시간 (ms)",
+        "ar": "المدة (مللي ثانية)"
       }
     }
   ]

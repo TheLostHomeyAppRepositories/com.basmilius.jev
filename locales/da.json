@@ -1,0 +1,25 @@
+{
+  "language": "da",
+  "settings": {
+    "introDetail": "Stil Jev spørgsmål direkte i dine Homey Flows. Du angiver tilstanden og de mulige svar.",
+    "connection": "Forbindelse",
+    "apiKey": "TypeSafe API-nøgle",
+    "keySaved": "En nøgle er gemt. Lad feltet være tomt for at beholde den.",
+    "keyMissing": "Tilføj din TypeSafe API-nøgle for at komme i gang.",
+    "clearKey": "Fjern den gemte nøgle",
+    "model": "Model",
+    "timeout": "Timeout for anmodninger (sekunder)",
+    "callLimit": "Maksimalt antal kald pr. minut",
+    "saveConnection": "Gem forbindelse",
+    "testConnection": "Test den gemte forbindelse",
+    "connectionOk": "Forbindelsen fungerer med",
+    "saved": "Gemt.",
+    "billable": "Forbindelsestest og Flow-vurderinger kalder TypeSafe og bruger API-kredit.",
+    "privacy": "Appen læser ikke enheder og gemmer ikke tilstande, spørgsmål eller svar. Homey gemmer kortenes opsætning i Flowet.",
+    "loading": "Indlæser…",
+    "retry": "Prøv igen",
+    "flowHelp": "Alle Jev-kort findes under Så. Vælg ja/nej, et svar fra en liste eller en score. Angiv tilstand og ét spørgsmål med tekst eller Flow-tags. Resultater returneres som tags i Advanced Flow. Kontroller det booleske Svar-tag med et logikkort. Beskriv hver værdi, f.eks. \"Bas sover: [Sover]\", og angiv måleenheder.",
+    "advancedHelp": "Det avancerede kort accepterer JSON med state og questions og returnerer rå svar som JSON. Kontroller selv sandsynlighed og sikkerhed. Kopier eksemplet og tilpas det i Flow-kortet:",
+    "example": "{\n  \"state\": {\n    \"activity\": \"Se film\",\n    \"guests\": true\n  },\n  \"questions\": {\n    \"scene\": {\n      \"type\": \"choice\",\n      \"instructions\": \"Hvilken lysscene passer?\",\n      \"criteria\": {\n        \"film\": \"Se film\",\n        \"reading\": \"Læse\",\n        \"guests\": \"Være sammen med gæster\"\n      }\n    },\n    \"notify\": {\n      \"type\": \"noul\",\n      \"instructions\": \"Ville en besked, der ikke haster, forstyrre aktiviteten?\"\n    }\n  }\n}"
+  }
+}

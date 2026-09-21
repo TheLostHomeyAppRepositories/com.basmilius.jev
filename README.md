@@ -104,3 +104,7 @@ Requests time out after 10 seconds by default, with a limit of 30 calls per minu
 The app does not persist new state, questions, answers or evaluation history. Homey stores the configured cards in your Flows. The initial development version's saved-decision cards have been removed; any Flows built with those cards must be rebuilt with direct cards. The former yes/no condition has also been removed; replace it with the yes/no action and check its Answer tag in Advanced Flow. The old `jev_state` setting, if present on a development Homey, is ignored rather than automatically deleted.
 
 The fixed choice cards with 2, 3 and 4 answers have been removed. Replace them with **Choose from a list**, putting the old answers on separate lines in the same order. Reconnect the result tags in your Flow.
+
+## Languages
+
+Store descriptions, Flow cards and settings are available in English, Dutch, German, French, Italian, Swedish, Norwegian, Spanish, Danish, Russian, Polish, Korean and Arabic, matching FlowBits. Arabic settings use right-to-left layout; JSON examples retain left-to-right layout. Technical validation and API error messages currently remain in English.
