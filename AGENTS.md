@@ -56,4 +56,4 @@ Score: https://docs.typesafe.ai/primitives/score
 
 Use `POST https://api.typesafe.ai/v1/systemone` with a bearer key and the configured model, defaulting to `jev-latest`. Check official docs before changing the API contract.
 
-Repository: https://github.com/basmilius/homey-jev. Keep it private. Do not publish releases or change visibility without a request. Claude and FlowBits are reference repositories, not dependencies to modify.
+Repository: https://github.com/basmilius/homey-jev. The repository is public. Do not publish releases or change visibility without a request. Claude and FlowBits are reference repositories, not dependencies to modify.

@@ -1,13 +1,16 @@
 {
   "name": "com.basmilius.jev",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "tsc && bun run --cwd settings-ui build",
     "typecheck": "tsc --noEmit && bun run --cwd settings-ui typecheck",
     "test": "bun test"
   },
-  "dependencies": { "@basmilius/homey-common": "^1.24.0" },
+  "dependencies": {
+    "@basmilius/homey-common": "^1.24.0"
+  },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.5",
     "@types/bun": "^1.3.14",

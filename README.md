@@ -105,6 +105,27 @@ The app does not persist new state, questions, answers or evaluation history. Ho
 
 The fixed choice cards with 2, 3 and 4 answers have been removed. Replace them with **Choose from a list**, putting the old answers on separate lines in the same order. Reconnect the result tags in your Flow.
 
+## Repository
+
+The app targets local Homey version 12.4 or newer and uses Homey SDK v3 with TypeScript. `src/brain/` handles request validation and TypeSafe transport, while `src/flow/` exposes the action cards. The Vue settings interface lives in `settings-ui/` and builds into `settings/`. Mocked API and Flow contract tests live in `tests/`.
+
+Use Bun from the repository root:
+
+```sh
+bun install
+bun install --cwd settings-ui
+bun run typecheck
+bun test
+bun run build
+homey app build
+```
+
+Edit app and Flow metadata in `.homeycompose/`; Homey generates the root `app.json`. `README.txt` and its translations contain the Homey App Store description. This Markdown file documents the GitHub project and its Flow contracts.
+
+## License
+
+[MIT License](LICENSE). Copyright (c) 2023-present Bas Milius.
+
 ## Languages
 
 Store descriptions, Flow cards and settings are available in English, Dutch, German, French, Italian, Swedish, Norwegian, Spanish, Danish, Russian, Polish, Korean and Arabic, matching FlowBits. Arabic settings use right-to-left layout; JSON examples retain left-to-right layout. Technical validation and API error messages currently remain in English.
