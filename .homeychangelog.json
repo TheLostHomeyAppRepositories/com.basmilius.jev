@@ -4,5 +4,8 @@
   },
   "0.2.0": {
     "en": "Removed obsolete flow cards."
+  },
+  "1.0.0": {
+    "en": "First release of Jev - AI decisions in your Homey Flows."
   }
 }
