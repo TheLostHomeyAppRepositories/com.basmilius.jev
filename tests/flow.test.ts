@@ -35,14 +35,14 @@ const base = {state: 'We are watching a film.', question: 'Which light scene fit
 
 test('registers only action cards, without conditions or triggers', () => {
     const f = fixture();
-    expect([...f.cards.keys()].sort()).toEqual(['action:advanced', 'action:choice_2', 'action:choice_3', 'action:choice_4', 'action:choice_list', 'action:score', 'action:yes_no']);
+    expect([...f.cards.keys()].sort()).toEqual(['action:advanced', 'action:choice_list', 'action:score', 'action:yes_no']);
 });
 
 for (const count of [2, 3, 4]) {
     test(`choice with ${count} answers sends exactly one question and returns text and position`, async () => {
         const f = fixture();
-        const args = {...base, answer_1: 'Bright', answer_2: 'Film', answer_3: 'Cozy', answer_4: 'No change'};
-        const result = await f.card(`action:choice_${count}`).run(args);
+        const args = {...base, answers: ['Bright', 'Film', 'Cozy', 'No change'].slice(0, count).join('\n')};
+        const result = await f.card('action:choice_list').run(args);
         expect(result.answer).toBe('Film');
         expect(result.answer_number).toBe(2);
         expect(result.confidence).toBe(0.95);
@@ -51,21 +51,6 @@ for (const count of [2, 3, 4]) {
         expect(f.requests[0].state).toBe(base.state);
     });
 }
-
-test('rejects missing or duplicate answers before the API call', async () => {
-    const f = fixture();
-    await expect(f.card('action:choice_2').run({...base, answer_1: 'Same', answer_2: ' same '})).rejects.toThrow('different');
-    await expect(f.card('action:choice_3').run({...base, answer_1: 'First', answer_2: 'Second'})).rejects.toThrow();
-    expect(f.requests).toHaveLength(0);
-});
-
-test('low choice confidence stops the branch; custom thresholds work', async () => {
-    const f = fixture();
-    f.setConfidence(0.6);
-    const args = {...base, answer_1: 'Bright', answer_2: 'Film'};
-    await expect(f.card('action:choice_2').run(args)).rejects.toThrow('uncertain');
-    expect((await f.card('action:choice_2').run({...args, minimum: 0.5})).answer).toBe('Film');
-});
 
 test('yes/no action distinguishes yes, no and uncertainty', async () => {
     const f = fixture();
@@ -104,7 +89,7 @@ test('advanced returns multiple raw answers, including uncertainty, without glob
 test('rejects invalid thresholds and advanced JSON before the API call', async () => {
     const f = fixture();
     await expect(f.card('action:yes_no').run({...base, minimum: 0.5})).rejects.toThrow();
-    await expect(f.card('action:choice_2').run({...base, minimum: 2})).rejects.toThrow();
+    await expect(f.card('action:choice_list').run({...base, answers: 'Bright\nFilm', minimum: 2})).rejects.toThrow();
     await expect(f.card('action:advanced').run({json: '{bad'})).rejects.toThrow('Invalid JSON');
     expect(f.requests).toHaveLength(0);
 });

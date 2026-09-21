@@ -8,9 +8,6 @@ Settings contain your TypeSafe API key, model, timeout, request limit and a conn
 
 | Card | Input | Output |
 | --- | --- | --- |
-| Ask a question with 2 answers | State, one question, two answers, minimum confidence | Answer text, answer number, confidence, probability |
-| Ask a question with 3 answers | State, one question, three answers, minimum confidence | Answer text, answer number, confidence, probability |
-| Ask a question with 4 answers | State, one question, four answers, minimum confidence | Answer text, answer number, confidence, probability |
 | Choose from a list | State, one question, 2–255 answers separated by newlines, minimum confidence | Answer text, answer number, confidence, probability |
 | Ask a yes/no question | State, one question, minimum probability | Boolean answer and probability of yes |
 | Score a question with 3 levels | State, one question, descriptions of low/middle/high, minimum confidence | Score from 0 to 2, including fractions, and confidence |
@@ -18,15 +15,19 @@ Settings contain your TypeSafe API key, model, timeout, request limit and a conn
 
 All cards appear under Then and also return the resolved model, input/output token counts, evaluation ID and duration. Action result tags can be connected in Advanced Flow. Use the yes/no card’s boolean Answer tag in a Logic condition to branch on its result. Each card makes a fresh API call.
 
-Each simple card evaluates exactly one question. Text fields accept Flow tags. Describe what every value means in state, and include units for measurements. For example, write `Bas is sleeping: [Asleep]. Living room temperature: [Temperature] °C.` and insert the corresponding Flow tags at the bracketed positions. This gives Jev the meaning of the values even when a tag resolves to `true`, `false` or a number. Choice answer numbers start at 1 and match the order of the answer fields, so you can branch on the answer number without matching text.
+Each simple card evaluates exactly one question. Text fields accept Flow tags. Describe what every value means in state, and include units for measurements. For example, write `Bas is sleeping: [Asleep]. Living room temperature: [Temperature] °C.` and insert the corresponding Flow tags at the bracketed positions. This gives Jev the meaning of the values even when a tag resolves to `true`, `false` or a number. Choice answer numbers start at 1 and match the order of the answers in the list, so you can branch on the answer number without matching text.
 
-For example, use the three-answer card with:
+For example, use the list card with:
 
 - State: `We are watching a film, guests are here and it is dark outside.`
 - Question: `Which light scene fits?`
-- Answer 1: `Film: dim light for watching television.`
-- Answer 2: `Cozy: enough warm light to talk with guests.`
-- Answer 3: `Bright: enough light to read or work.`
+- Answers, one per line:
+
+```text
+Film: dim light for watching television.
+Cozy: enough warm light to talk with guests.
+Bright: enough light to read or work.
+```
 
 Connect the returned answer number to existing Homey lighting actions.
 
@@ -101,3 +102,5 @@ Build and validation commands are in [AGENTS.md](AGENTS.md); [CLAUDE.md](CLAUDE.
 Requests time out after 10 seconds by default, with a limit of 30 calls per minute and four concurrent calls. Settings change the timeout and per-minute limit. Limits are shared across all cards and the connection test; requests are not retried automatically. Results stay local to each invocation, including simultaneous evaluations.
 
 The app does not persist new state, questions, answers or evaluation history. Homey stores the configured cards in your Flows. The initial development version's saved-decision cards have been removed; any Flows built with those cards must be rebuilt with direct cards. The former yes/no condition has also been removed; replace it with the yes/no action and check its Answer tag in Advanced Flow. The old `jev_state` setting, if present on a development Homey, is ignored rather than automatically deleted.
+
+The fixed choice cards with 2, 3 and 4 answers have been removed. Replace them with **Choose from a list**, putting the old answers on separate lines in the same order. Reconnect the result tags in your Flow.

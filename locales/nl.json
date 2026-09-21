@@ -18,7 +18,7 @@
     "privacy": "De app leest geen apparaten uit en bewaart geen state, vragen of antwoorden. Homey bewaart je kaartconfiguratie als onderdeel van de Flow.",
     "loading": "Laden…",
     "retry": "Opnieuw proberen",
-    "flowHelp": "Alle Jev-kaarten staan onder Dan. Voeg een ja/nee-kaart, keuzekaart met 2, 3 of 4 antwoorden, keuze uit een lijst, of scorekaart toe. Vul state en één vraag in met tekst of Flow-tags. Resultaten komen als tags terug in Advanced Flow. Gebruik de boolean-tag Antwoord van de ja/nee-kaart in een Logica-conditie om op het resultaat te vertakken. Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid.",
+    "flowHelp": "Alle Jev-kaarten staan onder Dan. Voeg een ja/nee-kaart, kaart voor kiezen uit een lijst, of scorekaart toe. Vul state en één vraag in met tekst of Flow-tags. Resultaten komen als tags terug in Advanced Flow. Gebruik de boolean-tag Antwoord van de ja/nee-kaart in een Logica-conditie om op het resultaat te vertakken. Beschrijf in state wat elke waarde betekent. Bijvoorbeeld: \"Bas slaapt: [Slapend]\"; voeg op [Slapend] de Flow-tag in. Vermeld bij metingen ook de eenheid.",
     "advancedHelp": "De geavanceerde kaart accepteert JSON met state en questions. Alle ruwe antwoorden komen terug als JSON. Controleer zelf kans en confidence. Kopieer dit voorbeeld en pas het aan in de Flow-kaart:"
   }
 }

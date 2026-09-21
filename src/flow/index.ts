@@ -9,7 +9,6 @@ type SimpleArgs = {
     readonly minimum?: number;
 };
 
-type ChoiceArgs = SimpleArgs & {readonly answer_1: string; readonly answer_2: string; readonly answer_3?: string; readonly answer_4?: string};
 type ScoreArgs = SimpleArgs & {readonly low: string; readonly middle: string; readonly high: string};
 
 export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
@@ -27,11 +26,6 @@ export function registerFlows(app: Pick<JevApp, 'evaluate' | 'homey'>): void {
         if (answer.confidence < minimum) throw new Error(`Jev is uncertain. Choice confidence: ${answer.confidence}; required: at least ${minimum}.`);
         const index = Number(answer.choice.slice('answer_'.length)) - 1;
         return {...tokens(response), answer: answers[index], answer_number: index + 1, confidence: answer.confidence, probability: answer.probabilities[answer.choice]};
-    }
-
-    for (const count of [2, 3, 4] as const) {
-        flow.getActionCard(`choice_${count}`).registerRunListener(async (args: ChoiceArgs) =>
-            choose(args, [args.answer_1, args.answer_2, ...(count >= 3 ? [args.answer_3] : []), ...(count === 4 ? [args.answer_4] : [])]));
     }
 
     flow.getActionCard('choice_list').registerRunListener(async (args: SimpleArgs & {readonly answers: string}) => {
