@@ -1,11 +1,20 @@
 import { expect, test } from 'bun:test';
-import { registerFlows } from '../src/flow';
+import { Actions } from '../src/flow';
 import type JevApp from '../src/index';
 import type { EvaluationRequest, EvaluationResponse } from '../src/types';
 
 class Card {
     run!: (args: any) => Promise<any>;
-    registerRunListener(listener: Card['run']): this { this.run = listener; return this; }
+
+    registerRunListener(listener: Card['run']): this {
+        this.run = listener;
+        return this;
+    }
+
+    // The flow entities subscribe to `update` to refresh autocomplete providers.
+    on(): this {
+        return this;
+    }
 }
 
 function fixture() {
@@ -14,10 +23,15 @@ function fixture() {
     let confidence = 0.95;
     let probability = 0.95;
     let choice = 'answer_2';
+
     function card(id: string): Card {
-        if (!cards.has(id)) cards.set(id, new Card());
+        if (!cards.has(id)) {
+            cards.set(id, new Card());
+        }
+
         return cards.get(id)!;
     }
+
     async function evaluate(request: EvaluationRequest): Promise<EvaluationResponse> {
         requests.push(request);
         const answers = Object.fromEntries(Object.entries(request.questions).map(([id, question]) => [id,
@@ -27,7 +41,25 @@ function fixture() {
         ]));
         return {answers, model: 'jev-latest', inputTokens: 20, outputTokens: 5, requestId: `request-${requests.length}`, durationMs: 10} as EvaluationResponse;
     }
-    registerFlows({evaluate, homey: {flow: {getActionCard: (id: string) => card(`action:${id}`), getConditionCard: (id: string) => card(`condition:${id}`)}}} as unknown as JevApp);
+
+    const app = {
+        evaluate,
+        homey: {
+            flow: {
+                getActionCard: (id: string) => card(`action:${id}`),
+                getConditionCard: (id: string) => card(`condition:${id}`),
+                getTriggerCard: (id: string) => card(`trigger:${id}`),
+                getDeviceTriggerCard: (id: string) => card(`device-trigger:${id}`)
+            },
+            log: () => {
+            }
+        }
+    } as unknown as JevApp;
+
+    for (const Action of Object.values(Actions)) {
+        new Action(app);
+    }
+
     return {cards, card, requests, setChoice: (value: string) => { choice = value; }, setConfidence: (value: number) => { confidence = value; }, setProbability: (value: number) => { probability = value; }};
 }
 

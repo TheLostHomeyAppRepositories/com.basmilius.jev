@@ -6,4 +6,4 @@ Everything is configured on Flow action cards (Then). Noul returns a boolean ans
 
 The user supplies all state and questions. Never gather device/sensor context automatically. Simple cards support one question. Choice also accepts a newline-separated list of 2–255 answers; the advanced card supports multiple typed questions in JSON. Keep results local to the invocation, with no persistent decision state.
 
-Start at `src/flow/index.ts`, `src/brain/request.ts` and `src/brain/jev.ts`. Run `bun run typecheck`, `bun test`, `bun run build` and `homey app build`. Report live TypeSafe and Homey-device testing separately from mocked tests. The GitHub repository is public. Maintain all 13 languages listed in AGENTS.md across store READMEs, app metadata, settings and Flow cards.
+Start at `src/flow/action/`, `src/brain/request.ts` and `src/brain/jev.ts`. Run `bun run typecheck`, `bun test`, `bun run build` and `homey app build`. Report live TypeSafe and Homey-device testing separately from mocked tests. The GitHub repository is public. Maintain all 13 languages listed in AGENTS.md across store READMEs, app metadata, settings and Flow cards.
