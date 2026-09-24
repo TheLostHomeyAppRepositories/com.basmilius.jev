@@ -5,7 +5,7 @@
     "": {
       "name": "com.basmilius.jev",
       "dependencies": {
-        "@basmilius/homey-common": "^1.24.0",
+        "@basmilius/homey-common": "^1.25.0",
       },
       "devDependencies": {
         "@tsconfig/node22": "^22.0.5",
@@ -17,7 +17,7 @@
     },
   },
   "packages": {
-    "@basmilius/homey-common": ["@basmilius/homey-common@1.24.0", "", {}, "sha512-6cS5yL6zb+sygcypa6ifaXAWj1LOFVOPiFpQ1nJBZx5BrsMOXd55soqAWCqR5KjBhjSxNwRPmnFrpO7lYAsreg=="],
+    "@basmilius/homey-common": ["@basmilius/homey-common@1.25.0", "", { "dependencies": { "@tsconfig/node22": "^22.0.6" } }, "sha512-hmExesTqshMAas72t70EUWVmPYEt9RO4OQeAdIX28Uwvjkkn+UJi5AA0tk2YigadpVpPtf7zH5jDIYVvb5G8Kw=="],
 
     "@tsconfig/node22": ["@tsconfig/node22@22.0.6", "", {}, "sha512-/5thavHAnWDZwH2H6eEn/T8pBEBhtuKaWGMslsj82kJfvzQgOgEMK7X4goBbIUjgVtAzPTtM9Ml64LA0uxO6Iw=="],
 
